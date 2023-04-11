@@ -1,0 +1,370 @@
+#main {
+
+}
+
+/* Start Header */
+.header__primary {
+    background: linear-gradient(220deg, var(--primary-color), var(--fift-color));
+}
+
+.header__navbar {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__navbar-items:last-child > .header__nav > .header__nav-items {
+    text-align: right;
+}
+
+.header__nav {
+    color: var(--white-color);
+    display: flex;
+}
+
+.header__nav-items {
+    position: relative;
+    display: flex;
+    color: var(--white-color);
+    font-size: 1.3rem;
+    margin-right: 50px;
+    cursor: pointer;
+}
+
+.header__nav-items > a {
+    color: var(--white-color);
+}
+
+.header__nav-items::before {
+    position: absolute;
+    right: -28px;
+    content: "";
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 14px;
+}
+
+.header__nav-items:last-child::before {
+    display: none;
+}
+
+.header__nav-item-icon {
+    color: var(--white-color);
+    font-size: 1.6rem;
+    margin: 0 4px;
+}
+
+.header__container {
+    padding: 30px 0;
+}
+
+.header__container--align {
+    align-items: center;
+}
+
+.header__logo-shop {
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon-shop {
+    position: relative;
+    font-size: 4.8rem;
+    color: var(--white-color);
+    margin-right: 50px;
+}
+
+.logo-icon-shop::after {
+    position: absolute;
+    content: "";
+    height: 70%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    top: 7px;
+    right: -25px;
+}
+
+.logo-icon__text-shop {
+    position: absolute;
+    left: 34%;
+    bottom: 4px;
+    font-size: 3.4rem;
+    color: var(--fift-color);
+}
+
+.header_logo--text-shop {
+    color: var(--white-color);
+    font-size: 3.8rem;
+}
+
+.header__container-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__search {
+    position: relative;
+    width: 700px;
+}
+
+.header__search-input {
+    width: 100%;
+    padding-right: 70px;
+    border: none;
+}
+
+.header__search-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    height: 90%;
+    width: 70px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+
+.header__search-icon {
+    color: var(--white-color);
+    font-size: 1.8rem;
+}
+
+.header__cart {
+    display: flex;
+    justify-content: center;
+}
+
+.header__cart-icon {
+    color: var(--white-color);
+    font-size: 2.6rem;
+}
+
+.header__shop {
+    padding: 40px 0;
+    background-color: var(--white-color);
+}
+
+.header__shop-left {
+    position: relative;
+    height: 135px;
+    border-radius: 4px;
+}
+
+.header__shop-left-img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.header__shop-left-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgba(51, 51, 51, 0.6);
+    border-radius: 4px;
+}
+
+.header__shop-img > img {
+    border-radius: 50%;
+    border: 5px solid #ccc;
+}
+
+.header__shop-info {
+    padding: 16px 0;
+}
+
+.header__shop-tittle {
+    color: var(--white-color);
+    font-size: 2.2rem;
+    line-height: 2.2rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.header__shop-address > span,
+.header__shop-address > i {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
+}
+
+.header__right {
+    padding: 10px 0;
+    padding-left: 40px;
+}
+
+.header__right-container {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.header__right-info {
+    margin-bottom: 33px;
+}
+
+.header__right-info:last-child {
+    margin-bottom: 0;
+}
+
+.info__icon {
+    color: #999;
+    margin-right: 10px;
+}
+
+.info__detail {
+    color: var(--primary-color);
+}
+
+/* End Header */
+
+/* Start Body */
+#body-shop {
+    background-color: #F5F5F5;
+    padding-top: 30px;
+    padding-bottom: 60px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.body__category-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(153, 153, 153, 0.4);
+}
+
+.category-icon {
+    margin-right: 10px;
+}
+
+.category-title {
+    font-size: 1.9rem;
+}
+
+.category__container {
+
+}
+
+.category__items {
+    cursor: pointer;
+    padding-top: 18px;
+    font-size: 1.5rem;
+}
+
+.category__items:hover {
+    color: var(--thirt-color);
+}
+
+.body__container-product {
+    background: var(--white-color);
+    border-radius: 3px;
+    box-shadow: 0px 0px 4px #999;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.product__img > img {
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.product__content {
+    padding: 10px;
+}
+
+.product__title {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.product__tag-shop {
+    min-width: 50%;
+    padding: 2px 6px;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.product__price {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.product__price > p {
+    color: var(--second-color);
+    text-decoration: underline;
+}
+
+.product__price > span {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--primary-color);
+}
+
+.product__rating {
+    margin: 8px 0;
+}
+
+.product__address {
+    font-size: 1rem;
+}
+
+.product__address > i {
+    color: #999;
+}
+
+.product__address > span {
+    font-size: 1.4rem;
+    margin-left: 4px;
+    color: #666;
+}
+
+/* End Body */
+
+/* Start Footer */
+#footer {
+
+}
+
+.footer__top {
+    padding: 40px 0;
+    border-bottom: 1px solid #999;
+}
+
+.footer__top-items--algin {
+    display: flex;
+    align-items: center;
+}
+
+.footer__top-items--right {
+    justify-content: flex-end;
+}
+
+.footer__top-items--center {
+    justify-content: center;
+}
+
+.footer__top-items--center > .footer__top-items-content > .footer__top-items-text > div {
+    width: 260px;
+}
+
+.footer__top-items-img {
+    width: 56px;
+}
+
+.footer__top-items-content {
+    margin-left: 10px;
+}
+
+.footer__top-items-text {
+    font-size: 1.4rem;
+}
+
+.footer__top-items-text > div {
+    margin: 5px 0;
+}
+/* End Footer */
