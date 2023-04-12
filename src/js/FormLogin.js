@@ -73,7 +73,7 @@ export default function FormLogin() {
 
                                                             <div className="col l-6">
                                                                 <div className="container__btn">
-                                                                    <div className="btn">Quay lại trang chủ</div>
+                                                                    <div className="btn">Trang Chủ</div>
                                                                 </div>
                                                             </div>
                                                         </div>

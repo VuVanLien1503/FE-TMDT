@@ -10,10 +10,10 @@ function App() {
             {/*<FormLogin/>*/}
             {/*<FormRegister/>*/}
             {/*<Link to={"/register"}>Đăng ký</Link>*/}
-            <PageShop/>
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
+                <Route path={"/"} element={<PageShop/>}/>
             </Routes>
         </>
     );
