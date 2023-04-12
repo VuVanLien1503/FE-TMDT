@@ -11,8 +11,8 @@ import axios from "axios";
 export default function FormRegister() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [seconds, setSeconds] = useState(10);
-    const initialSecondsRef = useRef(10);
+    const [seconds, setSeconds] = useState(180);
+    const initialSecondsRef = useRef(180);
     const countdownIntervalRef = useRef(null);
 
     useEffect(() => {
@@ -249,36 +249,39 @@ export default function FormRegister() {
 
     // Mở modal nhập mã xác nhận
     function OpenModal1(value) {
-        setCode("emailError")
-        axios.post(`http://localhost:8080/accounts/randomCode1/${value}`).then((response) => {
+        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
+            if (response.data === "emailError") {
+                alert("Email Đã Tồn Tại")
+            } else {
+                setIsModalOpen(true)
+                setRole(2)
+                document.getElementById("modal").style.display = "flex"
+            }
         })
-        if (code !== "emailError") {
-            alert("Email Đã Tồn Tại")
-        } else {
-            setIsModalOpen(true)
-            setRole(2)
-            document.getElementById("modal").style.display = "flex"
-        }
+
+
     }
 
     function OpenModal2(value) {
-        setCode("emailError")
-        axios.post(`http://localhost:8080/accounts/randomCode1/${value}`).then((response) => {
+        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
+            if (response.data === "emailError") {
+                alert("Email Đã Tồn Tại")
+            } else {
+                setIsModalOpen(true)
+                setRole(3)
+                document.getElementById("modal").style.display = "flex"
+            }
         })
-        if (code === "emailError") {
-            alert("Email Đã Tồn Tại")
-        } else {
-            setIsModalOpen(true)
-            setRole(3)
-            document.getElementById("modal").style.display = "flex"
-        }
+
+
     }
 
     function Save(value) {
 
         console.log(value)
+
         setAccount({
             role: {
                 id: role
@@ -296,7 +299,7 @@ export default function FormRegister() {
         console.log("code:" + code)
         console.log("input:" + codeInput)
 
-        if (code === codeInput) {
+        if (code == codeInput) {
             if (seconds !== 0) {
                 axios.post(`http://localhost:8080/accounts/save`, account).then((response) => {
                     document.getElementById("inputCode").value = ""
