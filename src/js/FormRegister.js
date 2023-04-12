@@ -4,11 +4,12 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import HeaderForm from "./HeaderForm";
 import FooterForm from "./FooterForm";
 import ContentForm from "./ContentForm";
-import {useState} from "react";
+import {isValidElement, useState} from "react";
 import {Link} from "react-router-dom";
 
 export default function FormRegister() {
-    const [status,setStatus] = useState("password")
+    const [status, setStatus] = useState("password")
+    const [check, setCheck] = useState(true)
     const Validation = Yup.object().shape({
         phone: Yup.string().min(0, "Số điện thoại không hợp lệ!").max(11, "Số điện thoại không hợp lệ!").required("Bạn chưa nhập thông tin!"),
         password: Yup.string().required("Bạn chưa nhập mật khẩu!").min(6, "Mật khẩu từ 6 đến 8 ký tự!").max(15, "Mật khẩu từ 6 đến 8 ký tự!"),
@@ -16,21 +17,25 @@ export default function FormRegister() {
         email: Yup.string().required("Bạn cần nhập thông tin!"),
         address: Yup.string().required("Bạn cần nhập thông tin!")
     })
+    const initialValues = {
+        phone: "",
+        password: "",
+        name: "",
+        email: "",
+        address: ""
+
+    };
     return (
         <>
             <Formik
-                initialValues={{
-                    phone: "",
-                    password: "",
-                    name: "",
-                    email: "",
-                    address: ""
-                }}
+                initialValues={initialValues}
                 onSubmit={(values) => {
                     sendData(values)
                 }}
-                validationSchema={Validation}>
+                validationSchema={Validation}
+                initialErrors={initialValues}>
 
+                {({  validateForm }) => (
                 <Form>
                     <div id="main">
                         <HeaderForm/>
@@ -51,25 +56,32 @@ export default function FormRegister() {
                                                             <div className="col l-6">
                                                                 <div className="form__field-container">
                                                                     <div className="form__field-items">
-                                                                        <Field name={'phone'} className="input--no-wrap" type="text"
+                                                                        <Field name={'phone'} className="input--no-wrap"
+                                                                               type="text"
                                                                                placeholder="Số điện thoại(*)"/>
                                                                     </div>
-                                                                    <div className={'error__message'}><ErrorMessage name={'phone'}/></div>
+                                                                    <div className={'error__message'}><ErrorMessage
+                                                                        name={'phone'}/></div>
                                                                 </div>
                                                             </div>
 
                                                             <div className="col l-6">
                                                                 <div className="form__field-container">
                                                                     <div className="form__field-items">
-                                                                        <Field name={'password'} id="password" className="input--no-wrap"
+                                                                        <Field name={'password'} id="password"
+                                                                               className="input--no-wrap"
                                                                                type={status} placeholder="Mật khẩu(*)"/>
-                                                                        <div id="event" className="form__field-items-icon"
+                                                                        <div id="event"
+                                                                             className="form__field-items-icon"
                                                                              onClick={setStatusPassword}>
-                                                                            <i id="eye-open" className="fa-solid fa-eye"></i>
-                                                                            <i id="eye-close" className="fa-solid fa-eye-slash"></i>
+                                                                            <i id="eye-open"
+                                                                               className="fa-solid fa-eye"></i>
+                                                                            <i id="eye-close"
+                                                                               className="fa-solid fa-eye-slash"></i>
                                                                         </div>
                                                                     </div>
-                                                                    <div className={'error__message'}><ErrorMessage name={'password'}/></div>
+                                                                    <div className={'error__message'}><ErrorMessage
+                                                                        name={'password'}/></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -78,21 +90,25 @@ export default function FormRegister() {
                                                     <div className="form__field">
                                                         <div className="form__field-container">
                                                             <Field name={'name'} type="text" placeholder="Tên(*)"/>
-                                                            <div className={'error__message'}><ErrorMessage name={'name'}/></div>
+                                                            <div className={'error__message'}><ErrorMessage
+                                                                name={'name'}/></div>
                                                         </div>
                                                     </div>
 
                                                     <div className="form__field">
                                                         <div className="form__field-container">
                                                             <Field name={'email'} type="email" placeholder="Email(*)"/>
-                                                            <div className={'error__message'}><ErrorMessage name={'email'}/></div>
+                                                            <div className={'error__message'}><ErrorMessage
+                                                                name={'email'}/></div>
                                                         </div>
                                                     </div>
 
                                                     <div className="form__field">
                                                         <div className="form__field-container">
-                                                            <Field name={'address'} type="text" placeholder="Địa chỉ(*)"/>
-                                                            <div className={'error__message'}><ErrorMessage name={'address'}/></div>
+                                                            <Field name={'address'} type="text"
+                                                                   placeholder="Địa chỉ(*)"/>
+                                                            <div className={'error__message'}><ErrorMessage
+                                                                name={'address'}/></div>
                                                         </div>
                                                     </div>
 
@@ -109,14 +125,17 @@ export default function FormRegister() {
 
                                                             <div className="col l-6">
                                                                 <div className="container__btn">
-                                                                    <div className="btn" onClick={openModal}>Người dùng</div>
+                                                                    <div className={'btn'} onClick={() => validateForm().then(() => console.log('blah'))}>Người
+                                                                        dùng
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div className="footer__form">
-                                                        <span className="footer__form-text">Bạn đã có tài khoản FCBlue?</span>
+                                                        <span
+                                                            className="footer__form-text">Bạn đã có tài khoản FCBlue?</span>
                                                         <Link to={"/login"}>Đăng nhập</Link>
                                                     </div>
                                                 </div>
@@ -149,19 +168,19 @@ export default function FormRegister() {
                         </div>
                     </div>
                     {/*End Modal*/}
-                </Form>
+                </Form>)}
             </Formik>
         </>
     )
 
     // Ẩn - hiện mật khẩu
-    function setStatusPassword(){
-        if (status === "password"){
+    function setStatusPassword() {
+        if (status === "password") {
             setStatus("text");
             document.getElementById("eye-open").style.display = "block";
             document.getElementById("eye-close").style.display = "none";
 
-        }else {
+        } else {
             setStatus("password");
             document.getElementById("eye-open").style.display = "none";
             document.getElementById("eye-close").style.display = "block";
@@ -170,6 +189,7 @@ export default function FormRegister() {
 
     // Mở modal nhập mã xác nhận
     function openModal() {
+        console.log()
         document.getElementById("modal").style.display = "flex"
     }
 
