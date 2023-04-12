@@ -5,9 +5,10 @@ import FooterForm from "./FooterForm";
 import * as Yup from 'yup'
 import '../css/Login.css'
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function FormLogin() {
+    const navigate = useNavigate()
     const [status,setStatus] = useState("password")
     const Validation = Yup.object().shape({
         password: Yup.string().required("Bạn chưa nhập mật khẩu!").min(6, "Mật khẩu từ 6 đến 8 ký tự!").max(15, "Mật khẩu từ 6 đến 8 ký tự!"),
@@ -40,7 +41,6 @@ export default function FormLogin() {
                                             <div className="body__right-container-login">
                                                 <h1 className="body__right-title">
                                                     Đăng Nhập
-                                                    <span className="body__right-title-logo">FCBlue</span>
                                                 </h1>
                                                 <div className="form">
                                                     <div className="form__field">
@@ -73,7 +73,7 @@ export default function FormLogin() {
 
                                                             <div className="col l-6">
                                                                 <div className="container__btn">
-                                                                    <div className="btn">Trang Chủ</div>
+                                                                    <div className="btn" onClick={backHome}>Quay lại</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -117,5 +117,9 @@ export default function FormLogin() {
 
     function sendData(values) {
 
+    }
+
+    function backHome() {
+        navigate("/")
     }
 }
