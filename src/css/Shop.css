@@ -4,7 +4,7 @@
 
 /* Start Header */
 .header__primary {
-    background: linear-gradient(180deg, var(--primary-color), var(--fift-color));
+    background: linear-gradient(190deg, var(--primary-color), var(--fift-color));
 }
 
 .header__navbar {
@@ -70,7 +70,7 @@
     position: relative;
     font-size: 4.8rem;
     color: var(--white-color);
-    margin-right: 50px;
+    margin-right: 18px;
 }
 
 .logo-icon-shop::after {
@@ -79,7 +79,7 @@
     height: 70%;
     border: 1px solid rgba(255, 255, 255, 0.2);
     top: 7px;
-    right: -25px;
+    right: -10px;
 }
 
 .logo-icon__text-shop {
@@ -118,7 +118,7 @@
     right: 2px;
     height: 90%;
     width: 70px;
-    background: var(--primary-color);
+    background: var(--four-color);
     display: flex;
     align-items: center;
     justify-content: center;

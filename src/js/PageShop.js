@@ -5,11 +5,16 @@ import axios from "axios";
 import FooterForm from "./FooterForm";
 export default function PageShop() {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/products/shop/1` ).then((response) => {
+        axios.get(`http://localhost:8081/home/products/shop/1` ).then((response) => {
             setProducts(response.data.content)
             console.log(response.data.content)
+        })
+
+        axios.get(`http://localhost:8081/home/categories`).then((response) => {
+            setCategories(response.data)
         })
     }, [])
 
@@ -23,7 +28,7 @@ export default function PageShop() {
                             <div className="header__navbar">
                                 <div className="header__navbar-items">
                                     <ul className="header__nav">
-                                        <li className="header__nav-items">Trang chủ FCBlue</li>
+                                        <li className="header__nav-items">Trang chủ FCBlue Mall</li>
                                         <li className="header__nav-items">Tải ứng dụng</li>
                                         <li className="header__nav-items">
                                             Kết nối
@@ -46,16 +51,16 @@ export default function PageShop() {
 
                             <div className="header__container">
                                 <div className="row header__container--align">
-                                    <div className="col l-3">
-                                        <div className="header__logo-shop">
+                                    <div className="col l-4">
+                                        <Link to={"/"} className="header__logo-shop">
                                             <i className="logo-icon-shop fa-solid fa-cloud">
                                                 <span className="logo-icon__text-shop">f</span>
                                             </i>
-                                            <span className="header_logo--text-shop">FCBlue</span>
-                                        </div>
+                                            <span className="header_logo--text-shop">FCBlue Mall</span>
+                                        </Link>
                                     </div>
 
-                                    <div className="col l-6">
+                                    <div className="col l-5">
                                         <div className="header__container-right">
                                             <div className="header__search">
                                                 <input type="text" className="header__search-input"
@@ -362,10 +367,11 @@ export default function PageShop() {
                                         <h2 className="category-title">Danh mục</h2>
                                     </div>
                                     <ul className="category__container">
-                                        <li className="category__items">Tất cả</li>
-                                        <li className="category__items">Tất cả</li>
-                                        <li className="category__items">Tất cả</li>
-                                        <li className="category__items">Tất cả</li>
+                                        {categories.map((category) => {
+                                            return (
+                                                <li className="category__items">{category.name}</li>
+                                            )
+                                        })}
                                     </ul>
                                 </div>
                             </div>
@@ -378,10 +384,10 @@ export default function PageShop() {
                                     <div className="row">
 
                                         {/*Start show product*/}
-                                        {/*{products.map((product) => {*/}
-                                        {/*    return (*/}
+                                        {products.map((product) => {
+                                            return (
                                                 <>
-                                                    <div className="col l-3">
+                                                    <Link to={"#"} className="col l-3">
                                                         <div className="body__container-product">
                                                             <div className="product__img">
                                                                 <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"
@@ -389,12 +395,12 @@ export default function PageShop() {
                                                             </div>
                                                             <div className="product__content">
                                                                 <h4 className="product__title">
-                                                                    VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                    {product.name}
                                                                 </h4>
-                                                                <span className="product__tag-shop">#</span>
+                                                                <span className="product__tag-shop">#{product.description}</span>
                                                                 <div className="product__price">
                                                                     <p>đ</p>
-                                                                    <span></span>
+                                                                    <span>{product.price}</span>
                                                                 </div>
                                                                 <div className="product__rating">
                                                                     ######
@@ -405,10 +411,10 @@ export default function PageShop() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </Link>
                                                 </>
-                                        {/*    )*/}
-                                        {/*})}*/}
+                                            )
+                                        })}
                                     {/*End show product*/}
                                     </div>
                                 </div>
