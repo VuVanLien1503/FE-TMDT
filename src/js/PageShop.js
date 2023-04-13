@@ -257,7 +257,6 @@ export default function PageShop() {
                                                                 </div>
                                                             </div>
                                                         </li>
-
                                                     </ul>
 
                                                     <div className="has__cart-container-btn">
@@ -373,7 +372,7 @@ export default function PageShop() {
 
                             <div className="col l-10">
                                 <div className="body__action">
-
+                                    <div className="btn">Thêm sản phẩm</div>
                                 </div>
                                 <div className="body__products">
                                     <div className="row">

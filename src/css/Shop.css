@@ -190,6 +190,10 @@
     text-transform: uppercase;
 }
 
+.header__shop-address > i {
+    margin-right: 4px;
+}
+
 .header__shop-address > span,
 .header__shop-address > i {
     color: rgba(255, 255, 255, 0.7);
@@ -260,6 +264,12 @@
 
 .category__items:hover {
     color: var(--thirt-color);
+}
+
+.body__action {
+    padding: 20px;
+    background: #ededed;
+    margin-bottom: 30px;
 }
 
 .body__container-product {
@@ -434,6 +444,11 @@
 .has__cart-delete {
     font-size: 1.3rem;
     color: #777;
+    cursor: pointer;
+}
+
+.has__cart-delete:hover {
+    color: red;
 }
 
 .has__cart-container-btn {
