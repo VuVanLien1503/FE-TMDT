@@ -43,8 +43,6 @@ export default function FormRegister() {
         }
     }, [seconds]);
 
-
-    const [account, setAccount] = useState([])
     const navigate = useNavigate();
     const [status, setStatus] = useState("password")
     const [code, setCode] = useState("123456")
@@ -96,39 +94,62 @@ export default function FormRegister() {
                                             <div className="body__right-container">
                                                 <h1 className="body__right-title">Đăng Ký Tài Khoản</h1>
                                                 <div className="form">
-                                                    <div className="form__field">
-                                                        <div className="row">
-                                                            <div className="col l-6">
-                                                                <div className="form__field-container">
-                                                                    <div className="form__field-items">
-                                                                        <Field name={'phone'} className="input--no-wrap"
-                                                                               type="text"
-                                                                               placeholder="Số điện thoại(*)"/>
-                                                                    </div>
-                                                                    <div className={'error__message'}><ErrorMessage
-                                                                        name={'phone'}/></div>
-                                                                </div>
-                                                            </div>
+                                                    {/*<div className="form__field">*/}
+                                                    {/*    <div className="row">*/}
+                                                    {/*        <div className="col l-6">*/}
+                                                    {/*            <div className="form__field-container">*/}
+                                                    {/*                <div className="form__field-items">*/}
+                                                    {/*                    <Field name={'phone'} className="input--no-wrap"*/}
+                                                    {/*                           type="text"*/}
+                                                    {/*                           placeholder="Số điện thoại(*)"/>*/}
+                                                    {/*                </div>*/}
+                                                    {/*                <div className={'error__message'}><ErrorMessage name={'phone'}/></div>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        </div>*/}
 
-                                                            <div className="col l-6">
-                                                                <div className="form__field-container">
-                                                                    <div className="form__field-items">
-                                                                        <Field name={'password'} id="password"
-                                                                               className="input--no-wrap"
-                                                                               type={status} placeholder="Mật khẩu(*)"/>
-                                                                        <div id="event"
-                                                                             className="form__field-items-icon"
-                                                                             onClick={setStatusPassword}>
-                                                                            <i id="eye-open"
-                                                                               className="fa-solid fa-eye"></i>
-                                                                            <i id="eye-close"
-                                                                               className="fa-solid fa-eye-slash"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className={'error__message'}><ErrorMessage
-                                                                        name={'password'}/></div>
+                                                    {/*        <div className="col l-6">*/}
+                                                    {/*            <div className="form__field-container">*/}
+                                                    {/*                <div className="form__field-items">*/}
+                                                    {/*                    <Field name={'password'} id="password"*/}
+                                                    {/*                           className="input--no-wrap"*/}
+                                                    {/*                           type={status} placeholder="Mật khẩu(*)"/>*/}
+                                                    {/*                    <div id="event"*/}
+                                                    {/*                         className="form__field-items-icon"*/}
+                                                    {/*                         onClick={setStatusPassword}>*/}
+                                                    {/*                        <i id="eye-open"*/}
+                                                    {/*                           className="fa-solid fa-eye"></i>*/}
+                                                    {/*                        <i id="eye-close"*/}
+                                                    {/*                           className="fa-solid fa-eye-slash"></i>*/}
+                                                    {/*                    </div>*/}
+                                                    {/*                </div>*/}
+                                                    {/*                <div className={'error__message'}><ErrorMessage*/}
+                                                    {/*                    name={'password'}/></div>*/}
+                                                    {/*            </div>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </div>*/}
+                                                    {/*</div>*/}
+                                                    <div className="form__field">
+                                                        <div className="form__field-container">
+                                                            <Field name={'phone'} type="text" placeholder="Số điện thoại(*)"/>
+                                                        </div>
+                                                        <div className={'error__message'}><ErrorMessage name={'phone'}/></div>
+                                                    </div>
+                                                    <div className="form__field">
+                                                        <div className="form__field-container">
+                                                            <div className="form__field-items">
+                                                                <Field name={'password'} id="password"
+                                                                       type={status} placeholder="Mật khẩu(*)"/>
+                                                                <div id="event"
+                                                                     className="form__field-items-icon"
+                                                                     onClick={setStatusPassword}>
+                                                                    <i id="eye-open"
+                                                                       className="fa-solid fa-eye"></i>
+                                                                    <i id="eye-close"
+                                                                       className="fa-solid fa-eye-slash"></i>
                                                                 </div>
                                                             </div>
+                                                            <div className={'error__message'}><ErrorMessage
+                                                                name={'password'}/></div>
                                                         </div>
                                                     </div>
 
@@ -204,9 +225,9 @@ export default function FormRegister() {
                     <div id="modal">
                         <div className="modal__background" onClick={closeModal}></div>
                         <div className="modal__container">
-            <span className="modal__close" onClick={closeModal}>
-                <i className="modal__close-icon fa-solid fa-xmark"></i>
-            </span>
+                        <span className="modal__close" onClick={closeModal}>
+                            <i className="modal__close-icon fa-solid fa-xmark"></i>
+                        </span>
                             <h1 className="modal__container-title">Nhập mã xác nhận </h1>
 
                             <div className="modal__container-input">
@@ -216,12 +237,12 @@ export default function FormRegister() {
                                        }}/>
 
                             </div>
-                            <div>
-                                <h1 style={{color: "red"}}>
+                            <div style={{marginTop:20,marginLeft:170}}>
+                                <h2 style={{color: "red"}}>
                                     {minutes}:{remainingSeconds < 10 ? "0" : ""}{remainingSeconds}
-                                </h1>
+                                </h2>
                             </div>
-                            <div className="modal__container-desc">
+                            <div className="modal__container-desc" style={{marginTop:10}}>
                                 <span>Mã xác nhận đã được gửi vào mail của bạn. Vui lòng kiểm tra mail để lấy mã!</span>
                             </div>
                             <button type={"submit"} className="btn">Xác nhận</button>
@@ -279,29 +300,9 @@ export default function FormRegister() {
     }
 
     function Save(value) {
-
-        console.log(value)
-
-        setAccount({
-            role: {
-                id: role
-            },
-            users: {
-                phone: value.phone,
-                password: value.password,
-                name: value.name,
-                email: value.email,
-                address: value.address
-            }
-        })
-        console.log(account)
-        console.log("role:" + role)
-        console.log("code:" + code)
-        console.log("input:" + codeInput)
-
         if (code == codeInput) {
             if (seconds !== 0) {
-                axios.post(`http://localhost:8080/accounts/save`, account).then((response) => {
+                axios.post(`http://localhost:8080/accounts/save`, value).then((response) => {
                     document.getElementById("inputCode").value = ""
                     navigate('/login')
                 })
