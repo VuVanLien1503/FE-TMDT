@@ -13,10 +13,10 @@ export default function FormLogin() {
     const [text, setText] = useState("");
     const [user, setUser] = useState([])
     const [userInput, setUserInput] = useState([])
-    const [shop,setShop]=useState({});
-    const [nameShop,setNameShop]=useState("")
-    const [description,setDescription]=useState("")
-    const [account,setAccount]=useState([])
+    const [shop, setShop] = useState({});
+    const [nameShop, setNameShop] = useState("")
+    const [description, setDescription] = useState("")
+    const [account, setAccount] = useState([])
 
     const navigate = useNavigate()
     const [status, setStatus] = useState("password")
@@ -138,29 +138,29 @@ export default function FormLogin() {
     function sendData(values) {
         console.log(values)
         axios.post(`http://localhost:8080/accounts/login`, values).then((response) => {
-            setUser(response.data.account.users)
-            setAccount(response.data.account)
-            console.log(response.data.account)
+            console.log(response.data)
+            if (response.data.account !== null){
+                setUser(response.data.account.users)
+                setAccount(response.data.account)
+            }
             setText(response.data.text)
-            console.log(response.data.text)
             if (response.data.text === "Đăng Nhập Thành Công") {
-                    switch (response.data.account.role.id){
-                        case 1:
-                            alert("ADMIN")
-                            navigate("/")
-                            break
-                        case 2:
-                            if (response.data.shop){
-                                alert(response.data.shop.name)
-                                navigate(`/shop/${response.data.account.id}`)
-                            }else {
-                                navigate(`/createShop/${response.data.account.id}`)
-                            }
-                            break
-                        case 3:
-                            alert("User")
-                            navigate(`/`)
-                    }
+                switch (response.data.account.role.id) {
+                    case 1:
+                        alert("ADMIN")
+                        navigate("/")
+                        break
+                    case 2:
+                        if (response.data.shop) {
+                            navigate(`/shop/${response.data.account.id}`)
+                        } else {
+                            navigate(`/createShop/${response.data.account.id}`)
+                        }
+                        break
+                    case 3:
+                        alert("User")
+                        navigate(`/`)
+                }
                 alert(response.data.text)
 
             } else {

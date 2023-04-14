@@ -4,6 +4,7 @@ import FormRegister from "./js/FormRegister";
 import FormLogin from "./js/FormLogin";
 import PageShop from "./js/PageShop";
 import CreateShop from "./js/CreateShop";
+import PageHome from "./js/PageHome";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Route path={"/login"} element={<FormLogin/>}/>
                 <Route path={"/shop/:id"} element={<PageShop/>}/>
                 <Route path={"/createShop/:id"} element={<CreateShop/>}/>
+                <Route path={"/"} element={<PageHome/>}/>
             </Routes>
         </>
     );
