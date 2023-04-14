@@ -11,6 +11,7 @@
 
 .footer__top {
     padding: 40px 0;
+    background: var(--white-color);
 }
 
 .footer__top-items--algin {
