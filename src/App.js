@@ -3,8 +3,6 @@ import {Link, Route, Routes} from "react-router-dom";
 import FormRegister from "./js/FormRegister";
 import FormLogin from "./js/FormLogin";
 import PageShop from "./js/PageShop";
-import CreateShop from "./js/CreateShop";
-import Home from "./js/Home";
 
 function App() {
     return (
