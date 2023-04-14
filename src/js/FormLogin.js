@@ -152,15 +152,14 @@ export default function FormLogin() {
                         case 2:
                             if (response.data.shop){
                                 alert(response.data.shop.name)
-                                navigate("/")
+                                navigate(`/shop/${response.data.account.id}`)
                             }else {
                                 navigate(`/createShop/${response.data.account.id}`)
                             }
                             break
                         case 3:
                             alert("User")
-                            navigate("/")
-                            break
+                            navigate(`/`)
                     }
                 alert(response.data.text)
 

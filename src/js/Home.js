@@ -3,31 +3,19 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import FooterForm from "./FooterForm";
-export default function PageShop() {
-    const [shop, setShop] = useState([]);
+export default function Home() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([])
-    const [user,setUser]=useState([])
-    const [totalElements,setTotalElements]=useState(0)
     const param =useParams()
-    const [check,setCheck]=useState(false)
-    console.log(param.id)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/products/shop/${param.id}` ).then((response) => {
+        axios.get(`http://localhost:8081/home/products/shop/${param.id}` ).then((response) => {
             setProducts(response.data.content)
-            setTotalElements(response.data.totalElements)
+            console.log(response.data.content)
         })
 
-        axios.get(`http://localhost:8080/home/shops/${param.id}/categories`).then((response) => {
+        axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-        })
-        axios.get(`http://localhost:8080/accounts/${param.id}`).then((response) => {
-            setUser(response.data)
-        })
-        axios.get(`http://localhost:8080/home/shops/${param.id}`).then((response) => {
-            setShop(response.data)
-            console.log(response.data)
         })
     }, [])
 
@@ -56,10 +44,8 @@ export default function PageShop() {
                                             <i className="header__nav-item-icon fa-solid fa-circle-question"></i>
                                             Hỗ trợ
                                         </li>
-                                        <li className="header__nav-items"><Link to={"/login"}>
-                                            Xin Chào {user.name}....!
-                                            <i className="header__nav-icon-down fa-solid fa-caret-down"></i>
-                                        </Link></li>
+                                        <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>
+                                        <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -80,9 +66,9 @@ export default function PageShop() {
                                             <div className="header__search">
                                                 <input type="text" className="header__search-input"
                                                        placeholder="Tìm kiếm trong shop"/>
-                                                    <div className="header__search-btn">
-                                                        <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
-                                                    </div>
+                                                <div className="header__search-btn">
+                                                    <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -300,24 +286,24 @@ export default function PageShop() {
                                             <img className="header__shop-left-img"
                                                  src="/img/logo/62901191827247fbb12c20d02d8bc1f6_tn.jfif"
                                                  alt=""/>
-                                                <div className="header__shop-left-content">
-                                                    <div className="row">
-                                                        <div className="header__shop-img col l-4">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"
-                                                                 alt=""/>
+                                            <div className="header__shop-left-content">
+                                                <div className="row">
+                                                    <div className="header__shop-img col l-4">
+                                                        <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"
+                                                             alt=""/>
+                                                    </div>
+                                                    <div className="header__shop-info col l-8">
+                                                        <div className="header__shop-tittle">
+                                                            SAMSUNG OFFICIAL store
                                                         </div>
-                                                        <div className="header__shop-info col l-8">
-                                                            <div className="header__shop-tittle">
-                                                                SAMSUNG OFFICIAL store
-                                                            </div>
 
-                                                            <div className="header__shop-address">
-                                                                <i className="fa-solid fa-location-dot"></i>
-                                                                <span className="header__shop-text">Thái Nguyên</span>
-                                                            </div>
+                                                        <div className="header__shop-address">
+                                                            <i className="fa-solid fa-location-dot"></i>
+                                                            <span className="header__shop-text">Thái Nguyên</span>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -327,19 +313,19 @@ export default function PageShop() {
                                                 <div className="col l-6">
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
-                                                            <i className="info__icon fa-solid fa-store"></i>
-                                                           Tên cửa hàng: <span className="info__detail">{shop.name}</span>
+                                                            <i className="info__icon fa-solid fa-user"></i>
+                                                            Chủ shop: <span className="info__detail">Mạnh Thắng</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-solid fa-phone"></i>
                                                             Số điện thoại: <span
-                                                            className="info__detail">{user.phone}</span>
+                                                            className="info__detail">0329479090</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-solid fa-envelope"></i>
-                                                            Email: <span className="info__detail">{user.email}</span>
+                                                            Email: <span className="info__detail">0329479090</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -347,18 +333,16 @@ export default function PageShop() {
                                                 <div className="col l-6">
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
-
-                                                          Số lượng sản phẩm: <span className="info__detail">{totalElements}</span>
+                                                            <i className="info__icon fa-solid fa-store"></i>
+                                                            Sản phẩm: <span className="info__detail">62</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-location-dot"></i>
-                                                            Địa chỉ: <span className="info__detail">{user.address}</span>
+                                                            Địa chỉ: <span className="info__detail">62</span>
                                                         </li>
 
                                                         <li className="header__right-info">
-                                                            <i className="info__icon fa-sharp fa-solid fa-bookmark"></i>
-                                                            Mô tả: <span className="info__detail">{shop.description}</span>
 
                                                         </li>
                                                     </ul>
@@ -420,11 +404,11 @@ export default function PageShop() {
                                                                     <span>{product.price}</span>
                                                                 </div>
                                                                 <div className="product__rating">
-                                                                    <h3>{product.category.name}</h3>
+                                                                    ######
                                                                 </div>
                                                                 <div className="product__address">
                                                                     <i className="fa-solid fa-location-dot"></i>
-                                                                    <span>{user.address}</span>
+                                                                    <span>Thái Nguyên</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -432,7 +416,7 @@ export default function PageShop() {
                                                 </>
                                             )
                                         })}
-                                    {/*End show product*/}
+                                        {/*End show product*/}
                                     </div>
                                 </div>
                             </div>
@@ -443,7 +427,7 @@ export default function PageShop() {
 
                 {/*Start Footer*/}
                 <FooterForm/>
-            {/*End Footer*/}
+                {/*End Footer*/}
             </div>
         </>
     )

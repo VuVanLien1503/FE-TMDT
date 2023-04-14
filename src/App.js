@@ -4,6 +4,7 @@ import FormRegister from "./js/FormRegister";
 import FormLogin from "./js/FormLogin";
 import PageShop from "./js/PageShop";
 import CreateShop from "./js/CreateShop";
+import Home from "./js/Home";
 
 function App() {
     return (
@@ -15,8 +16,9 @@ function App() {
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
-                <Route path={"/"} element={<PageShop/>}/>
+                <Route path={"/shop/:id"} element={<PageShop/>}/>
                 <Route path={"/createShop/:id"} element={<CreateShop/>}/>
+                <Route path={"/"}element={<Home/>}/>
             </Routes>
         </>
     );

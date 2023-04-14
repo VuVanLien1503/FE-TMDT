@@ -68,9 +68,9 @@ export default function CreateShop() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="container__btn">
+                                                    <div className="container__btn" style={{marginLeft:100,marginBottom:30}}>
                                                         <div className="row">
-                                                            <div className="col l-6">
+                                                            <div className="col l-8">
                                                                 <div className="container__btn">
                                                                     <button type={"submit"} className="btn">Xác Nhận
                                                                     </button>
