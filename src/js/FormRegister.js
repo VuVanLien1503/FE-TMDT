@@ -14,6 +14,7 @@ export default function FormRegister() {
     const [seconds, setSeconds] = useState(180);
     const initialSecondsRef = useRef(180);
     const countdownIntervalRef = useRef(null);
+    const [account,setAccount]=useState([])
 
     useEffect(() => {
         if (isModalOpen) {
@@ -75,7 +76,8 @@ export default function FormRegister() {
                     }
                 }
                 onSubmit={(values) => {
-                    Save(values)
+                    console.log(values)
+                    save(values)
                 }}
                 validationSchema={Validation}>
 
@@ -94,40 +96,6 @@ export default function FormRegister() {
                                             <div className="body__right-container">
                                                 <h1 className="body__right-title">Đăng Ký Tài Khoản</h1>
                                                 <div className="form">
-                                                    {/*<div className="form__field">*/}
-                                                    {/*    <div className="row">*/}
-                                                    {/*        <div className="col l-6">*/}
-                                                    {/*            <div className="form__field-container">*/}
-                                                    {/*                <div className="form__field-items">*/}
-                                                    {/*                    <Field name={'phone'} className="input--no-wrap"*/}
-                                                    {/*                           type="text"*/}
-                                                    {/*                           placeholder="Số điện thoại(*)"/>*/}
-                                                    {/*                </div>*/}
-                                                    {/*                <div className={'error__message'}><ErrorMessage name={'phone'}/></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-
-                                                    {/*        <div className="col l-6">*/}
-                                                    {/*            <div className="form__field-container">*/}
-                                                    {/*                <div className="form__field-items">*/}
-                                                    {/*                    <Field name={'password'} id="password"*/}
-                                                    {/*                           className="input--no-wrap"*/}
-                                                    {/*                           type={status} placeholder="Mật khẩu(*)"/>*/}
-                                                    {/*                    <div id="event"*/}
-                                                    {/*                         className="form__field-items-icon"*/}
-                                                    {/*                         onClick={setStatusPassword}>*/}
-                                                    {/*                        <i id="eye-open"*/}
-                                                    {/*                           className="fa-solid fa-eye"></i>*/}
-                                                    {/*                        <i id="eye-close"*/}
-                                                    {/*                           className="fa-solid fa-eye-slash"></i>*/}
-                                                    {/*                    </div>*/}
-                                                    {/*                </div>*/}
-                                                    {/*                <div className={'error__message'}><ErrorMessage*/}
-                                                    {/*                    name={'password'}/></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*</div>*/}
                                                     <div className="form__field">
                                                         <div className="form__field-container">
                                                             <Field name={'phone'} type="text" placeholder="Số điện thoại(*)"/>
@@ -272,6 +240,7 @@ export default function FormRegister() {
     function OpenModal1(value) {
         axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
+            console.log(response.data)
             if (response.data === "emailError") {
                 alert("Email Đã Tồn Tại")
             } else {
@@ -299,10 +268,25 @@ export default function FormRegister() {
 
     }
 
-    function Save(value) {
+    function save(value) {
+        setAccount({
+            role: {
+                id: role
+            },
+            users: {
+                phone: value.phone,
+                password: value.password,
+                name: value.name,
+                email: value.email,
+                address: value.address
+            }
+        })
+
         if (code == codeInput) {
+            console.log(account)
             if (seconds !== 0) {
-                axios.post(`http://localhost:8080/accounts/save`, value).then((response) => {
+                alert("done")
+                axios.post(`http://localhost:8080/accounts/save`, account).then((response) => {
                     document.getElementById("inputCode").value = ""
                     navigate('/login')
                 })

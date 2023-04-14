@@ -3,31 +3,34 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import FooterForm from "./FooterForm";
+import {ErrorMessage, Field} from "formik";
+
 export default function PageShop() {
     const [shop, setShop] = useState([]);
     const [products, setProducts] = useState([]);
+    const [categoryShop, setCategoryShop] = useState([])
     const [categories, setCategories] = useState([])
-    const [user,setUser]=useState([])
-    const [totalElements,setTotalElements]=useState(0)
-    const param =useParams()
-    const [check,setCheck]=useState(false)
-    console.log(param.id)
+    const [user, setUser] = useState([])
+    const [totalElements, setTotalElements] = useState(0)
+    const param = useParams()
+    const [check, setCheck] = useState(false)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/products/shop/${param.id}` ).then((response) => {
+        axios.get(`http://localhost:8080/home/products/shop/${param.id}`).then((response) => {
             setProducts(response.data.content)
             setTotalElements(response.data.totalElements)
         })
-
-        axios.get(`http://localhost:8080/home/shops/${param.id}/categories`).then((response) => {
+        axios.get(`http://localhost:8080/home/categories`).then((response) => {
             setCategories(response.data)
+        })
+        axios.get(`http://localhost:8080/home/shops/${param.id}/categories`).then((response) => {
+            setCategoryShop(response.data)
         })
         axios.get(`http://localhost:8080/accounts/${param.id}`).then((response) => {
             setUser(response.data)
         })
         axios.get(`http://localhost:8080/home/shops/${param.id}`).then((response) => {
             setShop(response.data)
-            console.log(response.data)
         })
     }, [])
 
@@ -80,9 +83,9 @@ export default function PageShop() {
                                             <div className="header__search">
                                                 <input type="text" className="header__search-input"
                                                        placeholder="Tìm kiếm trong shop"/>
-                                                    <div className="header__search-btn">
-                                                        <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
-                                                    </div>
+                                                <div className="header__search-btn">
+                                                    <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -97,19 +100,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -120,19 +131,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -143,19 +162,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -166,19 +193,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -189,19 +224,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -212,19 +255,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -235,19 +286,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -258,19 +317,27 @@ export default function PageShop() {
                                                         <li className="has__cart-items">
                                                             <div className="row">
                                                                 <div className="col l-1 has__cart-img">
-                                                                    <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                    <img
+                                                                        src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                                                 </div>
                                                                 <div className="col l-6">
                                                                     <div className="has__cart-head">
-                                                                        <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                        <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                        <div className="has__cart-head-title">VGA ASUS
+                                                                            Phoenix GeForce RTX 3050 8GB GDDR6
+                                                                            aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                        </div>
+                                                                        <div className="has__cart-head-desc">Loại hàng:
+                                                                            Máy tính
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col l-5">
                                                                     <div className="has__cart-action">
                                                                         <div className="has__cart-calculate">
-                                                                            <div className="has__cart-price">2.000.000</div>
-                                                                            <div className="has__cart-quantity">x 2</div>
+                                                                            <div className="has__cart-price">2.000.000
+                                                                            </div>
+                                                                            <div className="has__cart-quantity">x 2
+                                                                            </div>
                                                                         </div>
                                                                         <div className="has__cart-delete">Xoá</div>
                                                                     </div>
@@ -300,24 +367,24 @@ export default function PageShop() {
                                             <img className="header__shop-left-img"
                                                  src="/img/logo/62901191827247fbb12c20d02d8bc1f6_tn.jfif"
                                                  alt=""/>
-                                                <div className="header__shop-left-content">
-                                                    <div className="row">
-                                                        <div className="header__shop-img col l-4">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"
-                                                                 alt=""/>
+                                            <div className="header__shop-left-content">
+                                                <div className="row">
+                                                    <div className="header__shop-img col l-4">
+                                                        <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"
+                                                             alt=""/>
+                                                    </div>
+                                                    <div className="header__shop-info col l-8">
+                                                        <div className="header__shop-tittle">
+                                                            SAMSUNG OFFICIAL store
                                                         </div>
-                                                        <div className="header__shop-info col l-8">
-                                                            <div className="header__shop-tittle">
-                                                                SAMSUNG OFFICIAL store
-                                                            </div>
 
-                                                            <div className="header__shop-address">
-                                                                <i className="fa-solid fa-location-dot"></i>
-                                                                <span className="header__shop-text">Thái Nguyên</span>
-                                                            </div>
+                                                        <div className="header__shop-address">
+                                                            <i className="fa-solid fa-location-dot"></i>
+                                                            <span className="header__shop-text">Thái Nguyên</span>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -328,7 +395,8 @@ export default function PageShop() {
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-solid fa-store"></i>
-                                                           Tên cửa hàng: <span className="info__detail">{shop.name}</span>
+                                                            Tên cửa hàng: <span
+                                                            className="info__detail">{shop.name}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
@@ -348,17 +416,20 @@ export default function PageShop() {
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
 
-                                                          Số lượng sản phẩm: <span className="info__detail">{totalElements}</span>
+                                                            Số lượng sản phẩm: <span
+                                                            className="info__detail">{totalElements}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-location-dot"></i>
-                                                            Địa chỉ: <span className="info__detail">{user.address}</span>
+                                                            Địa chỉ: <span
+                                                            className="info__detail">{user.address}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-bookmark"></i>
-                                                            Mô tả: <span className="info__detail">{shop.description}</span>
+                                                            Mô tả: <span
+                                                            className="info__detail">{shop.description}</span>
 
                                                         </li>
                                                     </ul>
@@ -384,9 +455,9 @@ export default function PageShop() {
                                         <h2 className="category-title">Danh mục</h2>
                                     </div>
                                     <ul className="category__container">
-                                        {categories.map((category) => {
+                                        {categoryShop.map((category) => {
                                             return (
-                                                <li className="category__items">{category.name}</li>
+                                                <li className="category__items" onClick={()=>showDetail(category.id)}>{category.name}</li>
                                             )
                                         })}
                                     </ul>
@@ -395,7 +466,7 @@ export default function PageShop() {
 
                             <div className="col l-10">
                                 <div className="body__action">
-                                    <div className="btn">Thêm sản phẩm</div>
+                                    <div className="btn" onClick={addProduct}>Thêm sản phẩm</div>
                                 </div>
                                 <div className="body__products">
                                     <div className="row">
@@ -407,14 +478,16 @@ export default function PageShop() {
                                                     <Link to={"#"} className="col l-3">
                                                         <div className="body__container-product">
                                                             <div className="product__img">
-                                                                <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"
-                                                                     alt=""/>
+                                                                <img
+                                                                    src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"
+                                                                    alt=""/>
                                                             </div>
                                                             <div className="product__content">
                                                                 <h4 className="product__title">
                                                                     {product.name}
                                                                 </h4>
-                                                                <span className="product__tag-shop">#{product.description}</span>
+                                                                <span
+                                                                    className="product__tag-shop">#{product.description}</span>
                                                                 <div className="product__price">
                                                                     <p>đ</p>
                                                                     <span>{product.price}</span>
@@ -432,7 +505,7 @@ export default function PageShop() {
                                                 </>
                                             )
                                         })}
-                                    {/*End show product*/}
+                                        {/*End show product*/}
                                     </div>
                                 </div>
                             </div>
@@ -443,8 +516,79 @@ export default function PageShop() {
 
                 {/*Start Footer*/}
                 <FooterForm/>
-            {/*End Footer*/}
+                {/*End Footer*/}
             </div>
+            {/*Start Modal*/}
+            <div id="modal">
+                <div className="modal__background" onClick={closeModal}></div>
+                <div className="modal__container">
+                        <span className="modal__close" onClick={closeModal}>
+                            <i className="modal__close-icon fa-solid fa-xmark"></i>
+                        </span>
+                    <h1 className="modal__container-title" style={{marginLeft: 100}}>CREATE-PRODUCT</h1>
+                    <div className="form__field">
+                        <div className="form__field-container">
+                            <input name={'name'} type="text"
+                                   placeholder="Tên Sản Phẩm(*)"/>
+                        </div>
+                    </div>
+                    <div className="form__field">
+                        <div className="form__field-container">
+                            <input name={'price'} type="text"
+                                   placeholder="Đơn giá sản phẩm(*)"/>
+                        </div>
+                    </div>
+                    <div className="form__field">
+                        <div className="form__field-container">
+                            <input name={'quantity'} type="text"
+                                   placeholder="Số lượng sản phẩm(*)"/>
+                        </div>
+                    </div>
+                    <div className="form__field">
+                        <div className="form__field-container">
+                            <input name={'description'} type="text"
+                                   placeholder="Mô tả sản Phẩm(*)"/>
+                        </div>
+                    </div>
+                    <div className="form__field">
+                        <div className="form__field-container">
+                            <input name={'image'} type="text"
+                                   placeholder=" image path(*)"/>
+                        </div>
+                    </div>
+                    <div className="container__btn" style={{marginLeft: 100, marginBottom: 20}}>
+                        <div className="row">
+                            <div className="col l-8">
+                                <div className="container__btn">
+                                    <button onClick={save} className="btn">Xác Nhận
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/*End Modal*/}
         </>
     )
+
+
+    function showDetail(id){
+        alert("detail category " +id)
+    }
+
+    function addProduct() {
+        console.log(categories)
+        document.getElementById("modal").style.display = "flex"
+    }
+
+    function save() {
+        alert("save Product")
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none"
+    }
+
 }
