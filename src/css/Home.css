@@ -1,3 +1,91 @@
+/*Slide Show*/
+.slide {
+    overflow: hidden;
+}
+
+.body__home-slider > div {
+    position: relative;
+}
+
+.body__home-slider > div:hover .react-slideshow-container .nav:last-of-type,
+.body__home-slider > div:hover .react-slideshow-container .nav:first-of-type {
+    display: block;
+}
+
+.react-slideshow-container {
+    position: relative;
+}
+
+.images-wrap {
+    display: flex;
+}
+
+.react-slideshow-container .nav:first-of-type {
+    left: 0;
+    bottom: 37%;
+    display: none;
+    fill: #fff;
+    background: rgba(153, 153, 153, 0.2);
+}
+
+.react-slideshow-container .nav:last-of-type > svg,
+.react-slideshow-container .nav:first-of-type > svg {
+    height: 100%;
+}
+
+.react-slideshow-container .default-nav {
+    height: 58px;
+    background: rgba(255, 255, 255, 0.4);
+    width: 30px;
+    border: none;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.react-slideshow-container .nav {
+    z-index: 10;
+    position: absolute;
+    cursor: pointer;
+}
+
+.react-slideshow-container .nav:last-of-type {
+    right: 0;
+    top: 37%;
+    display: none;
+    fill: #fff;
+    background: rgba(153, 153, 153, 0.2);
+}
+
+.indicators {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+}
+
+.indicators > li {
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+}
+
+button.each-slideshow-indicator {
+    padding: 6px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.each-slideshow-indicator.active {
+    color: #fff;
+    background: var(--fift-color);
+}
+
+/*  */
 .main-home {
     background: #F5F5F5;
 }

@@ -4,6 +4,7 @@ import FooterForm from "./FooterForm";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Slide} from "react-slideshow-image";
 export default function PageHome() {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
@@ -26,10 +27,28 @@ export default function PageHome() {
                     <div className="body__home-top">
                         <div className="grid wide">
                             <div className="row sm-gutter">
-                                <div className="col l-8">
-                                    <div className="body__home-top-img">
-                                        <img src="/img/logo/vn-50009109-d842090bb8a2e1d44cf9652604d8e300_xxhdpi.jfif"/>
-                                    </div>
+                                <div className="col l-8 body__home-slider">
+                                    <Slide autoplay={true} indicators={true}>
+                                        <div className="body__home-top-img">
+                                            <img src="/img/logo/vn-50009109-d842090bb8a2e1d44cf9652604d8e300_xxhdpi.jfif"/>
+                                        </div>
+
+                                        <div className="body__home-top-img">
+                                            <img src="/img/logo/vn-50009109-870d0ac705aede51ebba573147345f62_xxhdpi.jfif"/>
+                                        </div>
+
+                                        <div className="body__home-top-img">
+                                            <img src="/img/logo/vn-50009109-ce4512e83a9d299b5a43f612f719a443_xxhdpi.jfif"/>
+                                        </div>
+
+                                        <div className="body__home-top-img">
+                                            <img src="/img/logo/vn-50009109-d94c4b91414ec0e0a53fad6d6e9ca77f_xxhdpi.jfif"/>
+                                        </div>
+
+                                        <div className="body__home-top-img">
+                                            <img src="/img/logo/vn-50009109-fa79715264f5c973648d8096a8aa9773_xxhdpi.jfif"/>
+                                        </div>
+                                    </Slide>
                                 </div>
 
                                 <div className="col l-4">
@@ -38,7 +57,7 @@ export default function PageHome() {
                                     </div>
 
                                     <div className="body__home-top-right-img">
-                                        <img src="/img/logo/vn-50009109-13ec323a46f0cec8bac22be085d3d674_xhdpi.jfif"/>
+                                        <img src="/img/logo/vn-50009109-a57459766d7ee95c6d71da0db9ff2e74_xhdpi.jfif"/>
                                     </div>
                                 </div>
                             </div>
