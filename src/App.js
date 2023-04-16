@@ -6,7 +6,6 @@ import PageShop from "./js/PageShop";
 import CreateShop from "./js/CreateShop";
 import PageHome from "./js/PageHome";
 
-
 function App() {
     return (
         <>
