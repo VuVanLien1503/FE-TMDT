@@ -238,7 +238,7 @@ export default function FormRegister() {
 
     // Mở modal nhập mã xác nhận
     function OpenModal1(value) {
-        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
+        axios.post(`http://localhost:8081/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
             console.log(response.data)
             if (response.data === "emailError") {
@@ -254,7 +254,7 @@ export default function FormRegister() {
     }
 
     function OpenModal2(value) {
-        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
+        axios.post(`http://localhost:8081/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
             if (response.data === "emailError") {
                 alert("Email Đã Tồn Tại")
@@ -286,7 +286,7 @@ export default function FormRegister() {
             console.log(account)
             if (seconds !== 0) {
                 alert("done")
-                axios.post(`http://localhost:8080/accounts/save`, account).then((response) => {
+                axios.post(`http://localhost:8081/accounts/save`, account).then((response) => {
                     document.getElementById("inputCode").value = ""
                     navigate('/login')
                 })

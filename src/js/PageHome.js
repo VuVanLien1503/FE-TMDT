@@ -10,11 +10,11 @@ export default function PageHome() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/categories`).then((response) => {
+        axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
         })
 
-        axios.get(`http://localhost:8080/home/products`).then((response) => {
+        axios.get(`http://localhost:8081/home/products`).then((response) => {
             setProducts(response.data.content)
         })
     }, [])
