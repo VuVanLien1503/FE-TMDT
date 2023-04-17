@@ -27,15 +27,15 @@ export default function PageShop() {
             .required('Vui lòng nhập giá sản phẩm')
             .positive('Giá sản phẩm phải lớn hơn 0'),
 
-        category: Yup.string()
+        category: Yup.object()
             .required('Vui lòng chọn danh mục sản phẩm'),
     });
-    const [imagePath, setFieldValue] = useState([])
     // validation close
 
 
     const [progressPercent, setProgressPercent] = useState(0)
     const [image, setImage] = useState("")
+    const [imagePath, setImagePath] = useState([])
 
 
     const [shop, setShop] = useState([]);
@@ -567,12 +567,15 @@ export default function PageShop() {
                             quantity: '',
                             price: '',
                             description: '',
-                            category: '',
+                            imagePath:'',
+                            category:{
+                                id:''
+                            }
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
                             console.log(values);
-                            console.log(imagePath)
+                            save(values)
                         }}
                     >
                         {(formik) => (
@@ -626,15 +629,16 @@ export default function PageShop() {
                                         <ErrorMessage name="category"/>
                                     </div>
                                     <div>
-                                        <Field id="category" name="category" as="select" style={{width: 400, height: 35}}>
-                                            <option value={''}>Vui lòng chọn</option>
+                                        <Field id="category" name="category.id" as="select"
+                                               style={{width: 400, height: 35}}>
+                                            <option value={''}>Vui lòng chọn category</option>
                                             {categories.map((item, id) => (
                                                 <option key={id} value={item.id}>{item.name}</option>
                                             ))}
                                         </Field>
                                     </div>
                                 </div>
-                                <div style={{marginTop:10,marginBottom:10}}>
+                                <div style={{marginTop: 10, marginBottom: 10}}>
                                     <h3>IMAGE</h3>
                                 </div>
                                 <div className="form__field">
@@ -642,18 +646,7 @@ export default function PageShop() {
                                         name="image"
                                         type="file"
                                         multiple
-                                        onChange={(event) => {
-                                            const files = event.currentTarget.files;
-                                            const images = [];
-                                            for (let i = 0; i < files.length; i++) {
-                                                images.push(files[i]);
-                                            }
-                                            setFieldValue(images);
-                                            console.log(images)
-                                            console.log(imagePath)
-                                            event.currentTarget.value = null;
-                                        }}
-                                    />
+                                        onChange={(e) => uploadFile(e)}/>
                                 </div>
                                 <div>
                                     {
@@ -672,7 +665,7 @@ export default function PageShop() {
                                         <div className="col l-8">
                                             <div className="container__btn">
                                             </div>
-                                            <button onClick={save} className={'btn btn-primary'}
+                                            <button type={"submit"} className={'btn btn-primary'}
                                                     aria-disabled={check}>Xác Nhận
                                             </button>
 
@@ -697,12 +690,16 @@ export default function PageShop() {
     }
 
     function addProduct() {
-        console.log(categories)
         document.getElementById("modal").style.display = "flex"
     }
 
-    function save() {
-        alert("save Product")
+    function save(values) {
+        values.imagePath=imagePath
+        axios.get(` http://localhost:8080/home/products/shop/${param.id}`).then((response) => {
+                alert(" Tạo mới thành công")
+        })
+
+
     }
 
     function closeModal() {
@@ -710,29 +707,38 @@ export default function PageShop() {
     }
 
     function uploadFile(e) {
+        let a=[]
         setCheck(true)
-        if (e.target.files[0]) {
-            const time = new Date().getTime()
-            const storageRef = ref(storage, `image/${time}_${e.target.files[0].name}`);
-            const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+        const files = e.currentTarget.files;
+        console.log(files)
+        for (let i = 0; i < files.length; i++) {
+            if (e.target.files) {
+                const time = new Date().getTime()
+                const storageRef = ref(storage, `image/${time}_${e.target.files[i].name}`);
+                const uploadTask = uploadBytesResumable(storageRef, e.target.files[i]);
 
-            uploadTask.on("state_changed",
-                (snapshot) => {
-                    const progress =
-                        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    setProgressPercent(progress);
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setImage(downloadURL)
-                        setCheck(false)
-                    });
-                }
-            );
+                uploadTask.on("state_changed",
+                    (snapshot) => {
+                        const progress =
+                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        setProgressPercent(progress);
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            a=[downloadURL,...a]
+                            setImage(downloadURL)
+                            setImagePath([...a])
+                            setCheck(false)
+                        });
+                    }
+                );
+            }
         }
+        e.currentTarget.value = null;
+
     }
 
 

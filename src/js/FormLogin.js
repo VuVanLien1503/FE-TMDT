@@ -158,8 +158,12 @@ export default function FormLogin() {
                         }
                         break
                     case 3:
-                        alert("User")
-                        navigate(`/`)
+                        if (!check()){
+                            navigate(`/`)
+                        }else {
+                            createCart(account.id)
+                        }
+                        break
                 }
                 alert(response.data.text)
 
@@ -169,6 +173,16 @@ export default function FormLogin() {
 
         })
 
+    }
+    function createCart(id) {
+        axios.post(`http://localhost:8081/home/carts/${id}`).then((response)=>{
+            navigate("/")
+        })
+    }
+    function check(id){
+        axios.get(`http://localhost:8081/home/carts/${id}`).then((response)=>{
+            return response.data;
+        })
     }
 
     function backHome() {
