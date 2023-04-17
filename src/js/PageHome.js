@@ -151,9 +151,35 @@ export default function PageHome() {
                                     })}
                                     {/**/}
                                 </div>
+
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn">
+                                            <button className="btn btn-prev">
+                                                <i className="fa-solid fa-chevron-left"></i>
+                                            </button>
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page"> 1 </li>
+                                            <li className="btn btn-page"> 2 </li>
+                                            <li className="btn btn-page"> 3 </li>
+                                            <li className="btn btn-page"> 4 </li>
+                                            <li className="btn btn-page"> 5 </li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn">
+                                            <button className="btn btn-next">
+                                                <i className="fa-solid fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
                 <FooterForm/>

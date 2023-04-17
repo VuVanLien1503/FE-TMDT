@@ -360,6 +360,7 @@
 
 /*Cart*/
 .header__cart-container {
+    z-index: 1;
     position: absolute;
     background: var(--white-color);
     top: 180%;
@@ -390,7 +391,7 @@
 
 .has__cart-container {
     overflow: auto;
-    height: 290px;
+    max-height: 290px;
 }
 
 .has__cart-items {

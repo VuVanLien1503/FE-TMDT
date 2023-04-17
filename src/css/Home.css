@@ -90,6 +90,10 @@ button.each-slideshow-indicator {
     background: #F5F5F5;
 }
 
+#body__home {
+    padding-bottom: 44px;
+}
+
 .body__home-top {
     padding-top: 30px;
     padding-bottom: 20px;
@@ -159,4 +163,59 @@ button.each-slideshow-indicator {
     font-weight: 100;
     text-align: center;
     color: #888;
+}
+
+.body__home-nav-page {
+    display: flex;
+}
+
+.nav-page__container {
+    display: flex;
+    margin: auto;
+}
+
+.nav-page__container-number-page {
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.btn.btn-next,
+.btn.btn-prev {
+    background: var(--white-color);
+    border: 1px solid var(--fift-color);
+}
+
+.btn.btn-next:hover,
+.btn.btn-prev:hover {
+    border: 1px solid #ee4c29;
+}
+
+.btn.btn-next > i,
+.btn.btn-prev > i {
+    color: var(--four-color);
+}
+
+.btn.btn-next:hover > i,
+.btn.btn-prev:hover > i {
+    color: #ee4c29;
+}
+
+.btn.btn-page {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white-color);
+    color: var(--four-color);
+    border: 1px solid var(--fift-color);
+}
+
+.btn.btn-page:hover {
+    color: #ee4c29;
+    border: 1px solid #ee4c29;
+}
+
+.btn-page:last-child {
+    margin-right: 0;
 }
