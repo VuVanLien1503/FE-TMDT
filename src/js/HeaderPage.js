@@ -1,8 +1,25 @@
-import {Link} from "react-router-dom";
-import React from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import PageHome from "./PageHome";
 
 export default function HeaderPage(props) {
     console.log(props)
+    let idAccount = localStorage.getItem("idAccount")
+    console.log(idAccount)
+    const [user, setUser] = useState([])
+    const [nameLogin, setNameLogin] = useState("")
+    const navigate = useNavigate()
+    useEffect(() => {
+
+        axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
+            setUser(response.data)
+            setNameLogin(response.data.name)
+
+        })
+    }, [])
+    console.log(user)
+
     return (
         <>
             <div className="header__primary">
@@ -25,8 +42,10 @@ export default function HeaderPage(props) {
                                     <i className="header__nav-item-icon fa-solid fa-circle-question"></i>
                                     Hỗ trợ
                                 </li>
-                                <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>
-                                <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>
+                                {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
+                                {nameLogin!==''&&   <li className="header__nav-items"><button onClick={logout}>Đăng xuất</button></li>}
+                                {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
+                                {nameLogin!==''&&  <li className="header__nav-items"><Link to={"/login"}>{nameLogin}</Link></li>}
                             </ul>
                         </div>
                     </div>
@@ -299,4 +318,8 @@ export default function HeaderPage(props) {
             </div>
         </>
     )
+    function logout() {
+        localStorage.setItem("idAccount","")
+        navigate("/login")
+    }
 }
