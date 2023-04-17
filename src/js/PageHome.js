@@ -1,19 +1,26 @@
 import '../css/Home.css'
 import HeaderPage from "./HeaderPage";
 import FooterForm from "./FooterForm";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Slide} from "react-slideshow-image";
 export default function PageHome() {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
+    const [user, setUser] = useState([])
+    const param = useParams()
+
+
 
     useEffect(() => {
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
         })
-
+        axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
+            setUser(response.data)
+            console.log(response.data)
+        })
         axios.get(`http://localhost:8081/home/products`).then((response) => {
             setProducts(response.data.content)
         })
@@ -21,8 +28,7 @@ export default function PageHome() {
     return (
         <>
             <div id="main" className="main-home">
-                <HeaderPage/>
-
+                <HeaderPage user={user}/>
                 <div id="body__home">
                     <div className="body__home-top">
                         <div className="grid wide">
@@ -90,35 +96,7 @@ export default function PageHome() {
                                 </div>
 
                                 <div className="row">
-
-                                    {/*Phần hiện sản phẩm*/}
-                                    <div className="col l-2">
-                                        <Link to={"#"} className="body__container-product">
-                                            <div className="product__img">
-                                                <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"
-                                                     alt=""/>
-                                            </div>
-                                            <div className="product__content">
-                                                <h4 className="product__title">
-                                                    SAMSUNG GALAXY123333333333333 2333333333333333333333333333333333333333333333
-                                                </h4>
-                                                <span className="product__tag-shop">#Hàng bán chạy</span>
-                                                <div className="product__price">
-                                                    <p>đ</p>
-                                                    <span>10.000.000</span>
-                                                </div>
-                                                <div className="product__rating">
-                                                    ######
-                                                </div>
-                                                <div className="product__address">
-                                                    <i className="fa-solid fa-location-dot"></i>
-                                                    <span>Thái Nguyên</span>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-
-                                    {products.map((product) => {
+                                    {products!=null&&products.map((product) => {
                                         return (
                                             <>
                                                 <div className="col l-2">

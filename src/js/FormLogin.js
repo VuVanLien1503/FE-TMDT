@@ -158,11 +158,7 @@ export default function FormLogin() {
                         }
                         break
                     case 3:
-                        if (!check()){
-                            navigate(`/`)
-                        }else {
-                            createCart(account.id)
-                        }
+                        createCart(response.data.account.id)
                         break
                 }
                 alert(response.data.text)
@@ -175,8 +171,9 @@ export default function FormLogin() {
 
     }
     function createCart(id) {
+        navigate(`/`)
         axios.post(`http://localhost:8081/home/carts/${id}`).then((response)=>{
-            navigate("/")
+
         })
     }
     function check(id){
