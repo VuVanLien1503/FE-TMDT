@@ -285,7 +285,6 @@ export default function FormRegister() {
         if (code == codeInput) {
             console.log(account)
             if (seconds !== 0) {
-                alert("done")
                 axios.post(`http://localhost:8081/accounts/save`, account).then((response) => {
                     document.getElementById("inputCode").value = ""
                     navigate('/login')
