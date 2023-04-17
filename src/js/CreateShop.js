@@ -5,13 +5,15 @@ import FooterForm from "./FooterForm";
 import * as Yup from 'yup'
 import '../css/Login.css'
 import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 export default function CreateShop() {
 
 
     const navigate = useNavigate()
+    const param = useParams()
+
     const [status, setStatus] = useState("password")
     const Validation = Yup.object().shape({
         name: Yup.string().required("Bạn cần nhập thông tin!"),
@@ -94,7 +96,7 @@ export default function CreateShop() {
     )
 
     function sendData(values) {
-        alert("asdasdasd")
+        alert(param.id)
     }
 
 

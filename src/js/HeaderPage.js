@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
+import React from "react";
 
-export default function HeaderPage() {
+export default function HeaderPage(props) {
+    console.log(props)
     return (
         <>
             <div className="header__primary">
@@ -66,8 +68,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -89,8 +96,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -112,8 +124,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -135,8 +152,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -158,8 +180,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -181,8 +208,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -204,8 +236,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
@@ -227,8 +264,13 @@ export default function HeaderPage() {
                                                         </div>
                                                         <div className="col l-6">
                                                             <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix GeForce RTX 3050 8GB GDDR6 aaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy tính</div>
+                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
+                                                                    GeForce RTX 3050 8GB GDDR6
+                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                                </div>
+                                                                <div className="has__cart-head-desc">Loại hàng: Máy
+                                                                    tính
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col l-5">
