@@ -2,7 +2,7 @@ import '../css/Home.css'
 import HeaderPage from "./HeaderPage";
 import FooterForm from "./FooterForm";
 import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slide} from "react-slideshow-image";
 export default function PageHome() {
@@ -102,21 +102,27 @@ export default function PageHome() {
                                                 <div className="col l-2">
                                                     <Link to={"#"} className="body__container-product">
                                                         <div className="product__img">
-                                                            <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"
-                                                                 alt=""/>
+                                                            <img onClick={() => {
+                                                                showDetailProduct(product.id)
+                                                            }} src={product.imagePath[0]}/>
                                                         </div>
+
                                                         <div className="product__content">
-                                                            <h4 className="product__title">
+                                                            <div className="product__title">
+                                                                <span onClick={()=>{showShop(product.shop.id)}}>
+                                                                    <i className="info__icon fa-solid fa-store" ></i>
+                                                                    <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
+                                                                </span>
+                                                            </div >
+                                                            <h2 className="product__rating">
                                                                 {product.name}
-                                                            </h4>
-                                                            <span className="product__tag-shop">#{product.category.name}</span>
+                                                            </h2>
+                                                            <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
                                                                 <p>đ</p>
                                                                 <span>{product.price}</span>
                                                             </div>
-                                                            <div className="product__rating">
-                                                                ######
-                                                            </div>
+                                                            -------------------------------------------------
                                                             <div className="product__address">
                                                                 <i className="fa-solid fa-location-dot"></i>
                                                                 <span>{product.shop.account.users.address}</span>
@@ -164,4 +170,10 @@ export default function PageHome() {
             </div>
         </>
     )
+    function showDetailProduct(id){
+        alert("ShowProduct " +id)
+    }
+    function showShop(id){
+        alert("Shop: "+ id)
+    }
 }

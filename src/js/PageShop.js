@@ -250,9 +250,6 @@ export default function PageShop() {
                                                     <Link to={"#"} className="col l-3">
                                                         <div className="body__container-product">
                                                             <div className="product__img">
-                                                                {/*<img*/}
-                                                                {/*    src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"*/}
-                                                                {/*    alt=""/>*/}
                                                                 <img onClick={() => {
                                                                     showDetailProduct(product.id)
                                                                 }} src={product.imagePath[0]}/>
@@ -261,8 +258,6 @@ export default function PageShop() {
                                                                 <h4 className="product__title">
                                                                     {product.name}
                                                                 </h4>
-                                                                <span
-                                                                    className="product__tag-shop">#{product.description}</span>
                                                                 <div className="product__price">
                                                                     <p>đ</p>
                                                                     <span>{product.price}</span>
@@ -272,10 +267,11 @@ export default function PageShop() {
                                                                         showDetailCategory(product.category.id)
                                                                     }}>{product.category.name}</h3>
                                                                 </div>
-                                                                <div className="product__address">
-                                                                    <i className="fa-solid fa-location-dot"></i>
-                                                                    <span>{user.address}</span>
+                                                                <div className="product__address" style={{marginLeft:50}}>
+                                                                 <button>update</button>
+                                                                 <button>delete</button>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </Link>
@@ -321,9 +317,10 @@ export default function PageShop() {
                             console.log(values);
                             save(values)
                         }}
+                        enableReinitialize={true}
                     >
                         {(formik) => (
-                            <Form>
+                            <Form id={"demo"}>
                                 <div>
                                     <div>
                                         <ErrorMessage name="name"/>
@@ -386,7 +383,7 @@ export default function PageShop() {
                                     <h3>IMAGE</h3>
                                 </div>
                                 <div className="form__field">
-                                    <input
+                                    <Field
                                         name="image"
                                         type="file"
                                         multiple
@@ -455,9 +452,10 @@ export default function PageShop() {
                 setTotalElements(response.data.totalElements)
             })
             closeModal()
+            document.getElementById("demo").reset()
+            setImage('')
+            setProgressPercent(0)
         })
-
-
     }
 
     function closeModal() {
