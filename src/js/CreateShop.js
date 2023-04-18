@@ -95,6 +95,7 @@ export default function CreateShop() {
 
     function sendData(values) {
         alert("asdasdasd")
+        navigate("/")
     }
 
 

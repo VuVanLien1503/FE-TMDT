@@ -382,6 +382,14 @@
     cursor: pointer;
 }
 
+.has-cart {
+    display: none;
+}
+
+.no-cart {
+    padding: 90px;
+}
+
 .cart__title {
     padding: 14px 10px;
     font-size: 1.4rem;

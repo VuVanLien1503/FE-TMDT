@@ -82,9 +82,9 @@ export default function FooterForm() {
 
                                 <div className="col l-3">
                                     <div className="footer__center-container-items">
-                                        <h2 className="footer__center-items-title">Về FCBlue</h2>
+                                        <h2 className="footer__center-items-title">Về FCBlue Mall</h2>
                                         <ul>
-                                            <li className="footer__center-items-nav">Giới Thiệu Về FCBlue</li>
+                                            <li className="footer__center-items-nav">Giới Thiệu Về FCBlue Mall</li>
                                             <li className="footer__center-items-nav">Tuyển Dụng</li>
                                             <li className="footer__center-items-nav">Điều Khoản FCBlue</li>
                                             <li className="footer__center-items-nav">Chính Sách Bảo Mật</li>
@@ -102,12 +102,15 @@ export default function FooterForm() {
                                         <h2 className="footer__center-items-title">Theo Dõi Chúng Tôi Trên</h2>
                                         <ul>
                                             <li className="footer__center-items-nav">
+                                                <i className="fa-brands fa-facebook"></i>
                                                 Facebook
                                             </li>
                                             <li className="footer__center-items-nav">
+                                                <i className="fa-brands fa-instagram"></i>
                                                 Instagram
                                             </li>
                                             <li className="footer__center-items-nav">
+                                                <i className="fa-brands fa-linkedin"></i>
                                                 Linkedln
                                             </li>
                                         </ul>

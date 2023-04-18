@@ -7,6 +7,7 @@ import ContentForm from "./ContentForm";
 import {useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Loading from "./Loading";
 
 export default function FormRegister() {
 
@@ -15,6 +16,7 @@ export default function FormRegister() {
     const initialSecondsRef = useRef(180);
     const countdownIntervalRef = useRef(null);
     const [account,setAccount]=useState([])
+    const [flag, setFlag] = useState(false)
 
     useEffect(() => {
         if (isModalOpen) {
@@ -99,8 +101,8 @@ export default function FormRegister() {
                                                     <div className="form__field">
                                                         <div className="form__field-container">
                                                             <Field name={'phone'} type="text" placeholder="Số điện thoại(*)"/>
+                                                            <div className={'error__message'}><ErrorMessage name={'phone'}/></div>
                                                         </div>
-                                                        <div className={'error__message'}><ErrorMessage name={'phone'}/></div>
                                                     </div>
                                                     <div className="form__field">
                                                         <div className="form__field-container">
@@ -217,6 +219,7 @@ export default function FormRegister() {
                         </div>
                     </div>
                     {/*End Modal*/}
+                    {flag && <Loading/>}
                 </Form>
             </Formik>
         </>
@@ -238,7 +241,7 @@ export default function FormRegister() {
 
     // Mở modal nhập mã xác nhận
     function OpenModal1(value) {
-        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
+        axios.post(`http://localhost:8081/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
             console.log(response.data)
             if (response.data === "emailError") {
@@ -254,7 +257,7 @@ export default function FormRegister() {
     }
 
     function OpenModal2(value) {
-        axios.post(`http://localhost:8080/accounts/randomCode/${value}`).then((response) => {
+        axios.post(`http://localhost:8081/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
             if (response.data === "emailError") {
                 alert("Email Đã Tồn Tại")
@@ -285,8 +288,7 @@ export default function FormRegister() {
         if (code == codeInput) {
             console.log(account)
             if (seconds !== 0) {
-                alert("done")
-                axios.post(`http://localhost:8080/accounts/save`, account).then((response) => {
+                axios.post(`http://localhost:8081/accounts/save`, account).then((response) => {
                     document.getElementById("inputCode").value = ""
                     navigate('/login')
                 })
@@ -299,7 +301,6 @@ export default function FormRegister() {
             alert("Mã xác Nhận Không Chính Xác")
             document.getElementById("inputCode").value = ""
         }
-
     }
 
     // Đóng modal nhập mã xác nhận

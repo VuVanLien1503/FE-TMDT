@@ -5,18 +5,30 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Slide} from "react-slideshow-image";
+import Loading from "./Loading";
 export default function PageHome() {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
+    const [flag, setFlag] = useState(true)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/categories`).then((response) => {
+        axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
+            axios.get(`http://localhost:8081/home/products`).then((response) => {
+                setProducts(response.data.content)
+                setFlag(false)
+            }).catch(() => {
+                setFlag(false)
+            }).finally(() => {
+                setFlag(false)
+            })
+        }).catch(() => {
+            setFlag(false)
+        }).finally(() => {
+            setFlag(false)
         })
 
-        axios.get(`http://localhost:8080/home/products`).then((response) => {
-            setProducts(response.data.content)
-        })
+
     }, [])
     return (
         <>
@@ -179,11 +191,15 @@ export default function PageHome() {
                         </div>
                     </div>
 
-
+                    <div className="body__home-card">
+                        <div className="grid wide body__home-card-container">
+                            <img src="/img/logo/sg-50009109-241c7b6f14338806f5da710eaba6312c.png"/>
+                        </div>
+                    </div>
                 </div>
-
                 <FooterForm/>
             </div>
+            {flag && <Loading/>}
         </>
     )
 }

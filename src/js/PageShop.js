@@ -16,11 +16,11 @@ export default function PageShop() {
     const [check, setCheck] = useState(false)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/home/products/shop/${param.id}`).then((response) => {
+        axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
             setProducts(response.data.content)
             setTotalElements(response.data.totalElements)
         })
-        axios.get(`http://localhost:8080/home/categories`).then((response) => {
+        axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
         })
         axios.get(`http://localhost:8080/home/shops/${param.id}/categories`).then((response) => {
