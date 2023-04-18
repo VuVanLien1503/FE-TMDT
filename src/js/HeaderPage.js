@@ -10,14 +10,20 @@ export default function HeaderPage(props) {
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
+    const [carts, setCart] = useState([])
     useEffect(() => {
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
             setNameLogin(response.data.name)
-
         })
+
+        axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
+            setCart(response.data)
+        })
+
     }, [])
     console.log(user)
+    console.log(carts)
 
     return (
         <>
@@ -71,7 +77,6 @@ export default function HeaderPage(props) {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col l-2">
                                 {nameLogin!=="lien"&& <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
@@ -79,231 +84,35 @@ export default function HeaderPage(props) {
                                         <div className="has-cart">
                                             <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                             <ul className="has__cart-container">
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                {carts!=null&& carts.map((element)=>{
+                                                    return(
+                                                        <>
+                                                            <li className="has__cart-items">
+                                                                <div className="row">
+                                                                    <div className="col l-1 has__cart-img">
+                                                                        <img src={element.imagePath[0]}/>
+                                                                    </div>
+                                                                    <div className="col l-6">
+                                                                        <div className="has__cart-head">
+                                                                            <div className="has__cart-head-title">{element.name}</div>
+                                                                            <div className="has__cart-head-desc">{element.category.name}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col l-5">
+                                                                        <div className="has__cart-action">
+                                                                            <div className="has__cart-calculate">
+                                                                                <div className="has__cart-price">{element.price}</div>
+                                                                                {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                            </div>
+                                                                            <div className="has__cart-delete">Xoá</div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li className="has__cart-items">
-                                                    <div className="row">
-                                                        <div className="col l-1 has__cart-img">
-                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="has__cart-head">
-                                                                <div className="has__cart-head-title">VGA ASUS Phoenix
-                                                                    GeForce RTX 3050 8GB GDDR6
-                                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                                </div>
-                                                                <div className="has__cart-head-desc">Loại hàng: Máy
-                                                                    tính
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-5">
-                                                            <div className="has__cart-action">
-                                                                <div className="has__cart-calculate">
-                                                                    <div className="has__cart-price">2.000.000</div>
-                                                                    <div className="has__cart-quantity">x 2</div>
-                                                                </div>
-                                                                <div className="has__cart-delete">Xoá</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                            </li>
+                                                        </>
+                                                    )
+                                                })}
                                             </ul>
-
                                             <div className="has__cart-container-btn">
                                                 <div className="btn btn-cart">Xem giỏ hàng</div>
                                             </div>
