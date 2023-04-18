@@ -65,7 +65,7 @@ export default function HeaderPage(props) {
                                     <div className="header__search">
                                         <input type="text" className="header__search-input"
                                                placeholder="Tìm kiếm trong shop"/>
-                                        <div className="header__search-btn">
+                                        <div className="btn header__search-btn">
                                             <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>
@@ -307,6 +307,10 @@ export default function HeaderPage(props) {
                                             <div className="has__cart-container-btn">
                                                 <div className="btn btn-cart">Xem giỏ hàng</div>
                                             </div>
+                                        </div>
+
+                                        <div className="no-cart">
+                                            <img src="/img/logo/empty-cart.webp"/>
                                         </div>
                                     </div>
                                 </div>}

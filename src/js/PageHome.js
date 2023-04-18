@@ -5,11 +5,13 @@ import {Link, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slide} from "react-slideshow-image";
+import Loading from "./Loading";
 import ShowAllProduct from "./ShowAllProduct";
 
 export default function PageHome() {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
+    const [flag, setFlag] = useState(true)
     const [user, setUser] = useState([])
     const param = useParams()
 
@@ -17,14 +19,21 @@ export default function PageHome() {
     useEffect(() => {
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
+            axios.get(`http://localhost:8081/home/products`).then((response) => {
+                setProducts(response.data.content)
+                setFlag(false)
+            }).catch(() => {
+                setFlag(false)
+            }).finally(() => {
+                setFlag(false)
+            })
+        }).catch(() => {
+            setFlag(false)
+        }).finally(() => {
+            setFlag(false)
         })
-        axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
-            setUser(response.data)
-            console.log(response.data)
-        })
-        axios.get(`http://localhost:8081/home/products`).then((response) => {
-            setProducts(response.data.content)
-        })
+
+
     }, [])
     return (
         <>
@@ -37,28 +46,23 @@ export default function PageHome() {
                                 <div className="col l-8 body__home-slider">
                                     <Slide autoplay={true} indicators={true}>
                                         <div className="body__home-top-img">
-                                            <img
-                                                src="/img/logo/vn-50009109-d842090bb8a2e1d44cf9652604d8e300_xxhdpi.jfif"/>
+                                            <img src="/img/logo/vn-50009109-d842090bb8a2e1d44cf9652604d8e300_xxhdpi.jfif"/>
                                         </div>
 
                                         <div className="body__home-top-img">
-                                            <img
-                                                src="/img/logo/vn-50009109-870d0ac705aede51ebba573147345f62_xxhdpi.jfif"/>
+                                            <img src="/img/logo/vn-50009109-870d0ac705aede51ebba573147345f62_xxhdpi.jfif"/>
                                         </div>
 
                                         <div className="body__home-top-img">
-                                            <img
-                                                src="/img/logo/vn-50009109-ce4512e83a9d299b5a43f612f719a443_xxhdpi.jfif"/>
+                                            <img src="/img/logo/vn-50009109-ce4512e83a9d299b5a43f612f719a443_xxhdpi.jfif"/>
                                         </div>
 
                                         <div className="body__home-top-img">
-                                            <img
-                                                src="/img/logo/vn-50009109-d94c4b91414ec0e0a53fad6d6e9ca77f_xxhdpi.jfif"/>
+                                            <img src="/img/logo/vn-50009109-d94c4b91414ec0e0a53fad6d6e9ca77f_xxhdpi.jfif"/>
                                         </div>
 
                                         <div className="body__home-top-img">
-                                            <img
-                                                src="/img/logo/vn-50009109-fa79715264f5c973648d8096a8aa9773_xxhdpi.jfif"/>
+                                            <img src="/img/logo/vn-50009109-fa79715264f5c973648d8096a8aa9773_xxhdpi.jfif"/>
                                         </div>
                                     </Slide>
                                 </div>
@@ -81,12 +85,14 @@ export default function PageHome() {
                             <div className="body__home-container-category">
                                 <h2 className="body__home-container-title">Danh Mục</h2>
                                 <ul className="row body__home-container-nav">
+                                    <li className="col l-2">
+                                        <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
+                                    </li>
                                     {categories.map((category) => {
                                         return (
                                             <>
                                                 <li className="col l-2">
-                                                    <div
-                                                        className="body__home-container-nav-items">{category.name}</div>
+                                                    <div className="body__home-container-nav-items">{category.name}</div>
                                                 </li>
                                             </>
                                         )
@@ -167,11 +173,16 @@ export default function PageHome() {
                         </div>
                     </div>
 
-
+                    <div className="body__home-card">
+                        <div className="grid wide body__home-card-container">
+                            <img src="/img/logo/sg-50009109-241c7b6f14338806f5da710eaba6312c.png"/>
+                        </div>
+                    </div>
                 </div>
 
                 <FooterForm/>
             </div>
+            {flag && <Loading/>}
         </>
     )
 

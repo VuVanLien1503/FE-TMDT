@@ -96,7 +96,7 @@ export default function CreateShop() {
     )
 
     function sendData(values) {
-        alert(param.id)
+        alert("asdasdasd")
     }
 
 

@@ -74,6 +74,7 @@
 }
 
 button.each-slideshow-indicator {
+    cursor: pointer;
     padding: 6px;
     border-radius: 50%;
     border: 1px solid #999;
@@ -134,16 +135,16 @@ button.each-slideshow-indicator {
 }
 .body__home-container-nav-items {
     padding: 14px 4px;
-    border: 1px solid rgba(153, 153, 153, 0.4);
+    border: 1px solid var(--second-color);
     margin-bottom: 4px;
     border-radius: 24px;
     cursor: pointer;
-    color: #777;
+    color: var(--thirt-color);
 }
 
 .body__home-container-nav-items:hover {
-    color: var(--second-color);
-    border: 1px solid var(--second-color);
+    color: #ee4c29;
+    border: 1px solid #ee4c29;
 }
 
 .body__home-container-products {
@@ -167,6 +168,8 @@ button.each-slideshow-indicator {
 
 .body__home-nav-page {
     display: flex;
+    margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 .nav-page__container {
@@ -218,4 +221,11 @@ button.each-slideshow-indicator {
 
 .btn-page:last-child {
     margin-right: 0;
+}
+
+.body__home-card-container {
+    padding: 20px 20px;
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
 }
