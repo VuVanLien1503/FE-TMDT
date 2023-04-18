@@ -46,6 +46,7 @@ export default function PageShop() {
     const [totalElements, setTotalElements] = useState(0)
     const param = useParams()
     const [check, setCheck] = useState(false)
+    const [id,setId] = useState(0)
 
     useEffect(() => {
         axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
@@ -94,9 +95,9 @@ export default function PageShop() {
                                         </li>
                                         <li className="header__nav-items">
                                             <Link to={"/login"}>
-                                            Xin Chào {user.name}....!
-                                            <i className="header__nav-icon-down fa-solid fa-caret-down"></i>
-                                        </Link>
+                                                Xin Chào {user.name}....!
+                                                <i className="header__nav-icon-down fa-solid fa-caret-down"></i>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -203,6 +204,7 @@ export default function PageShop() {
                                                             className="info__detail">{shop.description}</span>
 
                                                         </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -238,7 +240,7 @@ export default function PageShop() {
 
                             <div className="col l-10">
                                 <div className="body__action">
-                                    <div className="btn" onClick={addProduct}>Thêm sản phẩm</div>
+                                    <div className="btn" onClick={() => formSave(-1)}>Thêm sản phẩm</div>
                                 </div>
                                 <div className="body__products">
                                     <div className="row">
@@ -267,11 +269,15 @@ export default function PageShop() {
                                                                         showDetailCategory(product.category.id)
                                                                     }}>{product.category.name}</h3>
                                                                 </div>
-                                                                <div className="product__address" style={{marginLeft:50}}>
-                                                                 <button>update</button>
-                                                                 <button>delete</button>
+                                                                <div className="product__address"
+                                                                     style={{marginLeft: 50}}>
                                                                 </div>
+                                                                <div>
 
+                                                                    <button
+                                                                        onClick={() => formSave(product.id)}>Update
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </Link>
@@ -303,6 +309,7 @@ export default function PageShop() {
                     {/*formik open*/}
                     <Formik
                         initialValues={{
+                            id: '',
                             name: '',
                             quantity: '',
                             price: '',
@@ -434,12 +441,17 @@ export default function PageShop() {
         alert("detail product " + id)
     }
 
-    function addProduct() {
+    function formSave(id) {
+        setId(id)
         document.getElementById("modal").style.display = "flex"
     }
 
     function save(values) {
+        if (id!==-1){
+            values.id=id
+        }
         values.imagePath = imagePath
+        console.log(values)
         axios.post(` http://localhost:8081/home/products/shop/${param.id}`, values).then((response) => {
             axios.get(`http://localhost:8081/home/categories`).then((response) => {
                 setCategories(response.data)

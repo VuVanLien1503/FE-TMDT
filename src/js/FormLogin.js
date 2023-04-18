@@ -153,8 +153,11 @@ export default function FormLogin() {
                     case 2:
                         if (response.data.shop) {
                             navigate(`/shop/${response.data.account.id}`)
+                            localStorage.setItem("idAccount",response.data.account.id)
+
                         } else {
                             navigate(`/createShop/${response.data.account.id}`)
+                            localStorage.setItem("idAccount",response.data.account.id)
                         }
                         break
                     case 3:

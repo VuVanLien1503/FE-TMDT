@@ -11,7 +11,6 @@ export default function HeaderPage(props) {
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
     useEffect(() => {
-
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
             setNameLogin(response.data.name)
@@ -74,7 +73,7 @@ export default function HeaderPage(props) {
                             </div>
 
                             <div className="col l-2">
-                                <div className="header__cart">
+                                {nameLogin!=="lien"&& <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         <div className="has-cart">
@@ -310,7 +309,7 @@ export default function HeaderPage(props) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
