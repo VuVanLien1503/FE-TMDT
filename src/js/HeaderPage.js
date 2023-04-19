@@ -71,7 +71,7 @@ export default function HeaderPage(props) {
                                     <div className="header__search">
                                         <input type="text" className="header__search-input"
                                                placeholder="Tìm kiếm trong shop"/>
-                                        <div className="btn header__search-btn">
+                                        <div className="btn-login header__search-btn">
                                             <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>

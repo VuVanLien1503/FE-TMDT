@@ -83,7 +83,7 @@ export default function FormLogin() {
                                                         <div className="row">
                                                             <div className="col l-6">
                                                                 <div className="container__btn">
-                                                                    <button type={"submit"} className="btn">Đăng nhập
+                                                                    <button type={"submit"} className="btn-login">Đăng nhập
                                                                     </button>
                                                                 </div>
                                                             </div>

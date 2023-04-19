@@ -8,7 +8,7 @@ import PageHome from "./js/PageHome";
 import Loading from "./js/Loading";
 import Detail from "./js/Detail";
 import Crud from "./js/Crud";
-import Create from "./js/Create";
+import Error from "./js/404";
 
 function App() {
     return (
@@ -20,7 +20,7 @@ function App() {
             {/*<Loading/>*/}
             {/*<Detail/>*/}
             {/*<Crud/>*/}
-            <Create/>
+            {/*<Error/>*/}
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
