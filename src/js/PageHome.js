@@ -112,25 +112,26 @@ export default function PageHome() {
                                                 <div className="col l-2">
                                                     <Link to={"#"} className="body__container-product">
                                                         <div className="product__img">
-                                                            <img onClick={() => {
-                                                                showDetailProduct(product.id)
-                                                            }} src={product.imagePath[0]}/>
+                                                            <Link to={`detail/${product.id}`} >
+                                                                <img src={product.imagePath[0]} />
+                                                            </Link>
+
+
                                                         </div>
 
                                                         <div className="product__content">
                                                             <div className="product__title">
-                                                                <span onClick={()=>{showShop(product.shop.id)}}>
-                                                                    <i className="info__icon fa-solid fa-store" ></i>
-                                                                    <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
-                                                                </span>
+                                                            <Link to={`/shop/${product.shop.id}`}>
+                                                                <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
+                                                            </Link>
                                                             </div >
                                                             <h2 className="product__rating">
                                                                 {product.name}
                                                             </h2>
                                                             <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
-                                                                <p>đ</p>
                                                                 <span>{product.price}</span>
+                                                                <p>đ</p>
                                                             </div>
                                                             -------------------------------------------------
                                                             <div className="product__address">
@@ -187,7 +188,6 @@ export default function PageHome() {
     )
 
     function showDetailProduct(id) {
-        alert("ShowProduct " + id)
     }
 
     function showShop(id) {

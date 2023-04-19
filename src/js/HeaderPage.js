@@ -47,7 +47,7 @@ export default function HeaderPage(props) {
                                     Hỗ trợ
                                 </li>
                                 {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
-                                {nameLogin!==''&&   <li className="header__nav-items"><button onClick={logout}>Đăng xuất</button></li>}
+                                {nameLogin!==''&&   <li className="header__nav-items" onClick={logout}>Đăng xuất</li>}
                                 {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
                                 {nameLogin!==''&&  <li className="header__nav-items"><Link to={"/login"}>{nameLogin}</Link></li>}
                             </ul>

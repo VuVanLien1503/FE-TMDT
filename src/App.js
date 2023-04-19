@@ -5,8 +5,8 @@ import FormLogin from "./js/FormLogin";
 import PageShop from "./js/PageShop";
 import CreateShop from "./js/CreateShop";
 import PageHome from "./js/PageHome";
-import Loading from "./js/Loading";
 import Detail from "./js/Detail";
+import Crud from "./js/Crud";
 
 function App() {
     return (
@@ -17,6 +17,7 @@ function App() {
             {/*<PageShop/>*/}
             {/*<Loading/>*/}
             {/*<Detail/>*/}
+            {/*<Crud/>*/}
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
@@ -24,6 +25,7 @@ function App() {
                 <Route path={"/createShop/:id"} element={<CreateShop/>}/>
                 <Route path={"/"} element={<PageHome/>}/>
                 <Route path={"detail/:id"} element={<Detail/>}/>
+                <Route path={"/option/:id"} element={<Crud/>}/>
             </Routes>
         </>
     );
