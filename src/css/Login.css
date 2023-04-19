@@ -112,10 +112,10 @@
     padding: 0 8px;
 }
 
-.btn {
+.btn-login {
     font-size: 1.6rem;
     text-align: center;
-    padding: 14px;
+    padding: 13px;
     background-color: var(--thirt-color);
     color: var(--white-color);
     border-radius: 4px;
@@ -125,7 +125,7 @@
     width: 100%;
 }
 
-.btn:hover {
+.btn-login:hover {
     background-color: var(--primary-color);
 }
 

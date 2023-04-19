@@ -5,8 +5,10 @@ import FormLogin from "./js/FormLogin";
 import PageShop from "./js/PageShop";
 import CreateShop from "./js/CreateShop";
 import PageHome from "./js/PageHome";
+import Loading from "./js/Loading";
 import Detail from "./js/Detail";
 import Crud from "./js/Crud";
+import Error from "./js/404";
 
 function App() {
     return (
@@ -18,6 +20,7 @@ function App() {
             {/*<Loading/>*/}
             {/*<Detail/>*/}
             {/*<Crud/>*/}
+            {/*<Error/>*/}
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>

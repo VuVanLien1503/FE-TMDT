@@ -129,26 +129,22 @@ button.each-slideshow-indicator {
 }
 
 .body__home-container-nav {
-    text-align: center;
     font-size: 1.5rem;
     padding: 0 10px;
 }
 .body__home-container-nav-items {
     padding: 14px 4px;
-    border: 1px solid var(--second-color);
     margin-bottom: 4px;
-    border-radius: 24px;
     cursor: pointer;
-    color: var(--thirt-color);
+    color: #777;
+    border-bottom: 1px solid rgba(153, 153, 153, 0.5)
 }
 
 .body__home-container-nav-items:hover {
-    color: #ee4c29;
-    border: 1px solid #ee4c29;
+    color: var(--fift-color);
 }
 
 .body__home-container-products {
-    margin-top: 50px;
 }
 
 .body__home-container-products-title {
