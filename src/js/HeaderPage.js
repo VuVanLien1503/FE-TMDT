@@ -4,7 +4,6 @@ import axios from "axios";
 import PageHome from "./PageHome";
 
 export default function HeaderPage(props) {
-    console.log(props)
     let idAccount = localStorage.getItem("idAccount")
     console.log(idAccount)
     const [user, setUser] = useState([])
@@ -84,7 +83,7 @@ export default function HeaderPage(props) {
                                         <div className="has-cart">
                                             <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                             <ul className="has__cart-container">
-                                                {carts!=null&& carts.map((element)=>{
+                                                {carts!==''&& carts.map((element)=>{
                                                     return(
                                                         <>
                                                             <li className="has__cart-items">
@@ -117,7 +116,6 @@ export default function HeaderPage(props) {
                                                 <div className="btn btn-cart">Xem giỏ hàng</div>
                                             </div>
                                         </div>
-
                                         <div className="no-cart">
                                             <img src="/img/logo/empty-cart.webp"/>
                                         </div>

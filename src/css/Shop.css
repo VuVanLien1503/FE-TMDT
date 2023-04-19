@@ -383,11 +383,13 @@
 }
 
 .has-cart {
-    display: none;
+    /*display: none;*/
+    display: block;
 }
 
 .no-cart {
     padding: 90px;
+    display: none;
 }
 
 .cart__title {

@@ -161,8 +161,8 @@ export default function FormLogin() {
                         }
                         break
                     case 3:
+                        createCart(response.data.account.id)
                         navigate(`/`)
-                        // createCart(response.data.account.id)
                         localStorage.setItem("idAccount",response.data.account.id)
                         break
                 }
