@@ -42,7 +42,6 @@ export default function FormLogin() {
                 <Form>
                     <div id="main">
                         <HeaderForm/>
-
                         {/*Start Body & Form*/}
                         <div id="body">
                             <div className="grid wide">
@@ -139,12 +138,14 @@ export default function FormLogin() {
         console.log(values)
         axios.post(`http://localhost:8081/accounts/login`, values).then((response) => {
             console.log(response.data)
-            if (response.data.account !== null){
+            if (response.data.account !== null) {
                 setUser(response.data.account.users)
                 setAccount(response.data.account)
             }
             setText(response.data.text)
             if (response.data.text === "Đăng Nhập Thành Công") {
+                localStorage.setItem("idAccount", response.data.account.id)
+                localStorage.setItem("role", response.data.account.role.id)
                 switch (response.data.account.role.id) {
                     case 1:
                         alert("ADMIN")
@@ -152,37 +153,32 @@ export default function FormLogin() {
                         break
                     case 2:
                         if (response.data.shop) {
-                            navigate(`/shop/${response.data.account.id}`)
-                            localStorage.setItem("idAccount",response.data.account.id)
+                            navigate(`/option/${response.data.account.id}`)
 
                         } else {
                             navigate(`/createShop/${response.data.account.id}`)
-                            localStorage.setItem("idAccount",response.data.account.id)
                         }
                         break
                     case 3:
                         navigate(`/`)
-                        // createCart(response.data.account.id)
-                        localStorage.setItem("idAccount",response.data.account.id)
+                        createCart(response.data.account.id)
                         break
                 }
-                alert(response.data.text)
-
-            } else {
-                alert(response.data.text)
             }
-
+            alert(response.data.text)
         })
 
     }
+
     function createCart(id) {
         navigate(`/`)
-        axios.post(`http://localhost:8081/home/carts/${id}`).then((response)=>{
+        axios.post(`http://localhost:8081/home/carts/${id}`).then((response) => {
 
         })
     }
-    function check(id){
-        axios.get(`http://localhost:8081/home/carts/${id}`).then((response)=>{
+
+    function check(id) {
+        axios.get(`http://localhost:8081/home/carts/${id}`).then((response) => {
             return response.data;
         })
     }

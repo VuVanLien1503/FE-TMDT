@@ -28,7 +28,10 @@ export default function CreateShop() {
             <Formik
                 initialValues={{
                     name: "",
-                    description: ""
+                    description: "",
+                    account:{
+                        id:param.id
+                    }
                 }
                 }
                 onSubmit={(values) => {
@@ -96,7 +99,11 @@ export default function CreateShop() {
     )
 
     function sendData(values) {
-        alert("asdasdasd")
+        console.log(values)
+        axios.post(`http://localhost:8081/home/shops`,values).then((response) => {
+            navigate(`/shop/${param.id}`)
+        })
+
     }
 
 

@@ -48,7 +48,7 @@ export default function HeaderPage(props) {
                                     Hỗ trợ
                                 </li>
                                 {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
-                                {nameLogin!==''&&   <li className="header__nav-items"><button onClick={logout}>Đăng xuất</button></li>}
+                                {nameLogin!==''&&   <li className="header__nav-items" onClick={logout}>Đăng xuất</li>}
                                 {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
                                 {nameLogin!==''&&  <li className="header__nav-items"><Link to={"/login"}>{nameLogin}</Link></li>}
                             </ul>
@@ -84,7 +84,7 @@ export default function HeaderPage(props) {
                                         <div className="has-cart">
                                             <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                             <ul className="has__cart-container">
-                                                {carts!=null&& carts.map((element)=>{
+                                                {carts!==''&& carts.map((element)=>{
                                                     return(
                                                         <>
                                                             <li className="has__cart-items">
