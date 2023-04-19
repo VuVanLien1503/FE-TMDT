@@ -7,9 +7,11 @@ import '../css/Login.css'
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function FormLogin() {
 
+    const [checkLogin, setCheckLogin] = useState(false);
     const [text, setText] = useState("");
     const [user, setUser] = useState([])
     const [userInput, setUserInput] = useState([])
@@ -24,7 +26,27 @@ export default function FormLogin() {
         password: Yup.string().required("Bạn chưa nhập mật khẩu!").min(6, "Mật khẩu từ 6 đến 8 ký tự!").max(15, "Mật khẩu từ 6 đến 8 ký tự!"),
         email: Yup.string().required("Bạn cần nhập thông tin!"),
     })
+function sweetalert2(input) {
+        let icon="";
+        if (input==="Đăng Nhập Thành Công"){
+            icon="success"
+        }
+        if (input==="Mật Khẩu Không Chính Xác"){
+            icon="warning"
+        }
+        if (input==="Email Không Tồn Tại"){
+            icon="error"
+        }
+    Swal.fire({
+        position: 'center',
+        icon:icon,
+        title: input,
+        showConfirmButton: false,
+        timer: 1700
+    }).then(r => {
 
+    })
+}
 
     return (
         <>
@@ -165,7 +187,7 @@ export default function FormLogin() {
                         break
                 }
             }
-            alert(response.data.text)
+            sweetalert2(response.data.text)
         })
 
     }

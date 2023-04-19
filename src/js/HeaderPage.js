@@ -46,6 +46,7 @@ export default function HeaderPage(props) {
                                     <i className="header__nav-item-icon fa-solid fa-circle-question"></i>
                                     Hỗ trợ
                                 </li>
+
                                 {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
                                 {nameLogin!==''&&   <li className="header__nav-items" onClick={logout}>Đăng xuất</li>}
                                 {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
