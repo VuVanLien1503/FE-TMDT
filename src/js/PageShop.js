@@ -3,8 +3,10 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import FooterForm from "./FooterForm";
+import HeaderPage from "./HeaderPage";
 
 export default function PageShop() {
+    const [account, setAccount] = useState([]);
     const [shop, setShop] = useState([]);
     const [products, setProducts] = useState([]);
     const [categoryShop, setCategoryShop] = useState([])
@@ -16,30 +18,28 @@ export default function PageShop() {
 
 
     useEffect(() => {
-        if (localStorage.getItem("idAccount")){
+        if (localStorage.getItem("idAccount")) {
             axios.get(`http://localhost:8081/home/shops/information/${param.id}`).then((response) => {
                 setShop(response.data)
+                // truy van Acc tu ID SHop
+                axios.get(`http://localhost:8081/accounts/information/${param.id}`).then((response) => {
+                    setAccount(response.data)
+                    axios.get(`http://localhost:8081/home/products/shop/${response.data.id}`).then((response) => {
+                        setProducts(response.data.content)
+                        setTotalElements(response.data.totalElements)
+                    })
+                    axios.get(`http://localhost:8081/home/shops/${response.data.id}/categories`).then((response) => {
+                        setCategoryShop(response.data)
+                    })
+                    axios.get(`http://localhost:8081/accounts/${response.data.id}`).then((response) => {
+                        setUser(response.data)
+                        console.log(response.data)
+                    })
+                })
             })
 
 
-            axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
-                setProducts(response.data.content)
-                setTotalElements(response.data.totalElements)
-            })
-            axios.get(`http://localhost:8081/home/categories`).then((response) => {
-                setCategories(response.data)
-            })
-            axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
-                setCategoryShop(response.data)
-            })
-            axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
-                setUser(response.data)
-                console.log(response.data)
-            })
-
-
-
-        }else {
+        } else {
             alert("Bạn Cần Đăng Nhập Để Truy Cập")
             navigate("/login")
         }
@@ -51,63 +51,63 @@ export default function PageShop() {
             <div id="main">
                 {/*Start Header*/}
                 <div id="header__page-shop">
-                    <div className="header__primary">
-                        <div className="grid wide">
-                            <div className="header__navbar">
-                                <div className="header__navbar-items">
-                                    <ul className="header__nav">
-                                        <li className="header__nav-items">Trang chủ FCBlue Mall</li>
-                                        <li className="header__nav-items">Tải ứng dụng</li>
-                                        <li className="header__nav-items">
-                                            Kết nối
-                                            <i className="header__nav-item-icon fa-brands fa-facebook"></i>
-                                            <i className="header__nav-item-icon fa-brands fa-instagram"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="header__navbar-items">
-                                    <ul className="header__nav">
-                                        <li className="header__nav-items">
-                                            <i className="header__nav-item-icon fa-solid fa-circle-question"></i>
-                                            Hỗ trợ
-                                        </li>
-                                        <li className="header__nav-items">
-                                            <Link to={"/login"}>
-                                                Xin Chào {user.name}....!
-                                                <i className="header__nav-icon-down fa-solid fa-caret-down"></i>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                    {/*<div className="header__primary">*/}
+                    {/*    <div className="grid wide">*/}
+                    {/*        <div className="header__navbar">*/}
+                    {/*            <div className="header__navbar-items">*/}
+                    {/*                <ul className="header__nav">*/}
+                    {/*                    <li className="header__nav-items">Trang chủ FCBlue Mall</li>*/}
+                    {/*                    <li className="header__nav-items">Tải ứng dụng</li>*/}
+                    {/*                    <li className="header__nav-items">*/}
+                    {/*                        Kết nối*/}
+                    {/*                        <i className="header__nav-item-icon fa-brands fa-facebook"></i>*/}
+                    {/*                        <i className="header__nav-item-icon fa-brands fa-instagram"></i>*/}
+                    {/*                    </li>*/}
+                    {/*                </ul>*/}
+                    {/*            </div>*/}
+                    {/*            <div className="header__navbar-items">*/}
+                    {/*                <ul className="header__nav">*/}
+                    {/*                    <li className="header__nav-items">*/}
+                    {/*                        <i className="header__nav-item-icon fa-solid fa-circle-question"></i>*/}
+                    {/*                        Hỗ trợ*/}
+                    {/*                    </li>*/}
+                    {/*                    <li className="header__nav-items">*/}
+                    {/*                        <Link to={"/login"}>*/}
+                    {/*                            Xin Chào {user.name}....!*/}
+                    {/*                            <i className="header__nav-icon-down fa-solid fa-caret-down"></i>*/}
+                    {/*                        </Link>*/}
+                    {/*                    </li>*/}
+                    {/*                </ul>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
 
-                            <div className="header__container">
-                                <div className="row header__container--align">
-                                    <div className="col l-4">
-                                        <Link to={"/"} className="header__logo-shop">
-                                            <i className="logo-icon-shop fa-solid fa-cloud">
-                                                <span className="logo-icon__text-shop">f</span>
-                                            </i>
-                                            <span className="header_logo--text-shop">FCBlue Mall</span>
-                                        </Link>
-                                    </div>
+                    {/*        <div className="header__container">*/}
+                    {/*            <div className="row header__container--align">*/}
+                    {/*                <div className="col l-4">*/}
+                    {/*                    <Link to={"/"} className="header__logo-shop">*/}
+                    {/*                        <i className="logo-icon-shop fa-solid fa-cloud">*/}
+                    {/*                            <span className="logo-icon__text-shop">f</span>*/}
+                    {/*                        </i>*/}
+                    {/*                        <span className="header_logo--text-shop">FCBlue Mall</span>*/}
+                    {/*                    </Link>*/}
+                    {/*                </div>*/}
 
-                                    <div className="col l-5">
-                                        <div className="header__container-right">
-                                            <div className="header__search">
-                                                <input type="text" className="header__search-input"
-                                                       placeholder="Tìm kiếm trong shop"/>
-                                                <div className="header__search-btn">
-                                                    <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    {/*                <div className="col l-5">*/}
+                    {/*                    <div className="header__container-right">*/}
+                    {/*                        <div className="header__search">*/}
+                    {/*                            <input type="text" className="header__search-input"*/}
+                    {/*                                   placeholder="Tìm kiếm trong shop"/>*/}
+                    {/*                            <div className="header__search-btn">*/}
+                    {/*                                <i className="header__search-icon fa-solid fa-magnifying-glass"></i>*/}
+                    {/*                            </div>*/}
+                    {/*                        </div>*/}
+                    {/*                    </div>*/}
+                    {/*                </div>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <HeaderPage/>
                     <div className="header__shop">
                         <div className="grid wide">
                             <div className="header__shop-container">
@@ -227,8 +227,8 @@ export default function PageShop() {
                                                     <Link to={"#"} className="col l-3">
                                                         <div className="body__container-product">
                                                             <div className="product__img">
-                                                                <Link to={`/detail/${product.id}`} >
-                                                                    <img src={product.imagePath[0]} />
+                                                                <Link to={`/detail/${product.id}`}>
+                                                                    <img src={product.imagePath[0]}/>
                                                                 </Link>
                                                             </div>
                                                             <div className="product__content">
