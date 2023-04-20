@@ -295,3 +295,13 @@ button.each-slideshow-indicator {
 .btn.btn-filter:hover {
     background: linear-gradient(180deg, var(--primary-color), var(--fift-color));
 }
+
+.product__name-shop {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.product__name-shop > i {
+    color: var(--fift-color);
+    margin-right: 10px;
+}

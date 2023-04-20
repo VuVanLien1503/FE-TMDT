@@ -100,7 +100,7 @@ export default function PageHome() {
                                             {categories.map((category) => {
                                                 return (
                                                     <>
-                                                        <li className="col l-2">
+                                                        <li className="">
                                                             <div className="body__home-container-nav-items">{category.name}</div>
                                                         </li>
                                                     </>
@@ -159,6 +159,9 @@ export default function PageHome() {
                                 </div>
 
                                 <div className="col l-10">
+                                    <div className="body__home-container-btn-sort">
+
+                                    </div>
                                     <div className="body__home-container-products">
                                         <div className="body__home-container-products-title">
                                             <h2>Sản phẩm</h2>
@@ -177,20 +180,18 @@ export default function PageHome() {
                                                                 </div>
 
                                                         <div className="product__content">
-                                                            <div className="product__title">
-                                                            <Link to={`/shop/${product.shop.id}`}>
-                                                                <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
-                                                            </Link>
-                                                            </div >
-                                                            <h2 className="product__rating">
-                                                                {product.name}
-                                                            </h2>
+                                                            <h2 className="product__title">{product.name}</h2 >
+
+                                                            <div className="product__name-shop">
+                                                                <i className="fa-solid fa-store"></i>
+                                                                <Link to={`/shop/${product.shop.id}`}>{product.shop.name}</Link>
+                                                            </div>
+
                                                             <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
                                                                 <span>{product.price}</span>
                                                                 <p>đ</p>
                                                             </div>
-                                                            -------------------------------------------------
                                                             <div className="product__address">
                                                                 <i className="fa-solid fa-location-dot"></i>
                                                                 <span>{product.shop.account.users.address}</span>
