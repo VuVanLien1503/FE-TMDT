@@ -3,9 +3,11 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PageHome from "./PageHome";
 
-export default function HeaderPage(props) {
+export default function HeaderPage(prop) {
+    const [search, setSearch] = useState("")
+
+
     let idAccount = localStorage.getItem("idAccount")
-    console.log(idAccount)
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
@@ -21,8 +23,6 @@ export default function HeaderPage(props) {
         })
 
     }, [])
-    console.log(user)
-    console.log(carts)
 
     return (
         <>
@@ -65,13 +65,16 @@ export default function HeaderPage(props) {
                                     <span className="header_logo--text-shop">FCBlue Mall</span>
                                 </Link>
                             </div>
-
                             <div className="col l-7">
                                 <div className="header__container-right">
                                     <div className="header__search">
+
+                                        {/* tìm kiếm sản phẩm theo tên*/}
+
                                         <input type="text" className="header__search-input"
-                                               placeholder="Tìm kiếm trong shop"/>
-                                        <div className="btn header__search-btn">
+                                               placeholder="Tìm kiếm trong shop"
+                                               onChange={(e) => setSearch(e.target.value)}/>
+                                        <div className="btn header__search-btn" onClick={() => prop.onClick(search)}>
                                             <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>

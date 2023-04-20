@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import storage from "./FirebaseConfig";
+import Swal from "sweetalert2";
 
 export default function Crud() {
     const validationSchema = Yup.object().shape({
@@ -72,7 +73,7 @@ export default function Crud() {
             navigate("/login")
         }
 
-    }, [])
+    }, [products])
     let index=0
     return (
         <>
@@ -117,7 +118,7 @@ export default function Crud() {
                                                         <div className="btn btn-edit" onClick={() => formSave(product.id)}>Sửa</div>
                                                     </div>
                                                     <div className="col l-6">
-                                                        <div className="btn btn-delete" >Xoá</div>
+                                                        <div className="btn btn-delete" onClick={()=>deleteProduct(product.id)}>Xoá</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -272,16 +273,54 @@ export default function Crud() {
     function showDetailProduct(id) {
         alert("detail product " + id)
     }
+    function deleteProduct(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc không?',
+            text: "Bạn sẽ không thể hoàn tác điều này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'không',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8081/home/shops/delete/${id}`).then((response) => {
+                    swalWithBootstrapButtons.fire(
+                        'Xóa Sản Phẩm',
+                        'Tập tin của bạn xóa thành công',
+                        'success'
+                    )
+
+                })
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Đã hủy',
+                    'Tập tin của bạn an toàn)',
+                    'error'
+                )
+            }
+        })
+    }
 
     function formSave(id) {
         setId(id)
         if (id!==-1){
             axios.get(`http://localhost:8081/home/products/${id}`).then((response) => {
                 setProduct(response.data)
-                console.log(response.data)
             })
         }
-
         document.getElementById("modal").style.display = "flex"
     }
 
@@ -290,7 +329,7 @@ export default function Crud() {
             values.id=id
         }
         values.imagePath = imagePath
-        console.log(values)
+
         axios.post(` http://localhost:8081/home/products/shop/${param.id}`, values).then((response) => {
             axios.get(`http://localhost:8081/home/categories`).then((response) => {
                 setCategories(response.data)
@@ -310,6 +349,9 @@ export default function Crud() {
     }
 
     function closeModal() {
+        document.getElementById("demo").reset()
+        setImage('')
+        setProgressPercent(0)
         document.getElementById("modal").style.display = "none"
     }
 

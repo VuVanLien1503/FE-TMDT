@@ -112,7 +112,7 @@
     padding: 0 8px;
 }
 
-.btn {
+.btn-login {
     font-size: 1.6rem;
     text-align: center;
     padding: 14px;
@@ -125,7 +125,7 @@
     width: 100%;
 }
 
-.btn:hover {
+.btn-login:hover {
     background-color: var(--primary-color);
 }
 

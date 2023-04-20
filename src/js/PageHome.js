@@ -14,13 +14,22 @@ export default function PageHome() {
     const [flag, setFlag] = useState(true)
     const [user, setUser] = useState([])
     const param = useParams()
-
+    const [search ,setSearch]=useState([
+        {
+            name:"",
+            idCategory:0,
+            priceMin:0,
+            priceMax:100000000
+        }
+    ])
 
     useEffect(() => {
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
             axios.get(`http://localhost:8081/home/products`).then((response) => {
                 setProducts(response.data.content)
+                setSearch(response.data.search)
+                console.log(response.data)
                 setFlag(false)
             }).catch(() => {
                 setFlag(false)
@@ -32,13 +41,18 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-
-
     }, [])
+
+    function searchByName(search) {
+        alert(search)
+        // axios.get(`/${search}`).then((response) => {
+        //     setProducts(response.data.content)
+        // })
+    }
     return (
         <>
             <div id="main" className="main-home">
-                <HeaderPage/>
+                <HeaderPage  onClick={searchByName}/>
                 <div id="body__home">
                     <div className="body__home-top">
                         <div className="grid wide">
@@ -115,18 +129,21 @@ export default function PageHome() {
                                                             <Link to={`detail/${product.id}`} >
                                                                 <img src={product.imagePath[0]} />
                                                             </Link>
-
-
                                                         </div>
 
                                                         <div className="product__content">
                                                             <div className="product__title">
-                                                            <Link to={`/shop/${product.shop.id}`}>
-                                                                <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
-                                                            </Link>
+                                                                <Link to={`detail/${product.id}`} >
+                                                                    <b>{product.name}</b>
+                                                                </Link>
+
                                                             </div >
                                                             <h2 className="product__rating">
-                                                                {product.name}
+                                                                <Link to={`/shop/${product.shop.id}`}>
+                                                                    <i className="info__icon fa-solid fa-store"></i>
+                                                                    <span style={{fontSize:10}}>{product.shop.name}</span>
+                                                                </Link>
+
                                                             </h2>
                                                             <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
