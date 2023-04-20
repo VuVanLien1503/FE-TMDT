@@ -7,7 +7,6 @@ import axios from "axios";
 import {Slide} from "react-slideshow-image";
 import Loading from "./Loading";
 import ShowAllProduct from "./ShowAllProduct";
-import Swal from "sweetalert2";
 
 export default function PageHome() {
     const [categories, setCategories] = useState([])
@@ -15,13 +14,23 @@ export default function PageHome() {
     const [flag, setFlag] = useState(true)
     const [user, setUser] = useState([])
     const param = useParams()
-
+    const [search ,setSearch]=useState([
+        {
+            name:"",
+            idCategory:0,
+            priceMin:0,
+            priceMax:100000000
+        }
+    ])
 
     useEffect(() => {
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
             axios.get(`http://localhost:8081/home/products`).then((response) => {
                 setProducts(response.data.content)
+                setSearch(response.data.search)
+                console.log(response.data)
+                setFlag(false)
             }).catch(() => {
                 setFlag(false)
             }).finally(() => {
@@ -32,13 +41,18 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-
-
     }, [])
+
+    function searchByName(search) {
+        alert(search)
+        // axios.get(`/${search}`).then((response) => {
+        //     setProducts(response.data.content)
+        // })
+    }
     return (
         <>
             <div id="main" className="main-home">
-                <HeaderPage/>
+                <HeaderPage  onClick={searchByName}/>
                 <div id="body__home">
                     <div className="body__home-top">
                         <div className="grid wide">
@@ -82,108 +96,54 @@ export default function PageHome() {
 
                     <div className="grid wide">
                         <div className="body__home-container">
-                            <div className="row">
-                                <div className="col l-2">
-                                    <div className="body__home-container-category">
-                                        <div className="body__home-container-title">
-                                            <i className="fa-solid fa-bars"></i>
-                                            <span>Danh Mục</span>
-                                        </div>
-                                        <ul className="body__home-container-nav">
-                                            <li className="">
-                                                <div className="body__home-container-nav-items">Tất cả</div>
-                                            </li>
-
-                                            <li className="">
-                                                <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
-                                            </li>
-                                            {categories.map((category) => {
-                                                return (
-                                                    <>
-                                                        <li className="col l-2">
-                                                            <div className="body__home-container-nav-items">{category.name}</div>
-                                                        </li>
-                                                    </>
-                                                )
-                                            })}
-                                        </ul>
-                                    </div>
-
-                                    <div className="body__home-container-filter">
-                                        <div className="body__home-container-title">
-                                            <i className="fa-solid fa-filter"></i>
-                                            <span>Bộ lọc tìm kiếm</span>
-                                        </div>
-                                        <div className="body__home-container-filter-items">
-                                            <span>Nơi bán</span>
-                                            <ul className="body__home-container-filter-items-nav">
-                                                <li className="body__home-container-filter-items-wrap">
-                                                    <input type={"checkbox"} id="hanoi"/>
-                                                    <label htmlFor={"hanoi"}>Hà Nội</label>
+                            <div className="body__home-container-category">
+                                <h2 className="body__home-container-title">Danh Mục</h2>
+                                <ul className="row body__home-container-nav">
+                                    <li className="col l-2">
+                                        <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
+                                    </li>
+                                    {categories.map((category) => {
+                                        return (
+                                            <>
+                                                <li className="col l-2">
+                                                    <div className="body__home-container-nav-items">{category.name}</div>
                                                 </li>
+                                            </>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
 
-                                                <li className="body__home-container-filter-items-wrap">
-                                                    <input type={"checkbox"} id="hcm"/>
-                                                    <label htmlFor={"hcm"}>Hồ Chí Minh</label>
-                                                </li>
-
-                                                <li className="body__home-container-filter-items-wrap">
-                                                    <input type={"checkbox"} id="tn"/>
-                                                    <label htmlFor={"tn"}>Thái Nguyên</label>
-                                                </li>
-
-                                                <li className="body__home-container-filter-items-wrap">
-                                                    <input type={"checkbox"} id="tb"/>
-                                                    <label htmlFor={"tb"}>Thái Bình</label>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div className="body__home-container-filter-items">
-                                            <span>Khoảng Giá</span>
-                                            <div className="filter-container__input">
-                                                <div className="filter__input">
-                                                    <input placeholder={"đ Từ"}/>
-                                                </div>
-
-                                                <div className="filter__input">
-                                                    <input placeholder={"đ Đến"}/>
-                                                </div>
-
-                                                <div className="filter__container-btn">
-                                                    <div className="btn btn-filter">Áp Dụng</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div className="body__home-container-products">
+                                <div className="body__home-container-products-title">
+                                    <h2>Sản phẩm</h2>
                                 </div>
 
-                                <div className="col l-10">
-                                    <div className="body__home-container-products">
-                                        <div className="body__home-container-products-title">
-                                            <h2>Sản phẩm</h2>
-                                        </div>
-
-                                        <div className="row">
-                                            {products!=null&&products.map((product) => {
-                                                return (
-                                                    <>
-                                                        <div className="col l-3">
-                                                            <Link to={"#"} className="body__container-product">
-                                                                <div className="product__img">
-                                                                    <img onClick={() => {
-                                                                        showDetailProduct(product.id)
-                                                                    }} src={product.imagePath[0]}/>
-                                                                </div>
+                                <div className="row">
+                                    {products!=null&&products.map((product) => {
+                                        return (
+                                            <>
+                                                <div className="col l-2">
+                                                    <Link to={"#"} className="body__container-product">
+                                                        <div className="product__img">
+                                                            <Link to={`detail/${product.id}`} >
+                                                                <img src={product.imagePath[0]} />
+                                                            </Link>
+                                                        </div>
 
                                                         <div className="product__content">
                                                             <div className="product__title">
-                                                            <Link to={`/shop/${product.shop.id}`}>
-                                                                <span style={{fontSize:15}}><b>{product.shop.name}</b></span>
-                                                            </Link>
+                                                                <Link to={`detail/${product.id}`} >
+                                                                    <b>{product.name}</b>
+                                                                </Link>
+
                                                             </div >
                                                             <h2 className="product__rating">
-                                                                {product.name}
+                                                                <Link to={`/shop/${product.shop.id}`}>
+                                                                    <i className="info__icon fa-solid fa-store"></i>
+                                                                    <span style={{fontSize:10}}>{product.shop.name}</span>
+                                                                </Link>
+
                                                             </h2>
                                                             <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
@@ -241,7 +201,6 @@ export default function PageHome() {
     )
 
     function showDetailProduct(id) {
-        alert("ShowProduct " + id)
     }
 
     function showShop(id) {

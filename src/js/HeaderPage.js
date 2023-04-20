@@ -3,7 +3,10 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PageHome from "./PageHome";
 
-export default function HeaderPage(props) {
+export default function HeaderPage(prop) {
+    const [search, setSearch] = useState("")
+
+
     let idAccount = localStorage.getItem("idAccount")
     console.log(idAccount)
     const [user, setUser] = useState([])
@@ -21,8 +24,6 @@ export default function HeaderPage(props) {
         })
 
     }, [])
-    console.log(user)
-    console.log(carts)
 
     return (
         <>
@@ -65,20 +66,23 @@ export default function HeaderPage(props) {
                                     <span className="header_logo--text-shop">FCBlue Mall</span>
                                 </Link>
                             </div>
-
                             <div className="col l-7">
                                 <div className="header__container-right">
                                     <div className="header__search">
+
+                                        {/* tìm kiếm sản phẩm theo tên*/}
+
                                         <input type="text" className="header__search-input"
-                                               placeholder="Tìm kiếm trong shop"/>
-                                        <div className="btn-login header__search-btn">
+                                               placeholder="Tìm kiếm trong shop"
+                                               onChange={(e) => setSearch(e.target.value)}/>
+                                        <div className="btn header__search-btn" onClick={() => prop.onClick(search)}>
                                             <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="col l-2">
-                                {nameLogin!=="lien"&& <Link to={"/cart"} className="header__cart">
+                                {nameLogin!=="lien"&& <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         <div className="has-cart">
@@ -90,18 +94,18 @@ export default function HeaderPage(props) {
                                                             <li className="has__cart-items">
                                                                 <div className="row">
                                                                     <div className="col l-1 has__cart-img">
-                                                                        <img src={element.product.imagePath[0]}/>
+                                                                        <img src={element.imagePath[0]}/>
                                                                     </div>
                                                                     <div className="col l-6">
                                                                         <div className="has__cart-head">
-                                                                            <div className="has__cart-head-title">{element.product.name}</div>
-                                                                            <div className="has__cart-head-desc">{element.product.category.name}</div>
+                                                                            <div className="has__cart-head-title">{element.name}</div>
+                                                                            <div className="has__cart-head-desc">{element.category.name}</div>
                                                                         </div>
                                                                     </div>
                                                                     <div className="col l-5">
                                                                         <div className="has__cart-action">
                                                                             <div className="has__cart-calculate">
-                                                                                <div className="has__cart-price">{element.product.price}</div>
+                                                                                <div className="has__cart-price">{element.price}</div>
                                                                                 {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                             </div>
                                                                             <div className="has__cart-delete">Xoá</div>
@@ -121,7 +125,7 @@ export default function HeaderPage(props) {
                                             <img src="/img/logo/empty-cart.webp"/>
                                         </div>
                                     </div>
-                                </Link>}
+                                </div>}
                             </div>
                         </div>
                     </div>

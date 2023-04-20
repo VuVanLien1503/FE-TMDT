@@ -244,8 +244,8 @@ export default function PageShop() {
                                                                         showDetailCategory(product.category.id)
                                                                     }}>{product.category.name}</h3>
                                                                 </div>
-                                                                <div className="product__address"
-                                                                     style={{marginLeft: 50}}>
+                                                                <div className="product__rating">
+                                                                    <h3> Số Lượng :  {product.quantity}</h3>
                                                                 </div>
                                                                 <div>
                                                                 </div>
