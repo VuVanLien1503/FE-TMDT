@@ -188,7 +188,7 @@ export default function PageHome() {
                                     {products!=null&&products.map((product) => {
                                         return (
                                             <>
-                                                <div className="col l-2">
+                                                <div className="col l-3">
                                                     <Link to={"#"} className="body__container-product">
                                                         <div className="product__img">
                                                             <Link to={`detail/${product.id}`} >
