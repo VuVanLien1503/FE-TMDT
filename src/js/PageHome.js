@@ -7,6 +7,7 @@ import axios from "axios";
 import {Slide} from "react-slideshow-image";
 import Loading from "./Loading";
 import ShowAllProduct from "./ShowAllProduct";
+import Swal from "sweetalert2";
 
 export default function PageHome() {
     const [categories, setCategories] = useState([])
@@ -41,6 +42,8 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
+
+
     }, [])
 
     function searchByName(search) {
@@ -96,28 +99,90 @@ export default function PageHome() {
 
                     <div className="grid wide">
                         <div className="body__home-container">
-                            <div className="body__home-container-category">
-                                <h2 className="body__home-container-title">Danh Mục</h2>
-                                <ul className="row body__home-container-nav">
-                                    <li className="col l-2">
-                                        <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
-                                    </li>
-                                    {categories.map((category) => {
-                                        return (
-                                            <>
-                                                <li className="col l-2">
-                                                    <div className="body__home-container-nav-items">{category.name}</div>
-                                                </li>
-                                            </>
-                                        )
-                                    })}
-                                </ul>
-                            </div>
+                            <div className="row">
+                                <div className="col l-2">
+                                    <div className="body__home-container-category">
+                                        <div className="body__home-container-title">
+                                            <i className="fa-solid fa-bars"></i>
+                                            <span>Danh Mục</span>
+                                        </div>
+                                        <ul className="body__home-container-nav">
+                                            <li className="">
+                                                <div className="body__home-container-nav-items">Tất cả</div>
+                                            </li>
 
-                            <div className="body__home-container-products">
-                                <div className="body__home-container-products-title">
-                                    <h2>Sản phẩm</h2>
+                                            <li className="">
+                                                <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
+                                            </li>
+                                            {categories.map((category) => {
+                                                return (
+                                                    <>
+                                                        <li className="">
+                                                            <div className="body__home-container-nav-items">{category.name}</div>
+                                                        </li>
+                                                    </>
+                                                )
+                                            })}
+                                        </ul>
+                                    </div>
+
+                                    <div className="body__home-container-filter">
+                                        <div className="body__home-container-title">
+                                            <i className="fa-solid fa-filter"></i>
+                                            <span>Bộ lọc tìm kiếm</span>
+                                        </div>
+                                        <div className="body__home-container-filter-items">
+                                            <span>Nơi bán</span>
+                                            <ul className="body__home-container-filter-items-nav">
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="hanoi"/>
+                                                    <label htmlFor={"hanoi"}>Hà Nội</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="hcm"/>
+                                                    <label htmlFor={"hcm"}>Hồ Chí Minh</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="tn"/>
+                                                    <label htmlFor={"tn"}>Thái Nguyên</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="tb"/>
+                                                    <label htmlFor={"tb"}>Thái Bình</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="body__home-container-filter-items">
+                                            <span>Khoảng Giá</span>
+                                            <div className="filter-container__input">
+                                                <div className="filter__input">
+                                                    <input placeholder={"đ Từ"}/>
+                                                </div>
+
+                                                <div className="filter__input">
+                                                    <input placeholder={"đ Đến"}/>
+                                                </div>
+
+                                                <div className="filter__container-btn">
+                                                    <div className="btn btn-filter">Áp Dụng</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div className="col l-10">
+                                    <div className="body__home-container-btn-sort">
+
+                                    </div>
+                                    <div className="body__home-container-products">
+                                        <div className="body__home-container-products-title">
+                                            <h2>Sản phẩm</h2>
+                                        </div>
 
                                 <div className="row">
                                     {products!=null&&products.map((product) => {
@@ -132,25 +197,18 @@ export default function PageHome() {
                                                         </div>
 
                                                         <div className="product__content">
-                                                            <div className="product__title">
-                                                                <Link to={`detail/${product.id}`} >
-                                                                    <b>{product.name}</b>
-                                                                </Link>
+                                                            <h2 className="product__title">{product.name}</h2 >
 
-                                                            </div >
-                                                            <h2 className="product__rating">
-                                                                <Link to={`/shop/${product.shop.id}`}>
-                                                                    <i className="info__icon fa-solid fa-store"></i>
-                                                                    <span style={{fontSize:10}}>{product.shop.name}</span>
-                                                                </Link>
+                                                            <div className="product__name-shop">
+                                                                <i className="fa-solid fa-store"></i>
+                                                                <Link to={`/shop/${product.shop.id}`}>{product.shop.name}</Link>
+                                                            </div>
 
-                                                            </h2>
                                                             <span className="product__tag-shop"> # {product.category.name}</span>
                                                             <div className="product__price">
                                                                 <span>{product.price}</span>
                                                                 <p>đ</p>
                                                             </div>
-                                                            -------------------------------------------------
                                                             <div className="product__address">
                                                                 <i className="fa-solid fa-location-dot"></i>
                                                                 <span>{product.shop.account.users.address}</span>
@@ -201,6 +259,7 @@ export default function PageHome() {
     )
 
     function showDetailProduct(id) {
+        alert("ShowProduct " + id)
     }
 
     function showShop(id) {
