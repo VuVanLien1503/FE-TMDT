@@ -78,7 +78,7 @@ export default function HeaderPage(props) {
                                 </div>
                             </div>
                             <div className="col l-2">
-                                {nameLogin!=="lien"&& <div className="header__cart">
+                                {nameLogin!=="lien"&& <Link to={"/cart"} className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         <div className="has-cart">
@@ -114,14 +114,14 @@ export default function HeaderPage(props) {
                                                 })}
                                             </ul>
                                             <div className="has__cart-container-btn">
-                                                <div className="btn btn-cart">Xem giỏ hàng</div>
+                                                <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                             </div>
                                         </div>
                                         <div className="no-cart">
                                             <img src="/img/logo/empty-cart.webp"/>
                                         </div>
                                     </div>
-                                </div>}
+                                </Link>}
                             </div>
                         </div>
                     </div>

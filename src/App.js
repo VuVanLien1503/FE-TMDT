@@ -22,7 +22,7 @@ function App() {
             {/*<Detail/>*/}
             {/*<Crud/>*/}
             {/*<Error/>*/}
-            <Cart/>
+            {/*<Cart/>*/}
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
@@ -31,6 +31,7 @@ function App() {
                 <Route path={"/"} element={<PageHome/>}/>
                 <Route path={"detail/:id"} element={<Detail/>}/>
                 <Route path={"/option/:id"} element={<Crud/>}/>
+                <Route path={"/cart"} element={<Cart/>}/>
             </Routes>
         </>
     );

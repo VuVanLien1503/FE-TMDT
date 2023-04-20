@@ -85,10 +85,13 @@ export default function PageHome() {
                             <div className="row">
                                 <div className="col l-2">
                                     <div className="body__home-container-category">
-                                        <h2 className="body__home-container-title">Danh Mục</h2>
+                                        <div className="body__home-container-title">
+                                            <i className="fa-solid fa-bars"></i>
+                                            <span>Danh Mục</span>
+                                        </div>
                                         <ul className="body__home-container-nav">
                                             <li className="">
-                                                <div className="body__home-container-nav-items">Đồ dùng điện tử</div>
+                                                <div className="body__home-container-nav-items">Tất cả</div>
                                             </li>
 
                                             <li className="">
@@ -104,6 +107,54 @@ export default function PageHome() {
                                                 )
                                             })}
                                         </ul>
+                                    </div>
+
+                                    <div className="body__home-container-filter">
+                                        <div className="body__home-container-title">
+                                            <i className="fa-solid fa-filter"></i>
+                                            <span>Bộ lọc tìm kiếm</span>
+                                        </div>
+                                        <div className="body__home-container-filter-items">
+                                            <span>Nơi bán</span>
+                                            <ul className="body__home-container-filter-items-nav">
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="hanoi"/>
+                                                    <label htmlFor={"hanoi"}>Hà Nội</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="hcm"/>
+                                                    <label htmlFor={"hcm"}>Hồ Chí Minh</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="tn"/>
+                                                    <label htmlFor={"tn"}>Thái Nguyên</label>
+                                                </li>
+
+                                                <li className="body__home-container-filter-items-wrap">
+                                                    <input type={"checkbox"} id="tb"/>
+                                                    <label htmlFor={"tb"}>Thái Bình</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div className="body__home-container-filter-items">
+                                            <span>Khoảng Giá</span>
+                                            <div className="filter-container__input">
+                                                <div className="filter__input">
+                                                    <input placeholder={"đ Từ"}/>
+                                                </div>
+
+                                                <div className="filter__input">
+                                                    <input placeholder={"đ Đến"}/>
+                                                </div>
+
+                                                <div className="filter__container-btn">
+                                                    <div className="btn btn-filter">Áp Dụng</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -79,7 +79,7 @@ function sweetalert2(input) {
                                                 <div className="form">
                                                     <div className="form__field">
                                                         <div className="form__field-container">
-                                                            <Field name={'email'} type="email" placeholder="Email(*)"/>
+                                                            <Field name={'email'} type="email" placeholder="Email"/>
                                                             <div className={'error__message'}><ErrorMessage
                                                                 name={'email'}/></div>
                                                         </div>
@@ -89,7 +89,7 @@ function sweetalert2(input) {
                                                     <div className="form__field">
                                                         <div className="form__field-container">
                                                             <Field name={'password'} id="password" type={status}
-                                                                   placeholder="Mật khẩu(*)"/>
+                                                                   placeholder="Mật khẩu"/>
                                                             <div id="event" className="form__field-items-icon-login"
                                                                  onClick={setStatusPassword}>
                                                                 <i id="eye-open" className="fa-solid fa-eye"></i>
