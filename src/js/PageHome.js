@@ -250,10 +250,7 @@ export default function PageHome() {
                             </div>
                         </div>
                     </div>
-                </div>
-
                 <FooterForm/>
-            </div>
             {flag && <Loading/>}
         </>
     )
