@@ -9,6 +9,7 @@ import Loading from "./js/Loading";
 import Detail from "./js/Detail";
 import Crud from "./js/Crud";
 import Error from "./js/404";
+import Cart from "./js/Cart";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
             {/*<Detail/>*/}
             {/*<Crud/>*/}
             {/*<Error/>*/}
+            <Cart/>
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
