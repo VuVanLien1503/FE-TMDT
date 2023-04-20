@@ -33,7 +33,8 @@ export default function Detail() {
                             <div className="col l-5">
                                 <div className="body__detail-container-left">
                                     <div className="container__img-primary">
-                                        <img src={image[0]} />
+                                        {/*<img src={image[0]} />*/}
+                                        <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
                                     </div>
 
                                     <ul className="container__img-second">
@@ -104,12 +105,48 @@ export default function Detail() {
                                             </div>
                                         </div>
 
-                                </div>
+                                    </div>
 
-                            </div>
+                                    <div className="row detail__info-support">
+                                        <div className="col l-6">
+                                            <div className="detail__info-support-items">
+                                                <i className="fa-solid fa-tag"></i>
+                                                <span>Hàng chính hãng</span>
+                                            </div>
+
+                                            <div className="detail__info-support-items">
+                                                <i className="fa-sharp fa-solid fa-truck-fast"></i>
+                                                <span>Giao hàng miễn phí trong 90 phút</span>
+                                            </div>
+
+                                            <div className="detail__info-support-items">
+                                                <i className="fa-solid fa-retweet"></i>
+                                                <span>Chính sách đổi trả</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="col l-6">
+                                            <div className="detail__info-support-items">
+                                                <i className="fas fa-shield"></i>
+                                                <span>Bảo hành 24 tháng</span>
+                                            </div>
+
+                                            <div className="detail__info-support-items">
+                                                <i className="fa-solid fa-gears"></i>
+                                                <span>Chính sách trả góp</span>
+                                            </div>
+
+                                            <div className="detail__info-support-items">
+                                                <i className="fa-solid fa-piggy-bank"></i>
+                                                <span>Hàng chính hãng</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="btn btn-add-cart">Đặt hàng</div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

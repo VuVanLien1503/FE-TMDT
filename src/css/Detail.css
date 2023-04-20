@@ -69,7 +69,8 @@
 }
 
 .detail__info {
-
+    margin-bottom: 30px;
+    padding-bottom: 30px;
 }
 
 .detail__info-shared {
@@ -105,6 +106,7 @@
 
 .detail__desc {
     color: var(--fift-color);
+    height: 207px;
 }
 
 .detail__info-quantity {
@@ -144,4 +146,28 @@
 
 .detail__quantity-increase {
 
+}
+
+.detail__info-support {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    padding-top: 20px;
+    background: #F5F5F5;
+}
+
+.detail__info-support-items {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.detail__info-support-items > i {
+    display: flex;
+    justify-content: center;
+    width: 28px;
+    align-items: center;
+    color: #666;
+}
+
+.detail__info-support-items > span {
+    color: #666;
 }
