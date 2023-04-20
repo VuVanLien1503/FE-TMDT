@@ -90,18 +90,18 @@ export default function HeaderPage(props) {
                                                             <li className="has__cart-items">
                                                                 <div className="row">
                                                                     <div className="col l-1 has__cart-img">
-                                                                        <img src={element.imagePath[0]}/>
+                                                                        <img src={element.product.imagePath[0]}/>
                                                                     </div>
                                                                     <div className="col l-6">
                                                                         <div className="has__cart-head">
-                                                                            <div className="has__cart-head-title">{element.name}</div>
-                                                                            <div className="has__cart-head-desc">{element.category.name}</div>
+                                                                            <div className="has__cart-head-title">{element.product.name}</div>
+                                                                            <div className="has__cart-head-desc">{element.product.category.name}</div>
                                                                         </div>
                                                                     </div>
                                                                     <div className="col l-5">
                                                                         <div className="has__cart-action">
                                                                             <div className="has__cart-calculate">
-                                                                                <div className="has__cart-price">{element.price}</div>
+                                                                                <div className="has__cart-price">{element.product.price}</div>
                                                                                 {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                             </div>
                                                                             <div className="has__cart-delete">Xoá</div>
