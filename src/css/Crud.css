@@ -29,7 +29,11 @@
 }
 
 .btn.btn-create {
-    background: var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
+}
+
+.btn.btn-create:hover {
+    background: linear-gradient(180deg, var(--primary-color), var(--fift-color));
 }
 
 .table__head {

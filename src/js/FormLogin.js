@@ -42,7 +42,7 @@ function sweetalert2(input) {
         icon:icon,
         title: input,
         showConfirmButton: false,
-        timer: 1700
+        timer: 2000
     }).then(r => {
 
     })
@@ -63,7 +63,7 @@ function sweetalert2(input) {
                 validationSchema={Validation}>
 
                 <Form>
-                    <div id="main">
+                    <div id="main-form">
                         <HeaderForm/>
                         {/*Start Body & Form*/}
                         <div id="body">
