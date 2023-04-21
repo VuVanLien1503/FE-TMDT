@@ -6,7 +6,6 @@ import PageHome from "./PageHome";
 export default function HeaderPage(prop) {
     const [search, setSearch] = useState("")
 
-
     let idAccount = localStorage.getItem("idAccount")
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
@@ -50,7 +49,46 @@ export default function HeaderPage(prop) {
                                 {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
                                 {nameLogin!==''&&   <li className="header__nav-items" onClick={logout}>Đăng xuất</li>}
                                 {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
-                                {nameLogin!==''&&  <li className="header__nav-items"><Link to={"/login"}>{nameLogin}</Link></li>}
+                                {nameLogin!==''&&  <li className="header__nav-items">
+                                    <div className="header__nav-items-img">
+                                        <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                    </div>
+                                    <div className="nav-items__name-user">{nameLogin}</div>
+                                    <ul className="grid wide header__nav-items-container">
+                                        <li className="header__nav-items-container-info">
+                                            <Link to={"/shop/"} className="row">
+                                                <div className="col l-2 nav-items__container-icon">
+                                                    <i className="fa-solid fa-store"></i>
+                                                </div>
+                                                <div className="col l-10 nav-items__container-text">
+                                                    Cửa hàng của tôi
+                                                </div>
+                                            </Link>
+                                        </li>
+
+                                        <li className="header__nav-items-container-info">
+                                            <div className="row">
+                                                <div className="col l-2 nav-items__container-icon">
+                                                    <i className="fa-solid fa-user"></i>
+                                                </div>
+                                                <div className="col l-10 nav-items__container-text">
+                                                    Tài Khoản
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li className="header__nav-items-container-info">
+                                            <Link to={"/login"} className="row">
+                                                <div className="col l-2 nav-items__container-icon">
+                                                    <i className="fa-solid fa-right-from-bracket"></i>
+                                                </div>
+                                                <div className="col l-10 nav-items__container-text">
+                                                    Đăng xuất
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>}
                             </ul>
                         </div>
                     </div>
@@ -84,11 +122,11 @@ export default function HeaderPage(prop) {
                                 {nameLogin!=="lien"&& <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
+                                        {carts.length !== 0 &&carts.map((element)=>{
+                                            return(
                                         <div className="has-cart">
                                             <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                             <ul className="has__cart-container">
-                                                {carts!==''&& carts.map((element)=>{
-                                                    return(
                                                         <>
                                                             <li className="has__cart-items">
                                                                 <div className="row">
@@ -113,16 +151,19 @@ export default function HeaderPage(prop) {
                                                                 </div>
                                                             </li>
                                                         </>
-                                                    )
-                                                })}
                                             </ul>
                                             <div className="has__cart-container-btn">
                                                 <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                             </div>
                                         </div>
-                                        <div className="no-cart">
-                                            <img src="/img/logo/empty-cart.webp"/>
-                                        </div>
+                                            )
+                                        })}
+
+                                        {carts.length === 0 &&
+                                            <div className="no-cart">
+                                                <img src="/img/logo/empty-cart.webp"/>
+                                            </div>
+                                        }
                                     </div>
                                 </div>}
                             </div>

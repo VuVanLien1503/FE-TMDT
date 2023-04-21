@@ -24,6 +24,8 @@
 
 .container__img-second {
     display: flex;
+    height: 80px;
+    overflow-x: auto;
 }
 
 
@@ -106,7 +108,7 @@
 
 .detail__desc {
     color: var(--fift-color);
-    height: 207px;
+    height: 137px;
 }
 
 .detail__info-quantity {

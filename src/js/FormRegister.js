@@ -84,7 +84,7 @@ export default function FormRegister() {
                 validationSchema={Validation}>
 
                 <Form>
-                    <div id="main">
+                    <div id="main-form">
                         <HeaderForm/>
 
                         {/*Start Body & Form*/}

@@ -199,7 +199,11 @@ export default function PageHome() {
 
                                 <div className="col l-10">
                                     <div className="body__home-container-btn-sort">
-
+                                        <div className="row">
+                                            <div className="col l-2">
+                                                <div className="btn">Sắp xếp</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="body__home-container-products">
                                         <div className="body__home-container-products-title">
@@ -214,7 +218,8 @@ export default function PageHome() {
                                                     <Link to={"#"} className="body__container-product">
                                                         <div className="product__img">
                                                             <Link to={`detail/${product.id}`} >
-                                                                <img src={product.imagePath[0]} />
+                                                                <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
+                                                                {/*<img src={product.imagePath[0]} />*/}
                                                             </Link>
                                                         </div>
 
