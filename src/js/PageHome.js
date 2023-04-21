@@ -22,7 +22,24 @@ export default function PageHome() {
     const [priceMin, setPriceMin] = useState("0")
     const [priceMax, setPriceMax] = useState("100000000")
     const [idCategory, setIdCategory] = useState("0")
+    const [checkSort,setCheckSort]=useState(true)
 
+
+    function sortPrice() {
+        setCheckSort(!checkSort)
+        if (checkSort){
+            products.sort((a, b) => {
+                return a.price - b.price
+            })
+            setProducts([...products])
+        }else {
+            products.sort((a, b) => {
+                return b.price - a.price
+            })
+            setProducts([...products])
+        }
+
+    }
     function searchByName(input) {
         const a = {
             name: input,
@@ -30,11 +47,9 @@ export default function PageHome() {
             priceMin: priceMin,
             priceMax: priceMax
         }
-        console.log(a)
         axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
             setProducts(response.data.products.content)
             setSearch(response.data.search)
-            console.log(response)
         })
     }
 
@@ -62,11 +77,20 @@ export default function PageHome() {
 
     }, [])
 
-
+function backToHome(){
+    axios.get(`http://localhost:8081/home/products`).then((response) => {
+        setProducts(response.data.content)
+        resetValue()
+    })
+}
+function resetValue(){
+    document.getElementById("priceMin").value=""
+    document.getElementById("priceMax").value=""
+}
     return (
         <>
             <div id="main" className="main-home">
-                <HeaderPage onClick={searchByName}/>
+                <HeaderPage onClick={searchByName} home={backToHome}/>
                 <div id="body__home">
                     <div className="body__home-top">
                         <div className="grid wide">
@@ -156,6 +180,7 @@ export default function PageHome() {
                                             <i className="fa-solid fa-filter"></i>
                                             <span>Bộ lọc tìm kiếm</span>
                                         </div>
+
                                         <div className="body__home-container-filter-items">
                                             <span>Nơi bán</span>
                                             <ul className="body__home-container-filter-items-nav">
@@ -177,20 +202,24 @@ export default function PageHome() {
                                             <span>Khoảng Giá</span>
                                             <div className="filter-container__input">
                                                 <div className="filter__input">
-                                                    <input placeholder={"đ Từ"} onChange={(e) => {
+                                                    <input id={"priceMin"} placeholder={"đ Từ"} onChange={(e) => {
                                                         setPriceMin(e.target.value)
                                                     }}/>
                                                 </div>
 
                                                 <div className="filter__input">
-                                                    <input placeholder={"đ Đến"} onChange={(e) => {
+                                                    <input id={"priceMax"} placeholder={"đ Đến"} onChange={(e) => {
                                                         setPriceMax(e.target.value)
                                                     }}/>
                                                 </div>
 
                                                 <div className="filter__container-btn">
                                                     <div className="btn btn-filter"
-                                                    onClick={()=>searchByName("")}>Áp Dụng</div>
+                                                    onClick={()=>
+                                                        sortPrice()}>
+                                                        {checkSort&& "Giá Tăng Dần"}
+                                                        {!checkSort&& "Giá Giảm Dần"}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

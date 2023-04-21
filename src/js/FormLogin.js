@@ -32,7 +32,7 @@ function sweetalert2(input) {
             icon="success"
         }
         if (input==="Mật Khẩu Không Chính Xác"){
-            icon="warning"
+            icon="error"
         }
         if (input==="Email Không Tồn Tại"){
             icon="error"

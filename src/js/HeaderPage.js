@@ -58,11 +58,12 @@ export default function HeaderPage(prop) {
                     <div className="header__container">
                         <div className="row header__container--align">
                             <div className="col l-3">
-                                <Link to={"/"} className="header__logo-shop">
+                                <Link to={"#"} className="header__logo-shop">
                                     <i className="logo-icon-shop fa-solid fa-cloud">
                                         <span className="logo-icon__text-shop">f</span>
                                     </i>
-                                    <span className="header_logo--text-shop">FCBlue Mall</span>
+                                    <span className="header_logo--text-shop"
+                                    onClick={prop.home}>FCBlue Mall</span>
                                 </Link>
                             </div>
                             <div className="col l-7">
