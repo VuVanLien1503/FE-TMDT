@@ -158,9 +158,7 @@ function sweetalert2(input) {
     }
 
     function sendData(values) {
-        console.log(values)
         axios.post(`http://localhost:8081/accounts/login`, values).then((response) => {
-            console.log(response.data)
             if (response.data.account !== null) {
                 setUser(response.data.account.users)
                 setAccount(response.data.account)
