@@ -8,7 +8,6 @@ export default function HeaderPage(prop) {
 
 
     let idAccount = localStorage.getItem("idAccount")
-    console.log(idAccount)
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
@@ -74,7 +73,7 @@ export default function HeaderPage(prop) {
 
                                         <input type="text" className="header__search-input"
                                                placeholder="Tìm kiếm trong shop"
-                                               onChange={(e) => setSearch(e.target.value)}/>
+                                               onChange={(e) => prop.onClick(e.target.value)}/>
                                         <div className="btn header__search-btn" onClick={() => prop.onClick(search)}>
                                             <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
                                         </div>
