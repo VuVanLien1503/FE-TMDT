@@ -338,7 +338,7 @@ button.each-slideshow-indicator {
 .header__nav-items-container:before {
     position: absolute;
     content: "";
-    top: -17%;
+    top: -11%;
     right: 30px;
     border-width: 7px 10px;
     border-style: solid;

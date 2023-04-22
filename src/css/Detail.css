@@ -1,6 +1,6 @@
 .body__detail {
     background: #f5f5f5;
-    padding-top: 55px;
+    padding-top: 114px;
     padding-bottom: 30px;
 }
 
@@ -71,14 +71,14 @@
 }
 
 .detail__info {
-    margin-bottom: 30px;
-    padding-bottom: 30px;
+    margin-bottom: -25px;
+    padding-bottom: 25px;
 }
 
 .detail__info-shared {
     font-size: 1.6rem;
-    padding: 10px 0;
-    margin: 6px 0;
+    padding: 12px 0;
+    margin: -17px 0 10px 0;
 }
 
 .detail__info-shared-title {
@@ -108,7 +108,7 @@
 
 .detail__desc {
     color: var(--fift-color);
-    height: 137px;
+    height: 90px;
 }
 
 .detail__info-quantity {

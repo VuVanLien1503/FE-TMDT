@@ -143,9 +143,7 @@ export default function PageHome() {
             setCategories(response.data)
             axios.get(`http://localhost:8081/home/products?page=${pageNumber}`).then((response) => {
                 setProducts(response.data.content)
-                console.log(response.data.content)
                 setTotalPages(response.data.totalPages)
-                console.log(response.data.totalPages)
                 setFlag(false)
             }).catch(() => {
                 setFlag(false)
@@ -336,9 +334,8 @@ export default function PageHome() {
                                                             <Link to={"#"} className="body__container-product">
                                                                 <div className="product__img">
                                                                     <Link to={`detail/${product.id}`}>
-                                                                        <img
-                                                                            src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
-                                                                        {/*<img src={product.imagePath[0]} />*/}
+                                                                        {/*<img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>*/}
+                                                                        <img src={product.imagePath[0]} />
                                                                     </Link>
                                                                 </div>
 

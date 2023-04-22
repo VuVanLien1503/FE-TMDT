@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 
 export default function HeaderPage(prop) {
+
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .required('Vui lòng nhập tên')
@@ -21,14 +22,15 @@ export default function HeaderPage(prop) {
         address: Yup.string()
             .required('Vui lòng nhập địa chỉ')
             .min(4, "Tối thiểu 4 ký tự"),
-
     });
+
+    const [checkComponent, setCheckComponent] = useState("")
+
 
     const [progressPercent, setProgressPercent] = useState(0)
     const [image, setImage] = useState("")
     const [id, setId] = useState(0)
     const [check, setCheck] = useState(false)
-
 
     const [search, setSearch] = useState("")
 
@@ -40,6 +42,7 @@ export default function HeaderPage(prop) {
     const [carts, setCart] = useState([])
     const [render,setRender]=useState(false)
     useEffect(() => {
+        setCheckComponent(prop.component)
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
             setNameLogin(response.data.name)
@@ -50,7 +53,6 @@ export default function HeaderPage(prop) {
         })
 
     }, [render])
-
     return (
         <>
             <div className="header__primary">
@@ -58,7 +60,7 @@ export default function HeaderPage(prop) {
                     <div className="header__navbar">
                         <div className="header__navbar-items">
                             <ul className="header__nav">
-                                <li className="header__nav-items">Trang chủ FCBlue Mall</li>
+                                <li className="header__nav-items"><Link to={"/"}>Trang chủ FCBlue Mall</Link></li>
                                 <li className="header__nav-items">Tải ứng dụng</li>
                                 <li className="header__nav-items">
                                     Kết nối
@@ -137,7 +139,8 @@ export default function HeaderPage(prop) {
                         </div>
                     </div>
 
-                    <div className="header__container">
+                    {checkComponent!=="detail" &&
+                        <div className="header__container">
                         <div className="row header__container--align">
                             <div className="col l-3">
                                 <Link to={"/"} className="header__logo-shop">
@@ -166,6 +169,70 @@ export default function HeaderPage(prop) {
                             <div className="col l-2">
                                 {localStorage.getItem("role")!=="2" && <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
+                                    <div className="header__cart-container">
+                                        {carts.length !== 0 && carts.map((element) => {
+                                            return (
+                                                <div className="has-cart">
+                                                    <h3 className="cart__title">Sản phẩm đã chọn</h3>
+                                                    <ul className="has__cart-container">
+                                                        <>
+                                                            <li className="has__cart-items">
+                                                                <div className="row">
+                                                                    <div className="col l-1 has__cart-img">
+                                                                        <img src={element.product.imagePath[0]}/>
+                                                                    </div>
+                                                                    <div className="col l-6">
+                                                                        <div className="has__cart-head">
+                                                                            <div
+                                                                                className="has__cart-head-title">{element.product.name}</div>
+                                                                            <div
+                                                                                className="has__cart-head-desc">{element.product.category.name}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col l-5">
+                                                                        <div className="has__cart-action">
+                                                                            <div className="has__cart-calculate">
+                                                                                <div
+                                                                                    className="has__cart-price">{element.product.price}</div>
+                                                                                {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                            </div>
+                                                                            <div className="has__cart-delete">Xoá</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </>
+                                                    </ul>
+                                                    <div className="has__cart-container-btn">
+                                                        <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+
+                                        {carts.length === 0 &&
+                                            <div className="no-cart">
+                                                <img src="/img/logo/empty-cart.webp"/>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>}
+                            </div>
+                        </div>
+                    </div>}
+                    {checkComponent ==="detail" &&
+                        <div className="header__container">
+                            <div className="row header__container--align">
+                                <div className="col l-12">
+                                    <Link to={`/shop/${prop.shop.id}`} className="header__logo-shop">
+                                        <span className="header_logo--text-shop"  style={{marginLeft:300,marginTop:20}}>
+                                            {prop.shop.name} Kính Chào Quý Khách....!
+                                        </span>
+                                    </Link>
+                                </div>
+                                <div className="col l-2">
+                                    {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                        <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                         <div className="header__cart-container">
                                             {carts.length !== 0 && carts.map((element) => {
                                                 return (
@@ -213,10 +280,10 @@ export default function HeaderPage(prop) {
                                                 </div>
                                             }
                                         </div>
-                                </div>}
+                                    </div>}
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>}
                 </div>
             </div>
             <div id="modal">

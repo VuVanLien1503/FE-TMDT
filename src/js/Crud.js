@@ -29,6 +29,21 @@ export default function Crud() {
         category: Yup.object()
             .required('Vui lòng chọn danh mục sản phẩm'),
     });
+    const validationSchemaVoucher = Yup.object().shape({
+        name: Yup.string()
+            .required('Vui lòng nhập mã khuyến mãi')
+            .min(6,"Tối thiểu 6 ký tự")
+            .max(12,"Tối đa 12 ký tự"),
+        percent: Yup.number()
+            .required('Vui lòng nhập phần trăm khuyến mãi')
+            .min(1,"số nhập phải lớn hơn 0")
+            .max(100,"số nhập phải nhỏ hơn 100"),
+
+        quantity: Yup.number()
+            .required('Vui lòng nhập số mã khuyến mãi')
+            .positive('Số lượng sản phẩm phải lớn hơn 0'),
+
+    });
 
     const [progressPercent, setProgressPercent] = useState(0)
     const [image, setImage] = useState("")
@@ -108,7 +123,7 @@ export default function Crud() {
                             </div>
 
                             <div className="col l-2 container-btn-create">
-                                <div className="btn btn-create">Thêm mã giảm giá</div>
+                                <div className="btn btn-create" onClick={()=>openModalVoucher}>Thêm mã giảm giá</div>
                             </div>
                         </div>
                         <div>
@@ -154,7 +169,7 @@ export default function Crud() {
                 </div>
             </div>
             <FooterForm/>
-            <div id="modal">
+            <div id="modalAddProduct">
                 <div className="modal__background" onClick={closeModal}></div>
                 <div className="modal__container">
                         <span className="modal__close" onClick={closeModal}>
@@ -288,9 +303,103 @@ export default function Crud() {
                 </div>
             </div>
 
+            {/*modal add voucher*/}
+            <div id="modalAddVoucher">
+                <div className="modal__background" onClick={closeModalVoucher}></div>
+                <div className="modal__container">
+                        <span className="modal__close" onClick={closeModalVoucher}>
+                            <i className="modal__close-icon fa-solid fa-xmark"></i>
+                        </span>
+                    <h1 className="modal__container-title" style={{marginLeft: 100}}>
+                        <span>Thêm Mã Giảm Giá</span>
+                    </h1>
+
+                    {/*formik open*/}
+                    <Formik
+                        initialValues={{
+                            name: "",
+                            percent: "",
+                            quantity: "",
+                        }}
+                        validationSchema={validationSchemaVoucher}
+                        onSubmit={(values) => {
+                            saveVoucher(values)
+                        }}
+                        enableReinitialize={true}
+                    >
+                        {(formik) => (
+                            <Form id={"voucher"}>
+                                <div>
+                                    <div>
+                                        <ErrorMessage name="name"/>
+                                    </div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'name'} type="text"
+                                                   placeholder="Nhập mã giảm giá (*)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div><ErrorMessage name="percent"/></div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'percent'} type="number"
+                                                   placeholder="Phần trăm khuyến mãi (*)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <ErrorMessage name="quantity"/>
+                                    </div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'quantity'} type="number"
+                                                   placeholder="Số lượng mã giảm giá"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="container__btn"
+                                     style={{marginLeft: 100, marginBottom: 20, marginTop: 10}}>
+                                    <div className="row">
+                                        <div className="col l-8">
+                                            <div className="container__btn">
+                                            </div>
+                                            <button type={"submit"} className={'btn btn-primary'}
+                                                    aria-disabled={check}>Xác Nhận
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                    {/*formik close*/}
+
+                </div>
+            </div>
+
         </>
 
     )
+
+    // bắt đầuxử lý voucher
+
+    function saveVoucher(values){
+        console.log(values)
+    }
+    function openModalVoucher(){
+        document.getElementById("modalAddVoucher").style.display = "flex"
+    }
+    function closeModalVoucher(){
+        document.getElementById("voucher").reset()
+        document.getElementById("modalAddVoucher").style.display = "none"
+    }
+    // kết thúc sử lý voucher
+
+
     function showDetailProduct(id) {
         alert("detail product " + id)
     }
@@ -342,7 +451,7 @@ export default function Crud() {
                 setProduct(response.data)
             })
         }
-        document.getElementById("modal").style.display = "flex"
+        document.getElementById("modalAddProduct").style.display = "flex"
     }
 
     function save(values) {
@@ -373,7 +482,7 @@ export default function Crud() {
         document.getElementById("demo").reset()
         setImage('')
         setProgressPercent(0)
-        document.getElementById("modal").style.display = "none"
+        document.getElementById("modalAddProduct").style.display = "none"
     }
 
     function uploadFile(e) {
@@ -410,4 +519,7 @@ export default function Crud() {
         e.currentTarget.value = null;
 
     }
+
+
+
 }
