@@ -6,6 +6,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import storage from "./FirebaseConfig";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 
 export default function HeaderPage(prop) {
     const validationSchema = Yup.object().shape({
@@ -37,10 +38,10 @@ export default function HeaderPage(prop) {
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
     const [carts, setCart] = useState([])
+    const [render,setRender]=useState(false)
     useEffect(() => {
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
-            console.log(response.data)
             setNameLogin(response.data.name)
         })
 
@@ -48,7 +49,7 @@ export default function HeaderPage(prop) {
             setCart(response.data)
         })
 
-    }, [])
+    }, [render])
 
     return (
         <>
@@ -94,6 +95,16 @@ export default function HeaderPage(prop) {
                                                     </div>
                                                     <div className="col l-10 nav-items__container-text">
                                                         Cửa hàng của tôi
+                                                    </div>
+                                                </Link>
+                                            </li>}
+                                        {role !== "2" &&
+                                            <li className="header__nav-items-container-info">
+                                                <Link to={`#`} className="row">
+                                                    <div className="col l-2 nav-items__container-icon">
+                                                        <i className="fa-solid fa-eye"></i>                                                    </div>
+                                                    <div className="col l-10 nav-items__container-text">
+                                                        Lịch Sử Mua Hàng
                                                     </div>
                                                 </Link>
                                             </li>}
@@ -231,7 +242,11 @@ export default function HeaderPage(prop) {
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
-                            console.log(values);
+                            if (image !== "") {
+                                values.pathImage = image
+                            }else {
+                                values.pathImage=user.pathImage
+                            }
                             saveUser(values)
                         }}
                         enableReinitialize={true}
@@ -283,8 +298,11 @@ export default function HeaderPage(prop) {
                                 <div>
                                     {
                                         !image &&
-                                        <h3 className='inner-bar'
-                                            style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
+                                        <div>
+                                            <img src={user.pathImage} alt="" style={{width: 100, height: 100}}/>
+                                            <h3 className='inner-bar'
+                                                style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
+                                        </div>
                                     }
                                     {
                                         image &&
@@ -354,13 +372,21 @@ export default function HeaderPage(prop) {
     }
 
     function saveUser(values) {
-        if (image !== null) {
-            values.pathImage = image
-        }
-        axios.post(`http://localhost:8081/accounts/update-user`, values).then((response) => {
-            closeModal()
-            navigate('/')
 
+        console.log(values)
+        axios.post(`http://localhost:8081/accounts/update-user`, values).then((response) => {
+
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Cập Nhật Thành Công',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(r => {
+                setRender(!render)
+                navigate('/')
+                closeModal()
+            })
         })
     }
 

@@ -11,6 +11,10 @@ import Swal from "sweetalert2";
 import {paste} from "@testing-library/user-event/dist/paste";
 
 export default function PageHome() {
+    const [pageNumber, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+
+
     const [categories, setCategories] = useState([])
     const [city, setCity] = useState([])
     const [products, setProducts] = useState([])
@@ -53,9 +57,10 @@ export default function PageHome() {
                 priceMin: "0",
                 priceMax: "100000000"
             }
-            axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+            axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
                 setProducts(response.data.products.content)
                 setSearch(response.data.search)
+                setTotalPages(response.data.products.content.totalPages)
             })
         } else {
             if (priceMin === '') {
@@ -65,9 +70,11 @@ export default function PageHome() {
                     priceMin: "0",
                     priceMax: priceMax
                 }
-                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
                     setProducts(response.data.products.content)
                     setSearch(response.data.search)
+                    setTotalPages(response.data.products.content.totalPages)
+
                 })
             } else {
                 const a = {
@@ -76,9 +83,10 @@ export default function PageHome() {
                     priceMin: priceMin,
                     priceMax: priceMax
                 }
-                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
                     setProducts(response.data.products.content)
                     setSearch(response.data.search)
+                    setTotalPages(response.data.products.content.totalPages)
                 })
             }
             if (priceMax === '') {
@@ -88,9 +96,10 @@ export default function PageHome() {
                     priceMin: priceMin,
                     priceMax: "100000000"
                 }
-                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
                     setProducts(response.data.products.content)
                     setSearch(response.data.search)
+                    setTotalPages(response.data.products.content.totalPages)
                 })
             } else {
                 const a = {
@@ -99,13 +108,32 @@ export default function PageHome() {
                     priceMin: priceMin,
                     priceMax: priceMax
                 }
-                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
                     setProducts(response.data.products.content)
                     setSearch(response.data.search)
+                    setTotalPages(response.data.products.content.totalPages)
                 })
             }
 
         }
+    }
+    function isPrevious() {
+        setPage(pageNumber - 1)
+        console.log(pageNumber)
+        axios.get(`http://localhost:8081/home/product?page=${pageNumber-1}`).then((response) => {
+            setProducts(response.data.products.content)
+            setSearch(response.data.search)
+
+        })
+
+    }
+    function isNext() {
+        setPage(pageNumber + 1)
+        console.log(pageNumber)
+        axios.get(`http://localhost:8081/home/products?page=${pageNumber + 1}`).then((response) => {
+            setProducts(response.data.products.content)
+            setSearch(response.data.search)
+        })
     }
     useEffect(() => {
         axios.get(`http://localhost:8081/home/city`).then((repose) => {
@@ -113,9 +141,11 @@ export default function PageHome() {
         })
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-            axios.get(`http://localhost:8081/home/products`).then((response) => {
+            axios.get(`http://localhost:8081/home/products?page=${pageNumber}`).then((response) => {
                 setProducts(response.data.content)
-
+                console.log(response.data.content)
+                setTotalPages(response.data.totalPages)
+                console.log(response.data.totalPages)
                 setFlag(false)
             }).catch(() => {
                 setFlag(false)
@@ -127,7 +157,7 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-    }, [])
+    }, [pageNumber])
     useEffect(searchByName, [idCategory, priceMin, priceMax,nameProduct])
 
     function backToHome() {
@@ -341,24 +371,31 @@ export default function PageHome() {
 
                                         </div>
                                             {/*page*/}
+                                        {/*{pageNumber > 0 && <button className="btn btn-primary" id="backup" onClick={isPrevious}>Previous</button>}*/}
+                                        {/*<span>{pageNumber + 1} | {totalPages}</span>*/}
+                                        {/*{pageNumber + 1 < totalPages && <button className="btn btn-primary" id="next" onClick={isNext}>Next</button>}*/}
 
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
                                                 <div className="nav-page__container-btn">
-                                                    <div className="btn btn-prev">
-                                                        <i className="fa-solid fa-chevron-left"></i>
-                                                    </div>
+                                                    {pageNumber > 0 &&
+                                                        <div className="btn btn-prev">
+                                                        <i className="fa-solid fa-chevron-left" onClick={isPrevious}></i>
+                                                    </div>}
+
                                                 </div>
 
                                                 <ul className="nav-page__container-number-page">
-                                                    <li className="btn btn-page"> 1</li>
+                                                    <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
 
                                                 </ul>
 
                                                 <div className="nav-page__container-btn">
-                                                    <div className="btn btn-next">
-                                                        <i className="fa-solid fa-chevron-right"></i>
-                                                    </div>
+                                                    {pageNumber + 1 < totalPages &&
+                                                        <div className="btn btn-next">
+                                                            <i className="fa-solid fa-chevron-right"  onClick={isNext}></i>
+                                                        </div>}
+
                                                 </div>
                                             </div>
                                         </div>
