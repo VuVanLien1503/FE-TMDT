@@ -115,7 +115,7 @@ export default function PageHome() {
             setCategories(response.data)
             axios.get(`http://localhost:8081/home/products`).then((response) => {
                 setProducts(response.data.content)
-                // setSearch(response.data.search)
+
                 setFlag(false)
             }).catch(() => {
                 setFlag(false)
@@ -329,7 +329,8 @@ export default function PageHome() {
                                                                     </div>
                                                                     <div className="product__address">
                                                                         <i className="fa-solid fa-location-dot"></i>
-                                                                        <span>{product.shop.account.users.address}</span>
+                                                                        {/*<span>{product.shop.account.users.address}</span>*/}
+                                                                        <span>{product.shop.city.name}</span>
                                                                     </div>
                                                                 </div>
                                                             </Link>
@@ -339,6 +340,7 @@ export default function PageHome() {
                                             })}
 
                                         </div>
+                                            {/*page*/}
 
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
@@ -350,10 +352,7 @@ export default function PageHome() {
 
                                                 <ul className="nav-page__container-number-page">
                                                     <li className="btn btn-page"> 1</li>
-                                                    <li className="btn btn-page"> 2</li>
-                                                    <li className="btn btn-page"> 3</li>
-                                                    <li className="btn btn-page"> 4</li>
-                                                    <li className="btn btn-page"> 5</li>
+
                                                 </ul>
 
                                                 <div className="nav-page__container-btn">

@@ -54,7 +54,9 @@ export default function Crud() {
 
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
-                if (localStorage.getItem("idAccount")===response.data.account.id){
+                console.log(localStorage.getItem("idAccount"))
+                console.log(response.data.account.id)
+                if (localStorage.getItem("idAccount")==response.data.account.id){
                     axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
                         setProducts(response.data.content)
                         setTotalElements(response.data.totalElements)

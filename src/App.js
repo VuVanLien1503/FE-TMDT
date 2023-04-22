@@ -30,7 +30,7 @@ function App() {
                 <Route path={"/createShop/:id"} element={<CreateShop/>}/>
                 <Route path={"/"} element={<PageHome/>}/>
                 <Route path={"detail/:id"} element={<Detail/>}/>
-                <Route path={"/option/:id"} element={<Crud/>}/>
+                <Route path={"/shop-admin/:id"} element={<Crud/>}/>
                 <Route path={"/cart"} element={<Cart/>}/>
             </Routes>
         </>

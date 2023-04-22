@@ -101,7 +101,7 @@ export default function CreateShop() {
     function sendData(values) {
         console.log(values)
         axios.post(`http://localhost:8081/home/shops`,values).then((response) => {
-            navigate(`/shop/${param.id}`)
+            navigate(`/shop-admin/${param.id}`)
         })
 
     }

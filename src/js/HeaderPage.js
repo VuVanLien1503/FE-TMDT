@@ -2,11 +2,37 @@ import {Link, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PageHome from "./PageHome";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import storage from "./FirebaseConfig";
+import * as Yup from "yup";
 
 export default function HeaderPage(prop) {
+    const validationSchema = Yup.object().shape({
+        name: Yup.string()
+            .required('Vui lòng nhập tên')
+            .min(3, "Tối thiểu 3 ký tự")
+            .max(16, "Tối thiểu 16 ký tự"),
+
+        phone: Yup.number()
+            .required('Vui lòng nhập số điện thoại'),
+
+        address: Yup.string()
+            .required('Vui lòng nhập địa chỉ')
+            .min(4, "Tối thiểu 4 ký tự"),
+
+    });
+
+    const [progressPercent, setProgressPercent] = useState(0)
+    const [image, setImage] = useState("")
+    const [id, setId] = useState(0)
+    const [check, setCheck] = useState(false)
+
+
     const [search, setSearch] = useState("")
 
     let idAccount = localStorage.getItem("idAccount")
+    let role = localStorage.getItem("role")
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
@@ -14,6 +40,7 @@ export default function HeaderPage(prop) {
     useEffect(() => {
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
+            console.log(response.data)
             setNameLogin(response.data.name)
         })
 
@@ -46,31 +73,37 @@ export default function HeaderPage(prop) {
                                     Hỗ trợ
                                 </li>
 
-                                {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
-                                {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
-                                {nameLogin!==''&&  <li className="header__nav-items header__nav-items-info">
-                                    <div className="header__nav-items-img">
-                                        <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                {nameLogin === '' &&
+                                    <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
+                                {nameLogin === '' &&
+                                    <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
+                                {nameLogin !== '' && <li className="header__nav-items header__nav-items-info">
+                                    <div className="header__nav-items-img"  onClick={() => formSave()}>
+                                        {user.pathImage == null &&
+                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>}
+                                        {user.pathImage != null && <img src={user.pathImage}/>}
+
                                     </div>
                                     <div className="nav-items__name-user">{nameLogin}</div>
                                     <ul className="header__nav-items-container">
-                                        <li className="header__nav-items-container-info">
-                                            <Link to={"/shop/"} className="row">
-                                                <div className="col l-2 nav-items__container-icon">
-                                                    <i className="fa-solid fa-store"></i>
-                                                </div>
-                                                <div className="col l-10 nav-items__container-text">
-                                                    Cửa hàng của tôi
-                                                </div>
-                                            </Link>
-                                        </li>
-
+                                        {role === "2" &&
+                                            <li className="header__nav-items-container-info">
+                                                <Link to={`/shop-admin/${idAccount}`} className="row">
+                                                    <div className="col l-2 nav-items__container-icon">
+                                                        <i className="fa-solid fa-store"></i>
+                                                    </div>
+                                                    <div className="col l-10 nav-items__container-text">
+                                                        Cửa hàng của tôi
+                                                    </div>
+                                                </Link>
+                                            </li>}
                                         <li className="header__nav-items-container-info">
                                             <div className="row">
                                                 <div className="col l-2 nav-items__container-icon">
                                                     <i className="fa-solid fa-user"></i>
                                                 </div>
-                                                <div className="col l-10 nav-items__container-text">
+                                                <div className="col l-10 nav-items__container-text"
+                                                     onClick={() => formSave()}>
                                                     Tài Khoản
                                                 </div>
                                             </div>
@@ -82,7 +115,7 @@ export default function HeaderPage(prop) {
                                                     <i className="fa-solid fa-right-from-bracket"></i>
                                                 </div>
                                                 <div className="col l-10 nav-items__container-text"
-                                                onClick={logout}>
+                                                     onClick={logout}>
                                                     Đăng xuất
                                                 </div>
                                             </Link>
@@ -101,7 +134,7 @@ export default function HeaderPage(prop) {
                                         <span className="logo-icon__text-shop">f</span>
                                     </i>
                                     <span className="header_logo--text-shop"
-                                    onClick={prop.home}>FCBlue Mall</span>
+                                          onClick={prop.home}>FCBlue Mall</span>
                                 </Link>
                             </div>
                             <div className="col l-7">
@@ -120,62 +153,219 @@ export default function HeaderPage(prop) {
                                 </div>
                             </div>
                             <div className="col l-2">
-                                {nameLogin!=="lien"&& <div className="header__cart">
+                                {localStorage.getItem("role")!=="2" && <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
-                                    <div className="header__cart-container">
-                                        {carts.length !== 0 &&carts.map((element)=>{
-                                            return(
-                                        <div className="has-cart">
-                                            <h3 className="cart__title">Sản phẩm đã chọn</h3>
-                                            <ul className="has__cart-container">
-                                                        <>
-                                                            <li className="has__cart-items">
-                                                                <div className="row">
-                                                                    <div className="col l-1 has__cart-img">
-                                                                        <img src={element.product.imagePath[0]}/>
-                                                                    </div>
-                                                                    <div className="col l-6">
-                                                                        <div className="has__cart-head">
-                                                                            <div className="has__cart-head-title">{element.product.name}</div>
-                                                                            <div className="has__cart-head-desc">{element.product.category.name}</div>
+                                        <div className="header__cart-container">
+                                            {carts.length !== 0 && carts.map((element) => {
+                                                return (
+                                                    <div className="has-cart">
+                                                        <h3 className="cart__title">Sản phẩm đã chọn</h3>
+                                                        <ul className="has__cart-container">
+                                                            <>
+                                                                <li className="has__cart-items">
+                                                                    <div className="row">
+                                                                        <div className="col l-1 has__cart-img">
+                                                                            <img src={element.product.imagePath[0]}/>
                                                                         </div>
-                                                                    </div>
-                                                                    <div className="col l-5">
-                                                                        <div className="has__cart-action">
-                                                                            <div className="has__cart-calculate">
-                                                                                <div className="has__cart-price">{element.product.price}</div>
-                                                                                {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                        <div className="col l-6">
+                                                                            <div className="has__cart-head">
+                                                                                <div
+                                                                                    className="has__cart-head-title">{element.product.name}</div>
+                                                                                <div
+                                                                                    className="has__cart-head-desc">{element.product.category.name}</div>
                                                                             </div>
-                                                                            <div className="has__cart-delete">Xoá</div>
+                                                                        </div>
+                                                                        <div className="col l-5">
+                                                                            <div className="has__cart-action">
+                                                                                <div className="has__cart-calculate">
+                                                                                    <div
+                                                                                        className="has__cart-price">{element.product.price}</div>
+                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                </div>
+                                                                                <div className="has__cart-delete">Xoá</div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        </>
-                                            </ul>
-                                            <div className="has__cart-container-btn">
-                                                <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
-                                            </div>
-                                        </div>
-                                            )
-                                        })}
+                                                                </li>
+                                                            </>
+                                                        </ul>
+                                                        <div className="has__cart-container-btn">
+                                                            <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })}
 
-                                        {carts.length === 0 &&
-                                            <div className="no-cart">
-                                                <img src="/img/logo/empty-cart.webp"/>
-                                            </div>
-                                        }
-                                    </div>
+                                            {carts.length === 0 &&
+                                                <div className="no-cart">
+                                                    <img src="/img/logo/empty-cart.webp"/>
+                                                </div>
+                                            }
+                                        </div>
                                 </div>}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="modal">
+                <div className="modal__background" onClick={closeModal}></div>
+                <div className="modal__container">
+                        <span className="modal__close" onClick={closeModal}>
+                            <i className="modal__close-icon fa-solid fa-xmark"></i>
+                        </span>
+                    <h1 className="modal__container-title" style={{marginLeft: 100}}>
+                        <span>Chỉnh Sửa Thông Tin</span>
+                    </h1>
+
+                    {/*formik open*/}
+                    <Formik
+                        initialValues={{
+                            id: user.id,
+                            name: user.name,
+                            phone: user.phone,
+                            address: user.address,
+                            pathImage: user.pathImage,
+                            email: user.email,
+                            password: user.password,
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => {
+                            console.log(values);
+                            saveUser(values)
+                        }}
+                        enableReinitialize={true}
+                    >
+                        {(formik) => (
+                            <Form id={"demo"}>
+                                <div>
+                                    <div>
+                                        <ErrorMessage name="name"/>
+                                    </div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'name'} type="text"
+                                                   placeholder="Nhập Tên(*)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div><ErrorMessage name="phone"/></div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'phone'} type="text"
+                                                   placeholder="Số Điện Thoại(*)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <ErrorMessage name="address"/>
+                                    </div>
+                                    <div className="form__field">
+                                        <div className="form__field-container">
+                                            <Field name={'address'} type="text"
+                                                   placeholder="Địa chỉ(*)"/>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{marginTop: 10, marginBottom: 10}}>
+                                    <h3>IMAGE</h3>
+                                </div>
+                                <div className="form__field">
+                                    <Field
+                                        name="image"
+                                        type="file"
+                                        multiple
+                                        onChange={(e) => uploadFile(e)}/>
+                                </div>
+                                <div>
+                                    {
+                                        !image &&
+                                        <h3 className='inner-bar'
+                                            style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
+                                    }
+                                    {
+                                        image &&
+                                        <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
+                                    }
+                                </div>
+                                <div className="container__btn"
+                                     style={{marginLeft: 100, marginBottom: 20, marginTop: 10}}>
+                                    <div className="row">
+                                        <div className="col l-8">
+                                            <div className="container__btn">
+                                            </div>
+                                            <button type={"submit"} className={'btn btn-primary'}
+                                                    aria-disabled={check}>Xác Nhận
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                    {/*formik close*/}
+
+                </div>
+            </div>
+
         </>
     )
+
+    function formSave() {
+        document.getElementById("modal").style.display = "flex"
+    }
+
+    function closeModal() {
+        document.getElementById("demo").reset()
+        setImage('')
+        setProgressPercent(0)
+        document.getElementById("modal").style.display = "none"
+    }
+
+    function uploadFile(e) {
+        setCheck(true)
+        if (e.target.files[0]) {
+            const time = new Date().getTime()
+            const storageRef = ref(storage, `image/${time}_${e.target.files[0].name}`);
+            const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+
+            uploadTask.on("state_changed",
+                (snapshot) => {
+                    const progress =
+                        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    setProgressPercent(progress);
+                },
+                (error) => {
+                    console.log(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        setImage(downloadURL)
+                        setCheck(false)
+                    });
+                }
+            );
+        }
+    }
+
+    function saveUser(values) {
+        if (image !== null) {
+            values.pathImage = image
+        }
+        axios.post(`http://localhost:8081/accounts/update-user`, values).then((response) => {
+            closeModal()
+            navigate('/')
+
+        })
+    }
+
     function logout() {
-        localStorage.setItem("idAccount","")
+        localStorage.setItem("idAccount", "")
         navigate("/login")
     }
 }

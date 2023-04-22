@@ -174,7 +174,7 @@ function sweetalert2(input) {
                         break
                     case 2:
                         if (response.data.shop) {
-                            navigate(`/option/${response.data.account.id}`)
+                            navigate(`/shop-admin/${response.data.account.id}`)
 
                         } else {
                             navigate(`/createShop/${response.data.account.id}`)
