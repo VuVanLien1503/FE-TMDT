@@ -47,14 +47,13 @@ export default function HeaderPage(prop) {
                                 </li>
 
                                 {nameLogin===''&&   <li className="header__nav-items"><Link to={"/register"}>Đăng ký</Link></li>}
-                                {nameLogin!==''&&   <li className="header__nav-items" onClick={logout}>Đăng xuất</li>}
                                 {nameLogin===''&&  <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
-                                {nameLogin!==''&&  <li className="header__nav-items">
+                                {nameLogin!==''&&  <li className="header__nav-items header__nav-items-info">
                                     <div className="header__nav-items-img">
                                         <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
                                     </div>
                                     <div className="nav-items__name-user">{nameLogin}</div>
-                                    <ul className="grid wide header__nav-items-container">
+                                    <ul className="header__nav-items-container">
                                         <li className="header__nav-items-container-info">
                                             <Link to={"/shop/"} className="row">
                                                 <div className="col l-2 nav-items__container-icon">
@@ -82,7 +81,8 @@ export default function HeaderPage(prop) {
                                                 <div className="col l-2 nav-items__container-icon">
                                                     <i className="fa-solid fa-right-from-bracket"></i>
                                                 </div>
-                                                <div className="col l-10 nav-items__container-text">
+                                                <div className="col l-10 nav-items__container-text"
+                                                onClick={logout}>
                                                     Đăng xuất
                                                 </div>
                                             </Link>
@@ -96,7 +96,7 @@ export default function HeaderPage(prop) {
                     <div className="header__container">
                         <div className="row header__container--align">
                             <div className="col l-3">
-                                <Link to={"#"} className="header__logo-shop">
+                                <Link to={"/"} className="header__logo-shop">
                                     <i className="logo-icon-shop fa-solid fa-cloud">
                                         <span className="logo-icon__text-shop">f</span>
                                     </i>

@@ -329,10 +329,10 @@ button.each-slideshow-indicator {
     top: 24px;
     right: 0;
     background: var(--white-color);
-    width: calc(100% + 22px);
     z-index: 1;
     text-align: center;
     box-shadow: 0 0 6px #999;
+    width: 160px;
 }
 
 .header__nav-items-container:before {
@@ -371,4 +371,8 @@ button.each-slideshow-indicator {
     background: var(--white-color);
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.header__nav-items-info {
+    margin-right: 0;
 }

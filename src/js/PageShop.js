@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import FooterForm from "./FooterForm";
 import HeaderPage from "./HeaderPage";
+import Swal from "sweetalert2";
 
 export default function PageShop() {
     const [account, setAccount] = useState([]);
@@ -40,8 +41,15 @@ export default function PageShop() {
 
 
         } else {
-            alert("Bạn Cần Đăng Nhập Để Truy Cập")
-            navigate("/login")
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Bạn Cần Đăng Nhập',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(r => {
+                navigate("/login")
+            })
         }
 
     }, [])

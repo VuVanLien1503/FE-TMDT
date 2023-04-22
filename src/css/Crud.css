@@ -69,5 +69,5 @@
 }
 
 .btn.btn-edit {
-    background: #f94d30;
+    background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
 }

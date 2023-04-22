@@ -20,19 +20,20 @@ export default function PageHome() {
     const [value, setValue] = useState("")
     const [search, setSearch] = useState({})
     const [priceMin, setPriceMin] = useState("0")
+    const [nameProduct, setNameProduct] = useState("")
     const [priceMax, setPriceMax] = useState("100000000")
     const [idCategory, setIdCategory] = useState("0")
-    const [checkSort,setCheckSort]=useState(true)
+    const [checkSort, setCheckSort] = useState(true)
 
 
     function sortPrice() {
         setCheckSort(!checkSort)
-        if (checkSort){
+        if (checkSort) {
             products.sort((a, b) => {
                 return a.price - b.price
             })
             setProducts([...products])
-        }else {
+        } else {
             products.sort((a, b) => {
                 return b.price - a.price
             })
@@ -40,19 +41,72 @@ export default function PageHome() {
         }
 
     }
-    function searchByName(input) {
-        const a = {
-            name: input,
-            idCategory: idCategory,
-            priceMin: priceMin,
-            priceMax: priceMax
-        }
-        axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
-            setProducts(response.data.products.content)
-            setSearch(response.data.search)
-        })
-    }
 
+    function searchByName(input) {
+        if (input !== undefined) {
+            setNameProduct(input)
+        }
+        if (priceMin === '' && priceMax === '') {
+            const a = {
+                name: nameProduct,
+                idCategory: idCategory,
+                priceMin: "0",
+                priceMax: "100000000"
+            }
+            axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                setProducts(response.data.products.content)
+                setSearch(response.data.search)
+            })
+        } else {
+            if (priceMin === '') {
+                const a = {
+                    name: nameProduct,
+                    idCategory: idCategory,
+                    priceMin: "0",
+                    priceMax: priceMax
+                }
+                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                    setProducts(response.data.products.content)
+                    setSearch(response.data.search)
+                })
+            } else {
+                const a = {
+                    name: nameProduct,
+                    idCategory: idCategory,
+                    priceMin: priceMin,
+                    priceMax: priceMax
+                }
+                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                    setProducts(response.data.products.content)
+                    setSearch(response.data.search)
+                })
+            }
+            if (priceMax === '') {
+                const a = {
+                    name: nameProduct,
+                    idCategory: idCategory,
+                    priceMin: priceMin,
+                    priceMax: "100000000"
+                }
+                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                    setProducts(response.data.products.content)
+                    setSearch(response.data.search)
+                })
+            } else {
+                const a = {
+                    name: nameProduct,
+                    idCategory: idCategory,
+                    priceMin: priceMin,
+                    priceMax: priceMax
+                }
+                axios.post(`http://localhost:8081/home/products/search`, a).then((response) => {
+                    setProducts(response.data.products.content)
+                    setSearch(response.data.search)
+                })
+            }
+
+        }
+    }
     useEffect(() => {
         axios.get(`http://localhost:8081/home/city`).then((repose) => {
             setCity(repose.data)
@@ -73,20 +127,21 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-
-
     }, [])
+    useEffect(searchByName, [idCategory, priceMin, priceMax,nameProduct])
 
-function backToHome(){
-    axios.get(`http://localhost:8081/home/products`).then((response) => {
-        setProducts(response.data.content)
-        resetValue()
-    })
-}
-function resetValue(){
-    document.getElementById("priceMin").value=""
-    document.getElementById("priceMax").value=""
-}
+    function backToHome() {
+        axios.get(`http://localhost:8081/home/products`).then((response) => {
+            setProducts(response.data.content)
+            resetValue()
+        })
+    }
+
+    function resetValue() {
+        document.getElementById("priceMin").value = ""
+        document.getElementById("priceMax").value = ""
+    }
+
     return (
         <>
             <div id="main" className="main-home">
@@ -164,7 +219,6 @@ function resetValue(){
                                                             <div className="body__home-container-nav-items"
                                                                  onClick={() => {
                                                                      setIdCategory(category.id)
-                                                                     searchByName("")
                                                                  }}>
                                                                 {category.name}
                                                             </div>
@@ -202,25 +256,25 @@ function resetValue(){
                                             <span>Khoảng Giá</span>
                                             <div className="filter-container__input">
                                                 <div className="filter__input">
-                                                    <input id={"priceMin"} placeholder={"đ Từ"} onChange={(e) => {
-                                                        setPriceMin(e.target.value)
-                                                    }}/>
+                                                    <input type={"number"} id={"priceMin"} placeholder={"đ Từ"}
+                                                           onChange={(e) => {
+                                                               setPriceMin(e.target.value)
+                                                           }}/>
                                                 </div>
 
                                                 <div className="filter__input">
-                                                    <input id={"priceMax"} placeholder={"đ Đến"} onChange={(e) => {
-                                                        setPriceMax(e.target.value)
-                                                    }}/>
+                                                    <input type={"number"} id={"priceMax"} placeholder={"đ Đến"}
+                                                           onChange={(e) => {
+                                                               setPriceMax(e.target.value)
+                                                           }}/>
                                                 </div>
 
-                                                <div className="filter__container-btn">
-                                                    <div className="btn btn-filter"
-                                                    onClick={()=>
-                                                        sortPrice()}>
-                                                        {checkSort&& "Giá Tăng Dần"}
-                                                        {!checkSort&& "Giá Giảm Dần"}
-                                                    </div>
-                                                </div>
+                                                {/*<div className="filter__container-btn">*/}
+                                                {/*    <div className="btn btn-filter"*/}
+                                                {/*    onClick={()=>{searchByName(nameProduct)}}>*/}
+                                                {/*        Áp Dụng*/}
+                                                {/*    </div>*/}
+                                                {/*</div>*/}
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +284,12 @@ function resetValue(){
                                     <div className="body__home-container-btn-sort">
                                         <div className="row">
                                             <div className="col l-2">
-                                                <div className="btn">Sắp xếp</div>
+                                                <div className="btn"
+                                                     onClick={() =>
+                                                         sortPrice()}>
+                                                    {checkSort && "Giá Tăng Dần"}
+                                                    {!checkSort && "Giá Giảm Dần"}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -239,18 +298,19 @@ function resetValue(){
                                             <h2>Sản phẩm</h2>
                                         </div>
 
-                                <div className="row">
-                                    {products!=null&&products.map((product) => {
-                                        return (
-                                            <>
-                                                <div className="col l-3">
-                                                    <Link to={"#"} className="body__container-product">
-                                                        <div className="product__img">
-                                                            <Link to={`detail/${product.id}`} >
-                                                                <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
-                                                                {/*<img src={product.imagePath[0]} />*/}
-                                                            </Link>
-                                                        </div>
+                                        <div className="row">
+                                            {products != null && products.map((product) => {
+                                                return (
+                                                    <>
+                                                        <div className="col l-3">
+                                                            <Link to={"#"} className="body__container-product">
+                                                                <div className="product__img">
+                                                                    <Link to={`detail/${product.id}`}>
+                                                                        <img
+                                                                            src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
+                                                                        {/*<img src={product.imagePath[0]} />*/}
+                                                                    </Link>
+                                                                </div>
 
                                                                 <div className="product__content">
                                                                     <h2 className="product__title">{product.name}</h2>
@@ -310,7 +370,7 @@ function resetValue(){
                     </div>
                     <FooterForm/>
                 </div>
-            {flag && <Loading/>}
+                {flag && <Loading/>}
             </div>
         </>
     )

@@ -51,29 +51,48 @@ export default function Crud() {
 
     useEffect(() => {
         if (localStorage.getItem("idAccount")){
-            axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
-                setProducts(response.data.content)
-                setTotalElements(response.data.totalElements)
-            })
-            axios.get(`http://localhost:8081/home/categories`).then((response) => {
-                setCategories(response.data)
-            })
-            axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
-                setCategoryShop(response.data)
-            })
-            axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
-                setUser(response.data)
-                console.log(response.data)
-            })
+
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
+                if (localStorage.getItem("idAccount")===response.data.account.id){
+                    axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
+                        setProducts(response.data.content)
+                        setTotalElements(response.data.totalElements)
+                    })
+                    axios.get(`http://localhost:8081/home/categories`).then((response) => {
+                        setCategories(response.data)
+                    })
+                    axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
+                        setCategoryShop(response.data)
+                    })
+                    axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
+                        setUser(response.data)
+                    })
+                }else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Bạn Không Có Quyền Truy Cập',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(r => {
+                        navigate("/")
+                    })
+                }
             })
         }else {
-            alert("Bạn Cần Đăng Nhập Để Truy Cập")
-            navigate("/login")
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Bạn Cần Đăng Nhập',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(r => {
+                navigate("/login")
+            })
         }
 
-    }, [products])
+    }, [])
     let index=0
     return (
         <>
