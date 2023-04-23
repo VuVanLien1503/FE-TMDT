@@ -28,6 +28,7 @@ export default function PageHome() {
     const [priceMax, setPriceMax] = useState("100000000")
     const [idCategory, setIdCategory] = useState("0")
     const [checkSort, setCheckSort] = useState(true)
+    const [renderHome, serRenderHome] = useState(false)
 
 
     function sortPrice() {
@@ -155,14 +156,12 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-    }, [pageNumber])
+    }, [pageNumber,renderHome])
     useEffect(searchByName, [idCategory, priceMin, priceMax,nameProduct])
 
     function backToHome() {
-        axios.get(`http://localhost:8081/home/products`).then((response) => {
-            setProducts(response.data.content)
-            resetValue()
-        })
+        serRenderHome(!renderHome)
+        resetValue()
     }
 
     function resetValue() {
@@ -233,8 +232,7 @@ export default function PageHome() {
                                             <li className="">
                                                 <div className="body__home-container-nav-items"
                                                      onClick={() => {
-                                                         setIdCategory("0")
-                                                         searchByName("")
+                                                         backToHome()
                                                      }}
                                                 >Tất cả
                                                 </div>
@@ -247,6 +245,7 @@ export default function PageHome() {
                                                             <div className="body__home-container-nav-items"
                                                                  onClick={() => {
                                                                      setIdCategory(category.id)
+                                                                     setPage(0)
                                                                  }}>
                                                                 {category.name}
                                                             </div>
@@ -287,6 +286,7 @@ export default function PageHome() {
                                                     <input type={"number"} id={"priceMin"} placeholder={"đ Từ"}
                                                            onChange={(e) => {
                                                                setPriceMin(e.target.value)
+                                                               setPage(0)
                                                            }}/>
                                                 </div>
 
@@ -294,6 +294,7 @@ export default function PageHome() {
                                                     <input type={"number"} id={"priceMax"} placeholder={"đ Đến"}
                                                            onChange={(e) => {
                                                                setPriceMax(e.target.value)
+                                                               setPage(0)
                                                            }}/>
                                                 </div>
 
@@ -315,8 +316,8 @@ export default function PageHome() {
                                                 <div className="btn"
                                                      onClick={() =>
                                                          sortPrice()}>
-                                                    {checkSort && "Giá Tăng Dần"}
-                                                    {!checkSort && "Giá Giảm Dần"}
+                                                    {checkSort && "Giá Tăng"}
+                                                    {!checkSort && "Giá Giảm"}
                                                 </div>
                                             </div>
                                         </div>
@@ -367,18 +368,18 @@ export default function PageHome() {
                                             })}
 
                                         </div>
-                                            {/*page*/}
+                                        {/*page*/}
                                         {/*{pageNumber > 0 && <button className="btn btn-primary" id="backup" onClick={isPrevious}>Previous</button>}*/}
                                         {/*<span>{pageNumber + 1} | {totalPages}</span>*/}
                                         {/*{pageNumber + 1 < totalPages && <button className="btn btn-primary" id="next" onClick={isNext}>Next</button>}*/}
 
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
-                                                <div className="nav-page__container-btn">
+                                                <div className="nav-page__container-btn" onClick={isPrevious}>
                                                     {pageNumber > 0 &&
                                                         <div className="btn btn-prev">
-                                                        <i className="fa-solid fa-chevron-left" onClick={isPrevious}></i>
-                                                    </div>}
+                                                            <i className="fa-solid fa-chevron-left" ></i>
+                                                        </div>}
 
                                                 </div>
 
@@ -387,10 +388,10 @@ export default function PageHome() {
 
                                                 </ul>
 
-                                                <div className="nav-page__container-btn">
+                                                <div className="nav-page__container-btn" onClick={isNext}>
                                                     {pageNumber + 1 < totalPages &&
                                                         <div className="btn btn-next">
-                                                            <i className="fa-solid fa-chevron-right"  onClick={isNext}></i>
+                                                            <i className="fa-solid fa-chevron-right" ></i>
                                                         </div>}
 
                                                 </div>
@@ -401,8 +402,8 @@ export default function PageHome() {
                             </div>
                         </div>
                     </div>
-                    <FooterForm/>
                 </div>
+                <FooterForm/>
                 {flag && <Loading/>}
             </div>
         </>

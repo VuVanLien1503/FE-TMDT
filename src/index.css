@@ -50,8 +50,7 @@ input {
   font-size: 1.6rem;
   text-align: center;
   padding: 13px;
-  background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
-  color: var(--white-color);
+  background: linear-gradient(90deg, rgba(13, 229, 24, 0.67), var(--fift-color));  color: var(--white-color);
   border-radius: 4px;
   text-transform: uppercase;
   cursor: pointer;

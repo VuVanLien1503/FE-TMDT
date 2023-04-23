@@ -4,12 +4,13 @@ import ContentForm from "./ContentForm";
 import FooterForm from "./FooterForm";
 import * as Yup from 'yup'
 import '../css/Login.css'
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 export default function CreateShop() {
 
+    const [city, setCity] = useState([])
 
     const navigate = useNavigate()
     const param = useParams()
@@ -21,6 +22,11 @@ export default function CreateShop() {
             .min(6, "Tối thiểu từ 6 ký tự!")
             .max(255, "Tối đa  255 ký tự!"),
     })
+    useEffect(() => {
+        axios.get(`http://localhost:8081/home/city`).then((repose) => {
+            setCity(repose.data)
+        })
+    }, [])
 
 
     return (
@@ -31,6 +37,9 @@ export default function CreateShop() {
                     description: "",
                     account:{
                         id:param.id
+                    },
+                    city: {
+                        id:1
                     }
                 }
                 }
@@ -72,8 +81,17 @@ export default function CreateShop() {
                                                                 name={'description'}/></div>
                                                         </div>
                                                     </div>
+                                                    <div>
+                                                        <Field id="category" name="city.id" as="select"
+                                                               style={{width: 400, height: 35}}>
+                                                            <option value={''}>Vui lòng chọn Thành Phố</option>
+                                                            {city != null && city.map((item, id) => (
+                                                                <option key={id} value={item.id}>{item.name}</option>
+                                                            ))}
+                                                        </Field>
+                                                    </div>
 
-                                                    <div className="container__btn" style={{marginLeft:100,marginBottom:30}}>
+                                                    <div className="container__btn" style={{marginLeft:150,marginBottom:30,marginTop:30}}>
                                                         <div className="row">
                                                             <div className="col l-8">
                                                                 <div className="container__btn">

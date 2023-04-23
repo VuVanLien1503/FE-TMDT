@@ -29,7 +29,7 @@
 }
 
 .btn.btn-create {
-    background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
+    background: linear-gradient(90deg, #1fcb82, var(--fift-color));
 }
 
 .btn.btn-create:hover {
@@ -70,4 +70,20 @@
 
 .btn.btn-edit {
     background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
+}
+
+#modalAddProduct,
+#modalAddVoucher {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+}
+
+.container__btn-crud {
+    display: flex;
+    justify-content: center;
 }

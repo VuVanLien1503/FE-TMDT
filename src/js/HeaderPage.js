@@ -223,9 +223,9 @@ export default function HeaderPage(prop) {
                     {checkComponent ==="detail" &&
                         <div className="header__container">
                             <div className="row header__container--align">
-                                <div className="col l-12">
+                                <div className="col l-10">
                                     <Link to={`/shop/${prop.shop.id}`} className="header__logo-shop">
-                                        <span className="header_logo--text-shop"  style={{marginLeft:300,marginTop:20}}>
+                                        <span className="header_logo--text-shop"  style={{marginLeft:200,marginTop:20}}>
                                             {prop.shop.name} Kính Chào Quý Khách....!
                                         </span>
                                     </Link>

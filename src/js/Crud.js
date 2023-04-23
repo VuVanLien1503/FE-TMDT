@@ -64,6 +64,9 @@ export default function Crud() {
 
     const [checkUser,setCheckUser]=useState(false)
 
+
+    const [checkRender,setCheckRender]=useState(false)
+
     useEffect(() => {
         if (localStorage.getItem("idAccount")){
 
@@ -109,7 +112,7 @@ export default function Crud() {
             })
         }
 
-    }, [])
+    }, [checkRender])
     let index=0
     return (
         <>
@@ -123,7 +126,7 @@ export default function Crud() {
                             </div>
 
                             <div className="col l-2 container-btn-create">
-                                <div className="btn btn-create" onClick={()=>openModalVoucher}>Thêm mã giảm giá</div>
+                                <div className="btn btn-create" onClick={openModalVoucher}>Thêm mã giảm giá</div>
                             </div>
                         </div>
                         <div>
@@ -169,6 +172,7 @@ export default function Crud() {
                 </div>
             </div>
             <FooterForm/>
+            {/*modal add product*/}
             <div id="modalAddProduct">
                 <div className="modal__background" onClick={closeModal}></div>
                 <div className="modal__container">
@@ -281,12 +285,9 @@ export default function Crud() {
                                         <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
                                     }
                                 </div>
-                                <div className="container__btn"
-                                     style={{marginLeft: 100, marginBottom: 20, marginTop: 10}}>
+                                <div className="container__btn-crud">
                                     <div className="row">
-                                        <div className="col l-8">
-                                            <div className="container__btn">
-                                            </div>
+                                        <div className="">
                                             <button type={"submit"} className={'btn btn-primary'}
                                                     aria-disabled={check}>Xác Nhận
                                             </button>
@@ -302,7 +303,6 @@ export default function Crud() {
 
                 </div>
             </div>
-
             {/*modal add voucher*/}
             <div id="modalAddVoucher">
                 <div className="modal__background" onClick={closeModalVoucher}></div>
@@ -361,12 +361,9 @@ export default function Crud() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="container__btn"
-                                     style={{marginLeft: 100, marginBottom: 20, marginTop: 10}}>
+                                <div className="container__btn-crud">
                                     <div className="row">
-                                        <div className="col l-8">
-                                            <div className="container__btn">
-                                            </div>
+                                        <div className="">
                                             <button type={"submit"} className={'btn btn-primary'}
                                                     aria-disabled={check}>Xác Nhận
                                             </button>
@@ -419,7 +416,9 @@ export default function Crud() {
             showCancelButton: true,
             confirmButtonText: 'Có',
             cancelButtonText: 'không',
-            reverseButtons: true
+            reverseButtons: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`http://localhost:8081/home/shops/delete/${id}`).then((response) => {
@@ -428,7 +427,7 @@ export default function Crud() {
                         'Tập tin của bạn xóa thành công',
                         'success'
                     )
-
+                    setCheckRender(!checkRender)
                 })
 
             } else if (

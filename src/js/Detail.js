@@ -51,7 +51,7 @@ export default function Detail() {
                                                     <li className="container__img-second-items" onClick={() => {
                                                         setImageShow(element)
                                                     }}>
-                                                        <img src={element}/>
+                                                        <img src={element} style={{width:85,height:75}}/>
                                                     </li>
 
                                                 </>
