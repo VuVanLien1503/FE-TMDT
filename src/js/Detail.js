@@ -7,32 +7,37 @@ import {Link, useParams} from "react-router-dom";
 import {Formik} from "formik";
 
 export default function Detail() {
+    let idAccount = localStorage.getItem("idAccount")
     const [quantity, setQuantity] = useState(0)
+    const [quantityRemaining, setQuantityRemaining] = useState(0)
     const [product, setProduct] = useState([])
     const [shop, setShop] = useState([])
     const [nameShop, setNameShop] = useState("")
     const [image, setImage] = useState([])
     const [imageShow, setImageShow] = useState("")
+    const [check, setCheck] = useState(true)
     const param = useParams()
-
     useEffect(() => {
-        axios.get(`http://localhost:8081/home/products/${param.id}`).then((response) => {
-            setProduct(response.data)
-            setImage(response.data.imagePath)
-            axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`).then((response) => {
-                setShop(response.data)
-                setNameShop(response.data.name)
-            })
-        })
-
-    }, [imageShow])
-    // function showImage(){
-    //
-    // }
-    // useEffect(showImage,[imageShow])
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
+                setProduct(response.data);
+                setImage(response.data.imagePath);
+                const shopResponse = await axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`);
+                setShop(shopResponse.data);
+                const quantityResponse = await axios.post(`http://localhost:8081/home/carts/check-product/${idAccount}`, response.data);
+                setQuantity(quantityResponse.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, [check]);
+    // setQuantityRemaining(product.quantity);
+    console.log(quantity)
     return (
         <>
-            <HeaderPage component={"detail"} shop={shop}/>
+            <HeaderPage/>
             <div className="body__detail">
                 <div className="grid wide">
                     <div className="body__detail-container">
@@ -103,7 +108,7 @@ export default function Detail() {
                                             </div>
                                         </div>
                                         <div className="row detail__info-shared detail__info-quantity">
-                                            <span className="col l-3 detail__info-shared-title">Số lượng</span>
+                                            <span className="col l-3 detail__info-shared-title">Số lượng mua</span>
                                             <div className="col l-9 detail__info-shared-content">
                                                 <div className="detail__quantity">
                                                     <div className="detail__quantity-btn detail__quantity-reduce"
@@ -120,7 +125,9 @@ export default function Detail() {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div className="row detail__info-shared detail__info-quantity">
+                                        <span className="col l-3 detail__info-shared-title">Còn lại: {product.quantity}</span>
+                                        </div>
                                     </div>
 
                                     <div className="row detail__info-support">
@@ -159,13 +166,14 @@ export default function Detail() {
                                         </div>
                                     </div>
 
-                                    <div className="btn btn-add-cart" onClick={sendData}>Đặt hàng</div>
+                                    <div className="btn btn-add-cart">Đặt hàng</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <FooterForm/>
         </>
     )
@@ -174,18 +182,33 @@ export default function Detail() {
     function showShop(id) {
         alert("Cửa Hàng Có ID : " + id)
     }
-
     // Tăng số lượng
     function increaseQuantity() {
-        setQuantity(quantity + 1)
+        console.log(product.quantity)
+        if (quantity === product.quantity){
+            setQuantity(product.quantity)
+            setCheck(!check)
+        }
+        else {
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`,product).then((res)=>{
+                setQuantity(quantity +1)
+                setCheck(!check)
+            })
+        }
     }
 
     // Giảm số lượng
     function reduceQuantity() {
         if (quantity === 0) {
-            setQuantity(0)
+            axios.delete(`http://localhost:8081/home/carts/delete/product-cart/0/${idAccount}`,product).then((res)=>{
+                setQuantity(0)
+                setCheck(!check)
+            })
         } else {
-            setQuantity(quantity - 1)
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,product).then((res)=>{
+                setQuantity(quantity - 1)
+                setCheck(!check)
+            })
         }
     }
 
