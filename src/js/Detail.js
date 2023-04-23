@@ -6,23 +6,32 @@ import axios from "axios";
 import {Link, useParams} from "react-router-dom";
 
 export default function Detail() {
+    let idAccount = localStorage.getItem("idAccount")
     const [quantity, setQuantity] = useState(0)
+    const [quantityRemaining, setQuantityRemaining] = useState(0)
     const [product, setProduct] = useState([])
     const [shop, setShop] = useState([])
     const [image, setImage] = useState([])
+    const [check, setCheck] = useState(true)
     const param = useParams()
-
     useEffect(() => {
-        axios.get(`http://localhost:8081/home/products/${param.id}`).then((response) => {
-            setProduct(response.data)
-            setImage(response.data.imagePath)
-            axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`).then((response) => {
-                setShop(response.data)
-            })
-        })
-
-    }, [])
-    console.log(shop)
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
+                setProduct(response.data);
+                setImage(response.data.imagePath);
+                const shopResponse = await axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`);
+                setShop(shopResponse.data);
+                const quantityResponse = await axios.post(`http://localhost:8081/home/carts/check-product/${idAccount}`, response.data);
+                setQuantity(quantityResponse.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, [check]);
+    // setQuantityRemaining(product.quantity);
+    console.log(quantity)
     return (
         <>
             <HeaderPage/>
@@ -32,22 +41,21 @@ export default function Detail() {
                         <div className="row">
                             <div className="col l-5">
                                 <div className="body__detail-container-left">
-                                    <div className="container__img-primary">
-                                        {/*<img src={image[0]} />*/}
-                                        <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
-                                    </div>
-
+                                        <div className="container__img-primary">
+                                            {/*<img src={image[0]} />*/}
+                                            <img src={image[0]}/>
+                                        </div>
                                     <ul className="container__img-second">
                                         <li className="container__img-second-items">
-                                            <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
+                                            <img src={image[1]}/>
                                         </li>
 
                                         <li className="container__img-second-items">
-                                            <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
+                                            <img src={image[2]}/>
                                         </li>
 
                                         <li className="container__img-second-items">
-                                            <img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>
+                                            <img src={image[2]}/>
                                         </li>
 
                                     </ul>
@@ -87,7 +95,7 @@ export default function Detail() {
                                         </div>
 
                                         <div className="row detail__info-shared detail__info-quantity">
-                                            <span className="col l-3 detail__info-shared-title">Số lượng</span>
+                                            <span className="col l-3 detail__info-shared-title">Số lượng mua</span>
                                             <div className="col l-9 detail__info-shared-content">
                                                 <div className="detail__quantity">
                                                     <div className="detail__quantity-btn detail__quantity-reduce"
@@ -104,7 +112,9 @@ export default function Detail() {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div className="row detail__info-shared detail__info-quantity">
+                                        <span className="col l-3 detail__info-shared-title">Còn lại: {product.quantity}</span>
+                                        </div>
                                     </div>
 
                                     <div className="row detail__info-support">
@@ -160,15 +170,31 @@ export default function Detail() {
     }
     // Tăng số lượng
     function increaseQuantity() {
-        setQuantity(quantity + 1)
+        console.log(product.quantity)
+        if (quantity === product.quantity){
+            setQuantity(product.quantity)
+            setCheck(!check)
+        }
+        else {
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`,product).then((res)=>{
+                setQuantity(quantity +1)
+                setCheck(!check)
+            })
+        }
     }
 
     // Giảm số lượng
     function reduceQuantity() {
         if (quantity === 0) {
-            setQuantity(0)
+            axios.delete(`http://localhost:8081/home/carts/delete/product-cart/0/${idAccount}`,product).then((res)=>{
+                setQuantity(0)
+                setCheck(!check)
+            })
         } else {
-            setQuantity(quantity - 1)
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,product).then((res)=>{
+                setQuantity(quantity - 1)
+                setCheck(!check)
+            })
         }
     }
 }
