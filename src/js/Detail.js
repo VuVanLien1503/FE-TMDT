@@ -3,8 +3,9 @@ import HeaderPage from "./HeaderPage";
 import FooterForm from "./FooterForm";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
+import Swal from "sweetalert2";
 
 export default function Detail() {
     let idAccount = localStorage.getItem("idAccount")
@@ -16,6 +17,7 @@ export default function Detail() {
     const [image, setImage] = useState([])
     const [imageShow, setImageShow] = useState("")
     const [check, setCheck] = useState(true)
+    const navigate = useNavigate()
     const param = useParams()
     useEffect(() => {
         const fetchData = async () => {
@@ -166,7 +168,7 @@ export default function Detail() {
                                         </div>
                                     </div>
 
-                                    <div className="btn btn-add-cart">Đặt hàng</div>
+                                    <div className="btn btn-add-cart" onClick={order}>Đặt hàng</div>
                                 </div>
                             </div>
                         </div>
@@ -222,6 +224,17 @@ export default function Detail() {
         console.log(productCart)
         axios.post(`http://localhost:8081/home/carts`, productCart).then(() => {
 
+        })
+    }
+    function order() {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Đặt hàng thành công!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() =>{
+            navigate('/cart')
         })
     }
 }
