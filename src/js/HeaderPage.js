@@ -173,46 +173,48 @@ export default function HeaderPage(prop) {
                                 {localStorage.getItem("role")!=="2" && <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
-                                        {carts.length !== 0 && carts.map((element) => {
-                                            return (
-                                                <div className="has-cart">
-                                                    <h3 className="cart__title">Sản phẩm đã chọn</h3>
-                                                    <ul className="has__cart-container">
-                                                        <>
-                                                            <li className="has__cart-items">
-                                                                <div className="row">
-                                                                    <div className="col l-1 has__cart-img">
-                                                                        <img src={element.product.imagePath[0]}/>
-                                                                    </div>
-                                                                    <div className="col l-6">
-                                                                        <div className="has__cart-head">
-                                                                            <div
-                                                                                className="has__cart-head-title">{element.product.name}</div>
-                                                                            <div
-                                                                                className="has__cart-head-desc">{element.product.category.name}</div>
+                                        {carts.length !== 0 &&
+                                            <div className="has-cart">
+                                                <h3 className="cart__title">Sản phẩm đã chọn</h3>
+                                                <ul className="has__cart-container">
+                                                    {carts.map((element) => {
+                                                        return (
+                                                            <>
+                                                                <li className="has__cart-items">
+                                                                    <div className="row">
+                                                                        <div className="col l-1 has__cart-img">
+                                                                            <img src={element.product.imagePath[0]}/>
                                                                         </div>
-                                                                    </div>
-                                                                    <div className="col l-5">
-                                                                        <div className="has__cart-action">
-                                                                            <div className="has__cart-calculate">
+                                                                        <div className="col l-6">
+                                                                            <div className="has__cart-head">
                                                                                 <div
-                                                                                    className="has__cart-price">{element.product.price}</div>
-                                                                                {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                    className="has__cart-head-title">{element.product.name}</div>
+                                                                                <div
+                                                                                    className="has__cart-head-desc">{element.product.category.name}</div>
                                                                             </div>
-                                                                            <div className="has__cart-delete">Xoá</div>
+                                                                        </div>
+                                                                        <div className="col l-5">
+                                                                            <div className="has__cart-action">
+                                                                                <div className="has__cart-calculate">
+                                                                                    <div
+                                                                                        className="has__cart-price">{element.product.price}</div>
+                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                </div>
+                                                                                <div className="has__cart-delete">Xoá
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        </>
-                                                    </ul>
-                                                    <div className="has__cart-container-btn">
-                                                        <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
-                                                    </div>
+                                                                </li>
+                                                            </>
+                                                        )
+                                                    })}
+                                                </ul>
+                                                <div className="has__cart-container-btn">
+                                                    <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                                 </div>
-                                            )
-                                        })}
-
+                                            </div>
+                                        }
                                         {carts.length === 0 &&
                                             <div className="no-cart">
                                                 <img src="/img/logo/empty-cart.webp"/>
@@ -238,18 +240,20 @@ export default function HeaderPage(prop) {
                                     {localStorage.getItem("role")!=="2" && <div className="header__cart">
                                         <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                         <div className="header__cart-container">
-                                            {carts.length !== 0 && carts.map((element) => {
-                                                return (
-                                                    <div className="has-cart">
-                                                        <h3 className="cart__title">Sản phẩm đã chọn</h3>
-                                                        <ul className="has__cart-container">
-                                                            <>
+                                            {carts.length !== 0 &&
+                                                <div className="has-cart">
+                                                    <h3 className="cart__title">Sản phẩm đã chọn</h3>
+                                                    <ul className="has__cart-container">
+                                                        {carts.map((element) => {
+                                                            return (
                                                                 <li className="has__cart-items">
                                                                     <div className="row">
-                                                                        <div className="col l-1 has__cart-img">
-                                                                            <img src={element.product.imagePath[0]}/>
+                                                                        <div className="col l-2 has__cart-img">
+                                                                            <div>
+                                                                                <img src={element.product.imagePath[0]}/>
+                                                                            </div>
                                                                         </div>
-                                                                        <div className="col l-6">
+                                                                        <div className="col l-5">
                                                                             <div className="has__cart-head">
                                                                                 <div
                                                                                     className="has__cart-head-title">{element.product.name}</div>
@@ -264,20 +268,19 @@ export default function HeaderPage(prop) {
                                                                                         className="has__cart-price">{element.product.price}</div>
                                                                                     {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                                 </div>
-                                                                                <div className="has__cart-delete">Xoá</div>
+                                                                                <span className="has__cart-delete">Xoá</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                            </>
-                                                        </ul>
-                                                        <div className="has__cart-container-btn">
-                                                            <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
-                                                        </div>
+                                                            )
+                                                        })}
+                                                    </ul>
+                                                    <div className="has__cart-container-btn">
+                                                        <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                                     </div>
-                                                )
-                                            })}
-
+                                                </div>
+                                            }
                                             {carts.length === 0 &&
                                                 <div className="no-cart">
                                                     <img src="/img/logo/empty-cart.webp"/>

@@ -94,7 +94,7 @@ export default function Cart() {
                                                                 </div>
                                                             </div>
                                                             <div className="col l-2">
-                                                                <div className="btn btn-delete">Xoá</div>
+                                                                <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</div>
                                                             </div>
                                                             <div className="col l-2">
                                                                 <div className="btn btn-pay">Thanh toán</div>
@@ -133,6 +133,15 @@ export default function Cart() {
                 axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
                     setCheck(!check)
                 })
+        })
+    }
+
+    function deleteProductInCart(id) {
+        axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
+            console.log(res.data)
+            axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
+                setCheck(!check)
+            })
         })
     }
 
