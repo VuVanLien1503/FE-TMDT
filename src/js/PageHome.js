@@ -328,7 +328,7 @@ export default function PageHome() {
                                             </div>
                                         </div>
 
-                                        <div className="row">
+                                        <div className="row body__home-container-products-all">
                                             {products != null && products.map((product) => {
                                                 return (
                                                     <>

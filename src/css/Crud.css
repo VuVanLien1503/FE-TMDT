@@ -29,7 +29,7 @@
 }
 
 .btn.btn-create {
-    background: linear-gradient(90deg, #1fcb82, var(--fift-color));
+    background: linear-gradient(90deg,var(--primary-color), var(--fift-color));
 }
 
 .btn.btn-create:hover {
