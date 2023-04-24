@@ -32,12 +32,12 @@ export default function Crud() {
     const validationSchemaVoucher = Yup.object().shape({
         name: Yup.string()
             .required('Vui lòng nhập mã khuyến mãi')
-            .min(6,"Tối thiểu 6 ký tự")
-            .max(12,"Tối đa 12 ký tự"),
+            .min(6, "Tối thiểu 6 ký tự")
+            .max(12, "Tối đa 12 ký tự"),
         percent: Yup.number()
             .required('Vui lòng nhập phần trăm khuyến mãi')
-            .min(1,"số nhập phải lớn hơn 0")
-            .max(100,"số nhập phải nhỏ hơn 100"),
+            .min(1, "số nhập phải lớn hơn 0")
+            .max(100, "số nhập phải nhỏ hơn 100"),
 
         quantity: Yup.number()
             .required('Vui lòng nhập số mã khuyến mãi')
@@ -51,6 +51,10 @@ export default function Crud() {
 
 
     const [shop, setShop] = useState([]);
+    const [voucher, setVoucher] = useState([]);
+    const [checkVoucher, setCheckVoucher] = useState(false);
+
+
     const [products, setProducts] = useState([]);
     const [categoryShop, setCategoryShop] = useState([])
     const [categories, setCategories] = useState([])
@@ -58,23 +62,20 @@ export default function Crud() {
     const [totalElements, setTotalElements] = useState(0)
     const param = useParams()
     const [check, setCheck] = useState(false)
-    const [id,setId] = useState(0)
-    const [product,setProduct] = useState([])
+    const [id, setId] = useState(0)
+    const [product, setProduct] = useState([])
     const navigate = useNavigate()
 
-    const [checkUser,setCheckUser]=useState(false)
+    const [checkUser, setCheckUser] = useState(false)
 
 
-    const [checkRender,setCheckRender]=useState(false)
-
+    const [checkRender, setCheckRender] = useState(false)
     useEffect(() => {
-        if (localStorage.getItem("idAccount")){
+        if (localStorage.getItem("idAccount")) {
 
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
-                console.log(localStorage.getItem("idAccount"))
-                console.log(response.data.account.id)
-                if (localStorage.getItem("idAccount")==response.data.account.id){
+                if (localStorage.getItem("idAccount") == response.data.account.id) {
                     axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
                         setProducts(response.data.content)
                         setTotalElements(response.data.totalElements)
@@ -88,7 +89,8 @@ export default function Crud() {
                     axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
                         setUser(response.data)
                     })
-                }else {
+
+                } else {
                     Swal.fire({
                         position: 'center',
                         icon: 'error',
@@ -100,7 +102,7 @@ export default function Crud() {
                     })
                 }
             })
-        }else {
+        } else {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -113,7 +115,8 @@ export default function Crud() {
         }
 
     }, [checkRender])
-    let index=0
+
+    let index = 0
     return (
         <>
             <HeaderPage/>
@@ -128,46 +131,97 @@ export default function Crud() {
                             <div className="col l-2 container-btn-create">
                                 <div className="btn btn-create" onClick={openModalVoucher}>Thêm mã giảm giá</div>
                             </div>
-                        </div>
-                        <div>
-                            <div className="row table__head">
-                                <h3 className="col l-1">STT</h3>
-                                <h3 className="col l-1">Ảnh</h3>
-                                <h3 className="col l-3">Tên sản phẩm</h3>
-                                <h3 className="col l-3">Mô tả</h3>
-                                <h3 className="col l-1">Số lượng</h3>
-                                <h3 className="col l-1">Giá</h3>
-                                <h3 className="col l-2">Chỉnh sửa</h3>
+                            <div className="col l-2 container-btn-create">
+                                <div className="btn btn-create" onClick={showVoucher}>
+                                    {!checkVoucher&&"Khuyến mãi"}
+                                    {checkVoucher&&"Sản Phẩm"}
+                                </div>
                             </div>
-                            {products != null && products.map((product) => {
-                                return (
-                                    <>
-                                        <div className="row table__content">
-                                            <div className="col l-1">{++index}</div>
-                                            <div className="col l-1" >
-                                                <img src={product.imagePath[0]}/>
-                                            </div>
-                                            <div className="col l-3">{product.name}</div>
-                                            <div className="col l-3">{product.description}</div>
-                                            <div className="col l-1">{product.quantity}</div>
-                                            <div className="col l-1">{product.price}</div>
-                                            <div className="col l-2">
-                                                <div className="row">
-                                                    <div className="col l-6">
-                                                        <div className="btn btn-edit" onClick={() => formSave(product.id)}>Sửa</div>
-                                                    </div>
-                                                    <div className="col l-6">
-                                                        <div className="btn btn-delete" onClick={()=>deleteProduct(product.id)}>Xoá</div>
+                        </div>
+                        {!checkVoucher &&
+                            <div>
+                                <div className="row table__head">
+                                    <h3 className="col l-1">STT</h3>
+                                    <h3 className="col l-1">Ảnh</h3>
+                                    <h3 className="col l-3">Tên sản phẩm</h3>
+                                    <h3 className="col l-3">Mô tả</h3>
+                                    <h3 className="col l-1">Số lượng</h3>
+                                    <h3 className="col l-1">Giá</h3>
+                                    <h3 className="col l-2">Chỉnh sửa</h3>
+                                </div>
+                                {products != null && products.map((product) => {
+                                    return (
+                                        <>
+                                            <div className="row table__content">
+                                                <div className="col l-1">{++index}</div>
+                                                <div className="col l-1">
+                                                    <img src={product.imagePath[0]}/>
+                                                </div>
+                                                <div className="col l-3">{product.name}</div>
+                                                <div className="col l-3">{product.description}</div>
+                                                <div className="col l-1">{product.quantity}</div>
+                                                <div className="col l-1">{product.price}</div>
+                                                <div className="col l-2">
+                                                    <div className="row">
+                                                        <div className="col l-6">
+                                                            <div className="btn btn-edit"
+                                                                 onClick={() => formSave(product.id)}>Sửa
+                                                            </div>
+                                                        </div>
+                                                        <div className="col l-6">
+                                                            <div className="btn btn-delete"
+                                                                 onClick={() => deleteProduct(product.id)}>Xoá
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </>
-                                )
-                            })}
+                                        </>
+                                    )
+                                })}
 
-                        </div>
+                            </div>
+                        }
+                        {checkVoucher &&
+                            <div>
+                                <div className="row table__head">
+                                    <h3 className="col l-1">STT</h3>
+                                    <h3 className="col l-3">Tên sản mã</h3>
+                                    <h3 className="col l-2">Số lượng</h3>
+                                    <h3 className="col l-2">phần trăm</h3>
+                                    <h3 className="col l-4">Chỉnh sửa</h3>
+                                </div>
+                                {voucher != null && voucher.map((voucher) => {
+                                    return (
+                                        <>
+                                            <div className="row table__content">
+                                                <div className="col l-1">{++index}</div>
+                                                <div className="col l-3">{voucher.name}</div>
+                                                <div className="col l-2">{voucher.quantity}</div>
+                                                <div className="col l-2">{voucher.percent}</div>
+                                                <div className="col l-4">
+                                                    <div className="row">
+                                                        <div className="col l-6">
+                                                            <div className="btn btn-edit"
+                                                                 onClick={() => updateVoucher(product.id)}>Sửa
+                                                            </div>
+                                                        </div>
+                                                        <div className="col l-6">
+                                                            <div className="btn btn-delete"
+                                                                 onClick={() => deleteVoucher(product.id)}>Xoá
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </>
+                                    )
+                                })}
+
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -180,18 +234,18 @@ export default function Crud() {
                             <i className="modal__close-icon fa-solid fa-xmark"></i>
                         </span>
                     <h1 className="modal__container-title" style={{marginLeft: 100}}>
-                        {id===-1&&<span>Thêm Sản Phẩm</span>}
-                        {id!==-1&&<span>Chỉnh Sửa Sản Phẩm</span>}
+                        {id === -1 && <span>Thêm Sản Phẩm</span>}
+                        {id !== -1 && <span>Chỉnh Sửa Sản Phẩm</span>}
                     </h1>
 
                     {/*formik open*/}
                     <Formik
                         initialValues={{
                             id: id,
-                            name: product.name ? product.name:'',
-                            quantity: product.quantity ? product.quantity:'',
-                            price: product.price ? product.price:'',
-                            description: product.description ? product.description:'',
+                            name: product.name ? product.name : '',
+                            quantity: product.quantity ? product.quantity : '',
+                            price: product.price ? product.price : '',
+                            description: product.description ? product.description : '',
                             imagePath: '',
                             category: {
                                 id: ''
@@ -378,29 +432,56 @@ export default function Crud() {
                 </div>
             </div>
 
+
         </>
 
     )
+    //show voucher
+
+    function showVoucher(){
+        setCheckVoucher(!checkVoucher)
+        axios.get(`http://localhost:8081/home/shops/voucher/${shop.id}`).then((response) => {
+            setVoucher(response.data.content)
+        })
+    }
+    function updateVoucher(id){
+
+    }
+    function deleteVoucher(id){
+
+    }
 
     // bắt đầuxử lý voucher
-
-    function saveVoucher(values){
-        console.log(values)
+    function saveVoucher(values) {
+        axios.post(`http://localhost:8081/home/shops/${param.id}/voucher`, values).then((response) => {
+            closeModalVoucher()
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Thêm Mã Thành Công',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
     }
-    function openModalVoucher(){
+
+    function openModalVoucher() {
         document.getElementById("modalAddVoucher").style.display = "flex"
     }
-    function closeModalVoucher(){
+
+    function closeModalVoucher() {
         document.getElementById("voucher").reset()
         document.getElementById("modalAddVoucher").style.display = "none"
     }
+
     // kết thúc sử lý voucher
 
 
     function showDetailProduct(id) {
         alert("detail product " + id)
     }
-    function deleteProduct(id){
+
+    function deleteProduct(id) {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -445,7 +526,7 @@ export default function Crud() {
 
     function formSave(id) {
         setId(id)
-        if (id!==-1){
+        if (id !== -1) {
             axios.get(`http://localhost:8081/home/products/${id}`).then((response) => {
                 setProduct(response.data)
             })
@@ -454,8 +535,8 @@ export default function Crud() {
     }
 
     function save(values) {
-        if (id!==-1){
-            values.id=id
+        if (id !== -1) {
+            values.id = id
         }
         values.imagePath = imagePath
 
@@ -518,7 +599,6 @@ export default function Crud() {
         e.currentTarget.value = null;
 
     }
-
 
 
 }

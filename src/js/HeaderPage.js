@@ -43,6 +43,8 @@ export default function HeaderPage(prop) {
     const [render,setRender]=useState(false)
     useEffect(() => {
         setCheckComponent(prop.component)
+        console.log("component")
+        console.log(prop.component)
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
             setNameLogin(response.data.name)
@@ -217,6 +219,7 @@ export default function HeaderPage(prop) {
                                         }
                                     </div>
                                 </div>}
+
                             </div>
                         </div>
                     </div>}
@@ -225,13 +228,15 @@ export default function HeaderPage(prop) {
                             <div className="row header__container--align">
                                 <div className="col l-10">
                                     <Link to={`/shop/${prop.shop.id}`} className="header__logo-shop">
-                                        <span className="header_logo--text-shop"  style={{marginLeft:200,marginTop:20}}>
-                                            {prop.shop.name} Kính Chào Quý Khách....!
+
+                                        <span className="header_logo--text-shop"  style={{marginLeft:450,marginTop:10}}>
+                                            <i className="info__icon fa-solid fa-store"></i>
+                                            {prop.shop.name}
                                         </span>
                                     </Link>
                                 </div>
                                 <div className="col l-2">
-                                    {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                    {localStorage.getItem("role")==="2" && <div className="header__cart">
                                         <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                         <div className="header__cart-container">
                                             {carts.length !== 0 && carts.map((element) => {

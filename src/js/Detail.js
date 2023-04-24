@@ -34,10 +34,10 @@ export default function Detail() {
         fetchData();
     }, [check]);
     // setQuantityRemaining(product.quantity);
-    console.log(quantity)
+    console.log(shop)
     return (
         <>
-            <HeaderPage/>
+            <HeaderPage shop={shop} component={"detail"}/>
             <div className="body__detail">
                 <div className="grid wide">
                     <div className="body__detail-container">
