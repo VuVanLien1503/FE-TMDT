@@ -170,11 +170,11 @@ export default function HeaderPage(prop) {
                                 {localStorage.getItem("role")!=="2" && <div className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
-                                        {carts.length !== 0 && carts.map((element) => {
-                                            return (
                                                 <div className="has-cart">
                                                     <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                                     <ul className="has__cart-container">
+                                                        {carts.length !== 0 && carts.map((element) => {
+                                                            return (
                                                         <>
                                                             <li className="has__cart-items">
                                                                 <div className="row">
@@ -202,14 +202,13 @@ export default function HeaderPage(prop) {
                                                                 </div>
                                                             </li>
                                                         </>
+                                                            )
+                                                        })}
                                                     </ul>
                                                     <div className="has__cart-container-btn">
                                                         <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                                     </div>
                                                 </div>
-                                            )
-                                        })}
-
                                         {carts.length === 0 &&
                                             <div className="no-cart">
                                                 <img src="/img/logo/empty-cart.webp"/>
@@ -231,15 +230,14 @@ export default function HeaderPage(prop) {
                                     </Link>
                                 </div>
                                 <div className="col l-2">
-                                    {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                    {localStorage.getItem("role")==="2" && <div className="header__cart">
                                         <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                         <div className="header__cart-container">
-                                            {carts.length !== 0 && carts.map((element) => {
-                                                return (
                                                     <div className="has-cart">
                                                         <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                                         <ul className="has__cart-container">
-                                                            <>
+                                                            {carts.length !== 0 && carts.map((element) => {
+                                                                return (
                                                                 <li className="has__cart-items">
                                                                     <div className="row">
                                                                         <div className="col l-1 has__cart-img">
@@ -265,14 +263,13 @@ export default function HeaderPage(prop) {
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                            </>
+                                                             )
+                                                            })}
                                                         </ul>
                                                         <div className="has__cart-container-btn">
                                                             <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
                                                         </div>
                                                     </div>
-                                                )
-                                            })}
 
                                             {carts.length === 0 &&
                                                 <div className="no-cart">
