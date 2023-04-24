@@ -1,6 +1,7 @@
 .body__cart {
     background: #F5F5F5;
     padding-bottom: 34px;
+    margin-top: var(--height-header);
 }
 
 .body__cart-head {
