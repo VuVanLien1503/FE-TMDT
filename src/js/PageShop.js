@@ -51,62 +51,6 @@ export default function PageShop() {
             <div id="main">
                 {/*Start Header*/}
                 <div id="header__page-shop">
-                    {/*<div className="header__primary">*/}
-                    {/*    <div className="grid wide">*/}
-                    {/*        <div className="header__navbar">*/}
-                    {/*            <div className="header__navbar-items">*/}
-                    {/*                <ul className="header__nav">*/}
-                    {/*                    <li className="header__nav-items">Trang chủ FCBlue Mall</li>*/}
-                    {/*                    <li className="header__nav-items">Tải ứng dụng</li>*/}
-                    {/*                    <li className="header__nav-items">*/}
-                    {/*                        Kết nối*/}
-                    {/*                        <i className="header__nav-item-icon fa-brands fa-facebook"></i>*/}
-                    {/*                        <i className="header__nav-item-icon fa-brands fa-instagram"></i>*/}
-                    {/*                    </li>*/}
-                    {/*                </ul>*/}
-                    {/*            </div>*/}
-                    {/*            <div className="header__navbar-items">*/}
-                    {/*                <ul className="header__nav">*/}
-                    {/*                    <li className="header__nav-items">*/}
-                    {/*                        <i className="header__nav-item-icon fa-solid fa-circle-question"></i>*/}
-                    {/*                        Hỗ trợ*/}
-                    {/*                    </li>*/}
-                    {/*                    <li className="header__nav-items">*/}
-                    {/*                        <Link to={"/login"}>*/}
-                    {/*                            Xin Chào {user.name}....!*/}
-                    {/*                            <i className="header__nav-icon-down fa-solid fa-caret-down"></i>*/}
-                    {/*                        </Link>*/}
-                    {/*                    </li>*/}
-                    {/*                </ul>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-
-                    {/*        <div className="header__container">*/}
-                    {/*            <div className="row header__container--align">*/}
-                    {/*                <div className="col l-4">*/}
-                    {/*                    <Link to={"/"} className="header__logo-shop">*/}
-                    {/*                        <i className="logo-icon-shop fa-solid fa-cloud">*/}
-                    {/*                            <span className="logo-icon__text-shop">f</span>*/}
-                    {/*                        </i>*/}
-                    {/*                        <span className="header_logo--text-shop">FCBlue Mall</span>*/}
-                    {/*                    </Link>*/}
-                    {/*                </div>*/}
-
-                    {/*                <div className="col l-5">*/}
-                    {/*                    <div className="header__container-right">*/}
-                    {/*                        <div className="header__search">*/}
-                    {/*                            <input type="text" className="header__search-input"*/}
-                    {/*                                   placeholder="Tìm kiếm trong shop"/>*/}
-                    {/*                            <div className="header__search-btn">*/}
-                    {/*                                <i className="header__search-icon fa-solid fa-magnifying-glass"></i>*/}
-                    {/*                            </div>*/}
-                    {/*                        </div>*/}
-                    {/*                    </div>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <HeaderPage/>
                     <div className="header__shop">
                         <div className="grid wide">
@@ -125,12 +69,12 @@ export default function PageShop() {
                                                     </div>
                                                     <div className="header__shop-info col l-8">
                                                         <div className="header__shop-tittle">
-                                                            SAMSUNG OFFICIAL store
+                                                            {shop.name}
                                                         </div>
 
                                                         <div className="header__shop-address">
                                                             <i className="fa-solid fa-location-dot"></i>
-                                                            <span className="header__shop-text">Thái Nguyên</span>
+                                                            <span className="header__shop-text">{user.address}</span>
                                                         </div>
                                                     </div>
                                                 </div>
