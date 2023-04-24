@@ -58,13 +58,6 @@ input {
   width: 100%;
 }
 
-.btn.btn-danger {
-
-}
-
-.btn.btn-success {
-
-}
 .confirmButtonColor {
   cursor: pointer;
   background: linear-gradient(90deg, var(--primary-color), var(--fift-color));

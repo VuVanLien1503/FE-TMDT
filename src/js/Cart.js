@@ -4,6 +4,7 @@ import FooterForm from "./FooterForm";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default function Cart() {
     let idAccount = localStorage.getItem("idAccount")
     const [carts, setCart] = useState([])
@@ -137,12 +138,53 @@ export default function Cart() {
     }
 
     function deleteProductInCart(id) {
-        axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-            console.log(res.data)
-            axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
-                setCheck(!check)
-            })
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'confirmButtonColor',
+                cancelButton: 'cancelButtonColor'
+            },
+            buttonsStyling: false
         })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Bạn có muốn xóa không',
+            text: "Bạn sẽ không thể hoàn tác khi xóa",
+            icon: 'warning',
+            showCancelButton: true,
+            width: 400 ,
+            confirmButtonText: 'Có, tôi chắc chắn!',
+            cancelButtonText: 'Không, quay lại!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
+                    console.log(res.data)
+                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Xóa thành công!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setCheck(!check)
+                    })
+                })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Hủy thành công!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+
     }
 
 }
