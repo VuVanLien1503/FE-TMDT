@@ -310,21 +310,22 @@ export default function PageHome() {
                                 </div>
 
                                 <div className="col l-10">
-                                    <div className="body__home-container-btn-sort">
-                                        <div className="row">
-                                            <div className="col l-2">
-                                                <div className="btn"
-                                                     onClick={() =>
-                                                         sortPrice()}>
-                                                    {checkSort && "Giá Tăng"}
-                                                    {!checkSort && "Giá Giảm"}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div className="body__home-container-products">
                                         <div className="body__home-container-products-title">
                                             <h2>Sản phẩm</h2>
+                                        </div>
+
+                                        <div className="body__home-container-btn-sort">
+                                            <div className="row">
+                                                <div className="col l-2">
+                                                    <div className="btn"
+                                                         onClick={() =>
+                                                             sortPrice()}>
+                                                        {checkSort && "Giá Tăng"}
+                                                        {!checkSort && "Giá Giảm"}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div className="row">
@@ -385,7 +386,6 @@ export default function PageHome() {
 
                                                 <ul className="nav-page__container-number-page">
                                                     <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
-
                                                 </ul>
 
                                                 <div className="nav-page__container-btn" onClick={isNext}>
