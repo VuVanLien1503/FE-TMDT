@@ -82,12 +82,12 @@ export default function PageShop() {
                                                     </div>
                                                     <div className="header__shop-info col l-8">
                                                         <div className="header__shop-tittle">
-                                                            SAMSUNG OFFICIAL store
+                                                            {shop.name}
                                                         </div>
 
                                                         <div className="header__shop-address">
                                                             <i className="fa-solid fa-location-dot"></i>
-                                                            <span className="header__shop-text">Thái Nguyên</span>
+                                                            <span className="header__shop-text">{user.address}</span>
                                                         </div>
                                                     </div>
                                                 </div>

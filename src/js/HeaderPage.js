@@ -151,6 +151,7 @@ export default function HeaderPage(prop) {
                                           onClick={prop.home}>FCBlue Mall</span>
                                 </Link>
                             </div>
+
                             <div className="col l-7">
                                 <div className="header__container-right">
                                     <div className="header__search">
