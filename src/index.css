@@ -57,3 +57,39 @@ input {
   border: none;
   width: 100%;
 }
+
+.btn.btn-danger {
+
+}
+
+.btn.btn-success {
+
+}
+.confirmButtonColor {
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--primary-color), var(--fift-color));
+  color: var(--white-color);
+  border: none;
+  padding: 14px 34px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.confirmButtonColor:hover {
+  background: linear-gradient(180deg, var(--primary-color), var(--fift-color));
+}
+
+.cancelButtonColor {
+  cursor: pointer;
+  background: #f8462f;
+  color: var(--white-color);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.cancelButtonColor:hover {
+  background: rgba(248, 70, 47, 0.9);
+}

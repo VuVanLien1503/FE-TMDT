@@ -498,8 +498,13 @@ export default function Crud() {
             confirmButtonText: 'Có',
             cancelButtonText: 'không',
             reverseButtons: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            width:500,
+            height:400,
+            customClass:{
+                confirmButton: 'confirmButtonColor',
+                cancelButton: 'cancelButtonColor',
+            },
+
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`http://localhost:8081/home/shops/delete/${id}`).then((response) => {
