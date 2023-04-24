@@ -40,6 +40,7 @@ export default function HeaderPage(prop) {
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
     const [carts, setCart] = useState([])
+    const [checkCart, setCheckCart] = useState(true)
     const [render,setRender]=useState(false)
     useEffect(() => {
         setCheckComponent(prop.component)
@@ -54,7 +55,7 @@ export default function HeaderPage(prop) {
             setCart(response.data)
         })
 
-    }, [render])
+    }, [render,check])
     return (
         <>
             <div className="header__primary">
@@ -200,7 +201,8 @@ export default function HeaderPage(prop) {
                                                                                         className="has__cart-price">{element.product.price}</div>
                                                                                     {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                                 </div>
-                                                                                <div className="has__cart-delete">Xoá
+                                                                                <div className="has__cart-delete" onClick={() =>deleteProductInCart(element.product.id)} >
+                                                                                    Xoá
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -268,7 +270,7 @@ export default function HeaderPage(prop) {
                                                                                         className="has__cart-price">{element.product.price}</div>
                                                                                     {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                                 </div>
-                                                                                <span className="has__cart-delete">Xoá</span>
+                                                                                <span className="has__cart-delete" >Xoá</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -468,4 +470,54 @@ export default function HeaderPage(prop) {
         localStorage.setItem("idAccount", "")
         navigate("/login")
     }
+    function deleteProductInCart(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'confirmButtonColor',
+                cancelButton: 'cancelButtonColor'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Bạn có muốn xóa không',
+            text: "Bạn sẽ không thể hoàn tác khi xóa",
+            icon: 'warning',
+            showCancelButton: true,
+            width: 400 ,
+            confirmButtonText: 'Có, tôi chắc chắn!',
+            cancelButtonText: 'Không, quay lại!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
+                    console.log(res.data)
+                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Xóa thành công!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setCheck(!check)
+                    })
+                })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Hủy thành công!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+
+    }
+
 }
