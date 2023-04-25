@@ -52,13 +52,13 @@ export default function PageHome() {
             setNameProduct(input)
         }
         if (priceMin === '' && priceMax === '') {
-            const a = {
+            const search = {
                 name: nameProduct,
                 idCategory: idCategory,
                 priceMin: "0",
                 priceMax: "100000000"
             }
-            axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
+            axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, search).then((response) => {
                 setProducts(response.data.products.content)
                 setSearch(response.data.search)
                 setTotalPages(response.data.products.content.totalPages)
@@ -142,7 +142,7 @@ export default function PageHome() {
         })
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-            axios.get(`http://localhost:8081/home/products?page=${pageNumber}`).then((response) => {
+            axios.post(`http://localhost:8081/home/products/search-name?page=${pageNumber}`).then((response) => {
                 setProducts(response.data.content)
                 setTotalPages(response.data.totalPages)
                 setFlag(false)
@@ -279,7 +279,7 @@ export default function PageHome() {
                                             <span>Khoảng Giá</span>
                                             <div className="filter-container__input">
                                                 <div className="filter__input">
-                                                    <input type={"number"} id={"priceMin"} placeholder={"đ Từ"}
+                                                    <input type={"number"} id={"priceMin"} placeholder={"Từ 0đ"}
                                                            onChange={(e) => {
                                                                setPriceMin(e.target.value)
                                                                setPage(0)
@@ -287,7 +287,7 @@ export default function PageHome() {
                                                 </div>
 
                                                 <div className="filter__input">
-                                                    <input type={"number"} id={"priceMax"} placeholder={"đ Đến"}
+                                                    <input type={"number"} id={"priceMax"} placeholder={"Đến đ"}
                                                            onChange={(e) => {
                                                                setPriceMax(e.target.value)
                                                                setPage(0)
@@ -348,8 +348,8 @@ export default function PageHome() {
                                                                     <span
                                                                         className="product__tag-shop"> # {product.category.name}</span>
                                                                     <div className="product__price">
-                                                                        <span>{product.price}</span>
-                                                                        <p>đ</p>
+                                                                        <span>{product.price.toLocaleString()}</span>
+                                                                        <p style={{marginLeft:5}}>đ</p>
                                                                     </div>
                                                                     <div className="product__address">
                                                                         <i className="fa-solid fa-location-dot"></i>
@@ -364,11 +364,6 @@ export default function PageHome() {
                                             })}
 
                                         </div>
-                                        {/*page*/}
-                                        {/*{pageNumber > 0 && <button className="btn btn-primary" id="backup" onClick={isPrevious}>Previous</button>}*/}
-                                        {/*<span>{pageNumber + 1} | {totalPages}</span>*/}
-                                        {/*{pageNumber + 1 < totalPages && <button className="btn btn-primary" id="next" onClick={isNext}>Next</button>}*/}
-
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
                                                 <div className="nav-page__container-btn" onClick={isPrevious}>

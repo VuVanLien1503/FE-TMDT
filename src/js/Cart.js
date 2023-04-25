@@ -14,6 +14,10 @@ export default function Cart() {
     const param = useParams()
     const [check,setCheck]=useState(false)
     const [prevCarts, setPrevCarts] = useState([]);
+    const [renderCart, setRenderCart] = useState(false);
+    // function checkRender(){
+    //     setRenderCart(!renderCart)
+    // }
     const navigate = useNavigate()
     useEffect(() => {
         axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
@@ -56,6 +60,7 @@ export default function Cart() {
                                                                     <img src={element.product.imagePath[0]}/>
                                                                 </div>
                                                             </div>
+
                                                             <div className="col l-9">
                                                                 <div className="cart__product-name">
                                                                     {element.product.name}
@@ -101,7 +106,7 @@ export default function Cart() {
                                                                 <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</div>
                                                             </div>
                                                             <div className="col l-2">
-                                                                <div className="btn btn-pay" onClick={() => payProduct(element.quantity, element.product.id, element.product.price, element.product)}>Thanh toán</div>
+                                                                <div className="btn btn-pay">Thanh toán</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -256,4 +261,5 @@ export default function Cart() {
         })
 
     }
+
 }
