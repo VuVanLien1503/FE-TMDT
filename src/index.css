@@ -17,7 +17,7 @@
   text-decoration: none;
   list-style-type: none;
   scroll-behavior: smooth;
-  color: var(--text-color);
+  /*color: var(--text-color);*/
 }
 
 html {

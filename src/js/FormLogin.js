@@ -169,7 +169,6 @@ function sweetalert2(input) {
                 localStorage.setItem("role", response.data.account.role.id)
                 switch (response.data.account.role.id) {
                     case 1:
-                        alert("ADMIN")
                         navigate("/")
                         break
                     case 2:
@@ -192,6 +191,13 @@ function sweetalert2(input) {
     }
 
     function createCart(id) {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Tạo thành công!',
+            showConfirmButton: false,
+            timer: 2000
+        })
         navigate(`/`)
         axios.post(`http://localhost:8081/home/carts/${id}`).then((response) => {
 

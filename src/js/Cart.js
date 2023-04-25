@@ -52,7 +52,6 @@ export default function Cart() {
                                                                     <img src={element.product.imagePath[0]}/>
                                                                 </div>
                                                             </div>
-
                                                             <div className="col l-9">
                                                                 <div className="cart__product-name">
                                                                     {element.product.name}

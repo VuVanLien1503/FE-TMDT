@@ -53,6 +53,7 @@ export default function HeaderPage(prop) {
 
         axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
             setCart(response.data)
+            console.log(response.data)
         })
 
     }, [render,check])
@@ -63,7 +64,7 @@ export default function HeaderPage(prop) {
                     <div className="header__navbar">
                         <div className="header__navbar-items">
                             <ul className="header__nav">
-                                <li className="header__nav-items"><Link to={"/"}>Trang chủ FCBlue Mall</Link></li>
+                                <li className="header__nav-items"><Link to={"/"}>Trang chủ</Link></li>
                                 <li className="header__nav-items">Tải ứng dụng</li>
                                 <li className="header__nav-items">
                                     Kết nối
@@ -171,7 +172,7 @@ export default function HeaderPage(prop) {
                                 </div>
                             </div>
                             <div className="col l-2">
-                                {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                {localStorage.getItem("role")!=="2" && <Link to={"/cart"} className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         {carts.length !== 0 &&
@@ -197,9 +198,8 @@ export default function HeaderPage(prop) {
                                                                         <div className="col l-5">
                                                                             <div className="has__cart-action">
                                                                                 <div className="has__cart-calculate">
-                                                                                    <div
-                                                                                        className="has__cart-price">{element.product.price}</div>
-                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                    <div className="has__cart-price">{element.product.price}</div>
+                                                                                    <div className="has__cart-quantity">x {element.quantity}</div>
                                                                                 </div>
                                                                                 <div className="has__cart-delete" onClick={() =>deleteProductInCart(element.product.id)} >
                                                                                     Xoá
@@ -223,7 +223,7 @@ export default function HeaderPage(prop) {
                                             </div>
                                         }
                                     </div>
-                                </div>}
+                                </Link>}
                             </div>
                         </div>
                     </div>}
@@ -239,7 +239,7 @@ export default function HeaderPage(prop) {
                                     </Link>
                                 </div>
                                 <div className="col l-2">
-                                    {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                    {localStorage.getItem("role")!=="2" && <Link to={"/cart"} className="header__cart">
                                         <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                         <div className="header__cart-container">
                                             {carts.length !== 0 &&
@@ -266,11 +266,10 @@ export default function HeaderPage(prop) {
                                                                         <div className="col l-5">
                                                                             <div className="has__cart-action">
                                                                                 <div className="has__cart-calculate">
-                                                                                    <div
-                                                                                        className="has__cart-price">{element.product.price}</div>
-                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                    <div className="has__cart-price">{element.product.price}</div>
+                                                                                    <div className="has__cart-quantity">x {element.quantity}</div>
                                                                                 </div>
-                                                                                <span className="has__cart-delete" >Xoá</span>
+                                                                                <span className="has__cart-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -289,7 +288,7 @@ export default function HeaderPage(prop) {
                                                 </div>
                                             }
                                         </div>
-                                    </div>}
+                                    </Link>}
                                 </div>
                             </div>
                         </div>}
@@ -457,7 +456,7 @@ export default function HeaderPage(prop) {
                 icon: 'success',
                 title: 'Cập Nhật Thành Công',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             }).then(r => {
                 setRender(!render)
                 navigate('/')
@@ -498,7 +497,7 @@ export default function HeaderPage(prop) {
                             icon: 'success',
                             title: 'Xóa thành công!',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                         })
                         setCheck(!check)
                     })
@@ -512,7 +511,7 @@ export default function HeaderPage(prop) {
                     icon: 'error',
                     title: 'Hủy thành công!',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 })
             }
         })

@@ -108,8 +108,7 @@ export default function PageShop() {
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-solid fa-phone"></i>
-                                                            Số điện thoại: <span
-                                                            className="info__detail">{user.phone}</span>
+                                                            Số điện thoại: <span className="info__detail">{user.phone}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
@@ -123,20 +122,17 @@ export default function PageShop() {
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
 
-                                                            Số lượng sản phẩm: <span
-                                                            className="info__detail">{totalElements}</span>
+                                                            Số lượng sản phẩm: <span className="info__detail">{totalElements}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-location-dot"></i>
-                                                            Địa chỉ: <span
-                                                            className="info__detail">{user.address}</span>
+                                                            Địa chỉ: <span className="info__detail">{user.address}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-bookmark"></i>
-                                                            Mô tả: <span
-                                                            className="info__detail">{shop.description}</span>
+                                                            Mô tả: <span className="info__detail">{shop.description}</span>
 
                                                         </li>
 

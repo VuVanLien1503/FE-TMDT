@@ -8,6 +8,7 @@ import {useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
+import Swal from "sweetalert2";
 
 export default function FormRegister() {
 
@@ -245,7 +246,13 @@ export default function FormRegister() {
             setCode(response.data)
             console.log(response.data)
             if (response.data === "emailError") {
-                alert("Email Đã Tồn Tại")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Email đã tồn tại',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
             } else {
                 setIsModalOpen(true)
                 setRole(2)
@@ -260,7 +267,13 @@ export default function FormRegister() {
         axios.post(`http://localhost:8081/accounts/randomCode/${value}`).then((response) => {
             setCode(response.data)
             if (response.data === "emailError") {
-                alert("Email Đã Tồn Tại")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Email đã tồn tại',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
             } else {
                 setIsModalOpen(true)
                 setRole(3)
@@ -293,12 +306,24 @@ export default function FormRegister() {
                     navigate('/login')
                 })
             } else {
-                alert("Mã Đã Hết Hiệu Lực")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Mã hết hiệu lực!',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
                 document.getElementById("inputCode").value = ""
                 closeModal()
             }
         } else {
-            alert("Mã xác Nhận Không Chính Xác")
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Mã xác nhận không chnh xác!',
+                showConfirmButton: false,
+                timer: 2000
+            })
             document.getElementById("inputCode").value = ""
         }
     }

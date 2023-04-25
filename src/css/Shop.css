@@ -316,6 +316,7 @@
 }
 
 .product__title {
+    color: var(--text-color);
     font-size: 1.6rem;
     margin-bottom: 8px;
     line-height: 1.8rem;

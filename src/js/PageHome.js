@@ -146,13 +146,9 @@ export default function PageHome() {
                 setProducts(response.data.content)
                 setTotalPages(response.data.totalPages)
                 setFlag(false)
-            }).catch(() => {
-                setFlag(false)
             }).finally(() => {
                 setFlag(false)
             })
-        }).catch(() => {
-            setFlag(false)
         }).finally(() => {
             setFlag(false)
         })
@@ -333,9 +329,9 @@ export default function PageHome() {
                                                 return (
                                                     <>
                                                         <div className="col l-3">
-                                                            <Link to={"#"} className="body__container-product">
+                                                            <Link to={`detail/${product.id}`} className="body__container-product">
                                                                 <div className="product__img">
-                                                                    <Link to={`detail/${product.id}`}>
+                                                                    <Link to={"#"}>
                                                                         {/*<img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>*/}
                                                                         <img src={product.imagePath[0]} />
                                                                     </Link>
@@ -346,8 +342,7 @@ export default function PageHome() {
 
                                                                     <div className="product__name-shop">
                                                                         <i className="fa-solid fa-store"></i>
-                                                                        <Link
-                                                                            to={`/shop/${product.shop.id}`}>{product.shop.name}</Link>
+                                                                        <Link to={`/shop/${product.shop.id}`}>{product.shop.name}</Link>
                                                                     </div>
 
                                                                     <span
