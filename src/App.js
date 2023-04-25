@@ -10,6 +10,7 @@ import Detail from "./js/Detail";
 import Crud from "./js/Crud";
 import Error from "./js/404";
 import Cart from "./js/Cart";
+import Bill from "./js/Bill";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path={"detail/:id"} element={<Detail/>}/>
                 <Route path={"/shop-admin/:id"} element={<Crud/>}/>
                 <Route path={"/cart"} element={<Cart/>}/>
+                <Route path={"/bills"} element={<Bill/>}/>
             </Routes>
         </>
     );

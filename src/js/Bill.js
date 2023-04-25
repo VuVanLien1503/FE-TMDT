@@ -5,12 +5,10 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-export default function Cart() {
+export default function Bill() {
+
     let idAccount = localStorage.getItem("idAccount")
     const [carts, setCart] = useState([])
-    const [productUpdate, setProductUpdate] = useState([])
-    const [bill, setBill] = useState([])
-    const [billDetail, setBillDetail] = useState([])
     const param = useParams()
     const [check,setCheck]=useState(false)
     const [prevCarts, setPrevCarts] = useState([]);
@@ -56,6 +54,7 @@ export default function Cart() {
                                                                     <img src={element.product.imagePath[0]}/>
                                                                 </div>
                                                             </div>
+
                                                             <div className="col l-9">
                                                                 <div className="cart__product-name">
                                                                     {element.product.name}
@@ -101,7 +100,7 @@ export default function Cart() {
                                                                 <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</div>
                                                             </div>
                                                             <div className="col l-2">
-                                                                <div className="btn btn-pay" onClick={() => payProduct(element.quantity, element.product.id, element.product.price, element.product)}>Thanh toán</div>
+                                                                <div className="btn btn-pay" onClick={payProduct}>Thanh toán</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -122,10 +121,10 @@ export default function Cart() {
     )
 
     //Tăng số lượng sản phẩm
-   function increaseQuantity(id) {
+    function increaseQuantity(id) {
         axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
             axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`, res.data).then((res)=>{
-               setCheck(!check)
+                setCheck(!check)
             })
         })
 
@@ -134,9 +133,9 @@ export default function Cart() {
     //Giảm số luợng sản phẩm
     function reduceQuantity(id) {
         axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-                axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
-                    setCheck(!check)
-                })
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
+                setCheck(!check)
+            })
         })
     }
 
@@ -188,72 +187,8 @@ export default function Cart() {
         })
     }
 
-    function payProduct(quantity ,idProduct, price, product){
-        const productUpdate={
-            id:product.id,
-            quantity: product.quantity - quantity,
-            description : product.description,
-            name : product.name,
-            price: product.price,
-            category: {
-                id: product.category.id,
-            },
-            shop: {
-                id: product.shop.id,
-            },
-            imagePath : product.imagePath
-        }
-        const total = quantity * price
-        axios.get(`http://localhost:8081/home/shops/product/${idProduct}`).then((res)=> {
-            const bill = {
-                account: {
-                    id: idAccount,
-                },
-                date: Date.now(),
-                shop: {
-                    id: res.data.id
-                }
-
-            }
-
-            axios.post(`http://localhost:8081/home/bills/create`, bill).then((res) => {
-                setBill(res.data)
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Đặt hàng thành công!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                const billDetail = {
-                       billDetailId: {},
-                       bill: {
-                           id: res.data.id
-                       },
-                       product: {
-                           id: idProduct
-                       },
-                       quantity: quantity,
-                       total: total
-                }
-                axios.post(`http://localhost:8081/home/bills/bill-detail/create`, billDetail ).then((res) => {
-                    setBillDetail(res.data)
-                    })
-                    axios.post(`http://localhost:8081/home/products/update`,productUpdate).then((res) =>{
-                        axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
-                            setCheck(!check)
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Đặt hàng thành công!',
-                                showConfirmButton: false,
-                                timer: 1500
-                        })
-                    })
-                })
-            })
-
-        })
-
+    function payProduct(){
+        navigate("/bills")
     }
+
 }
