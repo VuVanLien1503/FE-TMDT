@@ -139,7 +139,7 @@ export default function Crud() {
                             </div>
                         </div>
                         {!checkVoucher &&
-                            <div>
+                            <div style={{height: 320}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
                                     <h3 className="col l-1">Ảnh</h3>
@@ -184,7 +184,7 @@ export default function Crud() {
                             </div>
                         }
                         {checkVoucher &&
-                            <div>
+                            <div style={{height: 320}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
                                     <h3 className="col l-3">Tên sản mã</h3>
@@ -233,7 +233,7 @@ export default function Crud() {
                         <span className="modal__close" onClick={closeModal}>
                             <i className="modal__close-icon fa-solid fa-xmark"></i>
                         </span>
-                    <h1 className="modal__container-title" style={{marginLeft: 100}}>
+                    <h1 className="modal__container-title modal__container-title-crud">
                         {id === -1 && <span>Thêm Sản Phẩm</span>}
                         {id !== -1 && <span>Chỉnh Sửa Sản Phẩm</span>}
                     </h1>
@@ -259,85 +259,85 @@ export default function Crud() {
                         enableReinitialize={true}
                     >
                         {(formik) => (
-                            <Form id={"demo"}>
-                                <div>
-                                    <div>
-                                        <ErrorMessage name="name"/>
-                                    </div>
-                                    <div className="form__field">
-                                        <div className="form__field-container">
-                                            <Field name={'name'} type="text"
-                                                   placeholder="Tên Sản Phẩm(*)"/>
+                            <Form id={"demo"} className="grid wide modal__create">
+                                <div className="row">
+                                    <div className="col l-6">
+                                        <div className="form__field">
+                                            <div className="form__field-container">
+                                                <Field name={'name'} type="text" placeholder="Tên Sản Phẩm(*)"/>
+                                                <div className="error__message">
+                                                    <ErrorMessage name="name"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div><ErrorMessage name="price"/></div>
-                                    <div className="form__field">
-                                        <div className="form__field-container">
-                                            <Field name={'price'} type="text"
-                                                   placeholder="Đơn giá sản phẩm(*)"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <ErrorMessage name="quantity"/>
-                                    </div>
-                                    <div className="form__field">
-                                        <div className="form__field-container">
-                                            <Field name={'quantity'} type="text"
-                                                   placeholder="Số lượng sản phẩm(*)"/>
 
+                                    <div className="col l-6">
+                                        <div className="form__field">
+                                            <div className="form__field-container">
+                                                <Field name={'price'} type="text" placeholder="Đơn giá sản phẩm(*)"/>
+                                                <div className="error__message"><ErrorMessage name="price"/></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <ErrorMessage name="description"/>
-                                    </div>
-                                    <div className="form__field">
-                                        <div className="form__field-container">
-                                            <Field name={'description'} type="text"
-                                                   placeholder="Mô tả sản Phẩm(*)"/>
 
+                                    <div className="col l-6">
+                                        <div className="form__field">
+                                            <div className="form__field-container">
+                                                <Field name={'quantity'} type="text" placeholder="Số lượng sản phẩm(*)"/>
+                                                <div className="error__message">
+                                                    <ErrorMessage name="quantity"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <ErrorMessage name="category"/>
+
+                                    <div className="col l-6">
+                                        <div className="form__field">
+                                            <div className="form__field-container">
+                                                <Field name={'description'} type="text" placeholder="Mô tả sản Phẩm(*)"/>
+                                                <div className="error__message">
+                                                    <ErrorMessage name="description"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <Field id="category" name="category.id" as="select"
-                                               style={{width: 400, height: 35}}>
-                                            <option value={''}>Vui lòng chọn category</option>
-                                            {categories != null && categories.map((item, id) => (
-                                                <option key={id} value={item.id}>{item.name}</option>
-                                            ))}
-                                        </Field>
+
+                                    <div className="col l-6">
+                                        <div className="form__field-container">
+                                            <Field id="category" name="category.id" as="select">
+                                                <option value={''}>Vui lòng chọn category</option>
+                                                {categories != null && categories.map((item, id) => (
+                                                    <option key={id} value={item.id}>{item.name}</option>
+                                                ))}
+                                            </Field>
+                                            <div className="error__message">
+                                                <ErrorMessage name="category"/>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div style={{marginTop: 10, marginBottom: 10}}>
-                                    <h3>IMAGE</h3>
-                                </div>
-                                <div className="form__field">
-                                    <Field
-                                        name="image"
-                                        type="file"
-                                        multiple
-                                        onChange={(e) => uploadFile(e)}/>
-                                </div>
-                                <div>
-                                    {
-                                        !image &&
-                                        <h3 className='inner-bar'
-                                            style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
-                                    }
-                                    {
-                                        image &&
-                                        <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
-                                    }
+
+                                    <div className="col l-6" style={{height: 168}}>
+                                        <div className="form__field">
+                                            <Field className="input__file"
+                                                name="image"
+                                                type="file"
+                                                multiple
+                                                onChange={(e) => uploadFile(e)}/>
+                                        </div>
+
+                                        <div>
+                                            {
+                                                !image &&
+                                                <h3 className='inner-bar'
+                                                    style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
+                                            }
+                                            {
+                                                image &&
+                                                <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="container__btn-crud">
                                     <div className="row">
@@ -360,11 +360,11 @@ export default function Crud() {
             {/*modal add voucher*/}
             <div id="modalAddVoucher">
                 <div className="modal__background" onClick={closeModalVoucher}></div>
-                <div className="modal__container">
+                <div className="modal__container modal__container-voucher">
                         <span className="modal__close" onClick={closeModalVoucher}>
                             <i className="modal__close-icon fa-solid fa-xmark"></i>
                         </span>
-                    <h1 className="modal__container-title" style={{marginLeft: 100}}>
+                    <h1 className="modal__container-title" style={{textAlign: "center"}}>
                         <span>Thêm Mã Giảm Giá</span>
                     </h1>
 

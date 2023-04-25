@@ -86,4 +86,35 @@
 .container__btn-crud {
     display: flex;
     justify-content: center;
+    margin-top: 16px;
+}
+
+.modal__create {
+
+}
+
+.modal__container-title-crud {
+    text-align: center;
+    border-bottom: 1px solid var(--fift-color);
+    padding-bottom: 16px;
+}
+
+.form__field-container > input {
+    width: 100%;
+}
+
+#category {
+    width: 100%;
+    padding: 10px;
+    color: #888;
+    font-size: 1.4rem;
+}
+
+.input__file {
+    width: 100%;
+    color: #888;
+}
+
+.modal__container-voucher {
+    width: 400px;
 }

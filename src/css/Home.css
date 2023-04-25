@@ -307,6 +307,10 @@ button.each-slideshow-indicator {
     margin-right: 10px;
 }
 
+.product__name-shop > a {
+    color: var(--fift-color);
+}
+
 .header__nav-items:hover .header__nav-items-container {
     display: block;
 }
@@ -333,6 +337,15 @@ button.each-slideshow-indicator {
     text-align: center;
     box-shadow: 0 0 6px #999;
     width: 160px;
+}
+
+.header__nav-items-container:after {
+    position: absolute;
+    content: "";
+    width: 41%;
+    height: 13px;
+    top: -10px;
+    right: -4px;
 }
 
 .header__nav-items-container:before {

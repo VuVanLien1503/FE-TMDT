@@ -223,6 +223,7 @@ export default function HeaderPage(prop) {
                                             </div>
                                         }
                                     </div>
+                                    <div className="header__cart-count">3</div>
                                 </Link>}
                             </div>
                         </div>
