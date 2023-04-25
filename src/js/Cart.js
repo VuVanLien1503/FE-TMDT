@@ -11,6 +11,10 @@ export default function Cart() {
     const param = useParams()
     const [check,setCheck]=useState(false)
     const [prevCarts, setPrevCarts] = useState([]);
+    const [renderCart, setRenderCart] = useState(false);
+    // function checkRender(){
+    //     setRenderCart(!renderCart)
+    // }
     useEffect(() => {
         axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
             setPrevCarts(carts);
