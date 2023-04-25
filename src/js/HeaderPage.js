@@ -171,7 +171,7 @@ export default function HeaderPage(prop) {
                                 </div>
                             </div>
                             <div className="col l-2">
-                                {localStorage.getItem("role")!=="2" && <div className="header__cart">
+                                {localStorage.getItem("role")!=="2" && <Link to={"/cart"} className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         {carts.length !== 0 &&
@@ -223,7 +223,7 @@ export default function HeaderPage(prop) {
                                             </div>
                                         }
                                     </div>
-                                </div>}
+                                </Link>}
                             </div>
                         </div>
                     </div>}
@@ -517,7 +517,7 @@ export default function HeaderPage(prop) {
             }
         })
 
-
     }
+
 
 }
