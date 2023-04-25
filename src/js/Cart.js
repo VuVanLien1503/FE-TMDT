@@ -256,4 +256,6 @@ export default function Cart() {
         })
 
     }
+
+    console.log("Hoang lao ta")
 }
