@@ -212,6 +212,9 @@ export default function Cart() {
                 date: Date.now(),
                 shop: {
                     id: res.data.id
+                },
+                statusBill:{
+                    id : 1
                 }
 
             }
@@ -239,23 +242,14 @@ export default function Cart() {
                 axios.post(`http://localhost:8081/home/bills/bill-detail/create`, billDetail ).then((res) => {
                     setBillDetail(res.data)
                     })
-                    axios.post(`http://localhost:8081/home/products/update`,productUpdate).then((res) =>{
-                        axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
-                            setCheck(!check)
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Đặt hàng thành công!',
-                                showConfirmButton: false,
-                                timer: 1500
-                        })
-                    })
+                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
+                        setCheck(!check)
+                        navigate("/bills")
                 })
             })
 
         })
 
     }
-
-    console.log("Hoang lao ta")
+    
 }

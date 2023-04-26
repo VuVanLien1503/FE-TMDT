@@ -187,9 +187,9 @@ export default function Crud() {
                             <div style={{height: 320}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
-                                    <h3 className="col l-3">Tên sản mã</h3>
+                                    <h3 className="col l-3">Tên mã</h3>
                                     <h3 className="col l-2">Số lượng</h3>
-                                    <h3 className="col l-2">phần trăm</h3>
+                                    <h3 className="col l-2">Chiết khấu</h3>
                                     <h3 className="col l-4">Chỉnh sửa</h3>
                                 </div>
                                 {voucher != null && voucher.map((voucher) => {

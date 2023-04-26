@@ -364,11 +364,6 @@ export default function PageHome() {
                                             })}
 
                                         </div>
-                                        {/*page*/}
-                                        {/*{pageNumber > 0 && <button className="btn btn-primary" id="backup" onClick={isPrevious}>Previous</button>}*/}
-                                        {/*<span>{pageNumber + 1} | {totalPages}</span>*/}
-                                        {/*{pageNumber + 1 < totalPages && <button className="btn btn-primary" id="next" onClick={isNext}>Next</button>}*/}
-
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
                                                 <div className="nav-page__container-btn" onClick={isPrevious}>

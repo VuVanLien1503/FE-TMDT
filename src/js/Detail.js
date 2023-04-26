@@ -168,7 +168,7 @@ export default function Detail() {
                                         </div>
                                     </div>
 
-                                    <div className="btn btn-add-cart" onClick={order}>Đặt hàng</div>
+                                    <div className="btn btn-add-cart" onClick={order}>Thêm giỏ hàng</div>
                                 </div>
                             </div>
                         </div>

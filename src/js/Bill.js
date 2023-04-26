@@ -9,14 +9,15 @@ export default function Bill() {
 
     let idAccount = localStorage.getItem("idAccount")
     const [carts, setCart] = useState([])
+    const [billDetail, setBillDetail] = useState([])
     const param = useParams()
     const [check,setCheck]=useState(false)
     const [prevCarts, setPrevCarts] = useState([]);
     const navigate = useNavigate()
+    let index = 0;
     useEffect(() => {
-        axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
-            setPrevCarts(carts);
-            setCart(response.data)
+        axios.get(`http://localhost:8081/home/bills/bill-detail/${idAccount}`).then((response) => {
+           setBillDetail(response.data.content)
         })
     }, [check]);
     return (
@@ -28,7 +29,7 @@ export default function Bill() {
                         <div className="grid wide">
                             <div className="body__cart-title">
                                 <i className="fa-solid fa-cart-shopping"></i>
-                                Giỏ hàng
+                                Đơn hàng
                             </div>
                         </div>
                     </div>
@@ -42,70 +43,39 @@ export default function Bill() {
                                     ZteeBoss
                                 </div>
                                 <div className="body__cart-product">
-                                    {carts !== ''&& carts.map((element)=>{
-                                        const prevElement = prevCarts
+                                    <div className="row table__head">
+                                        <h3 className="col l-1">STT</h3>
+                                        <h3 className="col l-1">Ảnh</h3>
+                                        <h3 className="col l-2">Tên</h3>
+                                        <h3 className="col l-1">Số lượng</h3>
+                                        <h3 className="col l-1">Đơn giá</h3>
+                                        <h3 className="col l-2">Tổng tiền</h3>
+                                        <h3 className="col l-2">Trạng thái</h3>
+                                        <h3 className="col l-2">Hành động</h3>
+
+                                    </div>
+                                    {billDetail !== ''&& billDetail.map((element)=>{
                                         return(
-                                            <div className="row" key={element.product.id}>
-                                                <div className="col l-3">
-                                                    <div className="body__cart-product-left">
-                                                        <div className="row">
-                                                            <div className="col l-3">
-                                                                <div className="cart__product-img">
-                                                                    <img src={element.product.imagePath[0]}/>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="col l-9">
-                                                                <div className="cart__product-name">
-                                                                    {element.product.name}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col l-9">
-                                                    <div className="cart__product-action">
-                                                        <div className="row">
-                                                            <div className="col l-2">
-                                                                <div className="product-action__wrap">
-                                                                    <div className="product__text">Đơn giá: </div>
-                                                                    <div className="product__unit-price product-money">
-                                                                        {element.product.price}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col l-3">
-                                                                <div className="detail__quantity product-cart__quantity">
-                                                                    <div className="detail__quantity-btn detail__quantity-reduce" onClick={() => reduceQuantity(element.product.id)}>
-                                                                        -
-                                                                    </div>
-                                                                    <div className="detail__quantity-number">
-                                                                        {element.quantity}
-                                                                    </div>
-                                                                    <div className="detail__quantity-btn detail__quantity-increase" onClick={()=>increaseQuantity(element.product.id)}>
-                                                                        +
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col l-3">
-                                                                <div className="product-action__wrap">
-                                                                    <div className="product__text">Tổng: </div>
-                                                                    <div className="product__total product-money">
-                                                                        {element.product.price*element.quantity}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col l-2">
-                                                                <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</div>
-                                                            </div>
-                                                            <div className="col l-2">
-                                                                <div className="btn btn-pay" onClick={payProduct}>Thanh toán</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                           <>
+                                               <div className="row table__content">
+                                                   <div className="col l-1">{++index}</div>
+                                                   <div className="col l-1">
+                                                       <img src={element.product.imagePath[0]}/>
+                                                   </div>
+                                                   <div className="col l-2">{element.product.name}</div>
+                                                   <div className="col l-1">{element.quantity}</div>
+                                                   <div className="col l-1">{element.product.price}</div>
+                                                   <div className="col l-2">{element.quantity * element.product.price}</div>
+                                                   <div className="col l-2">{element.bill.statusBill.name}</div>
+                                                   <div className="col l-2">
+                                                       {element.bill.statusBill.id === 1 &&
+                                                           <div className="row">
+                                                               <div className="btn btn-delete" onClick={() =>removeBill(element.bill.id)}>Hủy</div>
+                                                           </div>
+                                                       }
+                                                   </div>
+                                               </div>
+                                           </>
                                         )
                                     })}
                                 </div>
@@ -129,15 +99,12 @@ export default function Bill() {
         })
 
     }
+     function removeBill(idBill){
+         axios.post(`http://localhost:8081/home/bills/delete/${idBill}`).then((res)=>{
+            setCheck(!check)
+         })
+     }
 
-    //Giảm số luợng sản phẩm
-    function reduceQuantity(id) {
-        axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
-                setCheck(!check)
-            })
-        })
-    }
 
     function deleteProductInCart(id) {
         const swalWithBootstrapButtons = Swal.mixin({
