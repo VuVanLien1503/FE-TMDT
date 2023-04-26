@@ -64,6 +64,8 @@ export default function Crud() {
     const [check, setCheck] = useState(false)
     const [id, setId] = useState(0)
     const [product, setProduct] = useState([])
+    const [billDetails, setBillDetails] = useState([])
+    const [checkBillDetail, setCheckBillDetail] = useState(false)
     const navigate = useNavigate()
 
     const [checkUser, setCheckUser] = useState(false)
@@ -89,7 +91,6 @@ export default function Crud() {
                     axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
                         setUser(response.data)
                     })
-
                 } else {
                     Swal.fire({
                         position: 'center',
@@ -115,7 +116,6 @@ export default function Crud() {
         }
 
     }, [checkRender])
-
     let index = 0
     return (
         <>
@@ -136,6 +136,9 @@ export default function Crud() {
                                     {!checkVoucher&&"Khuyến mãi"}
                                     {checkVoucher&&"Sản Phẩm"}
                                 </div>
+                            </div>
+                            <div className="col l-2 container-btn-create">
+                                <div className="btn btn-create" onClick={showBillDetail}>Đơn hàng</div>
                             </div>
                         </div>
                         {!checkVoucher &&
@@ -222,6 +225,45 @@ export default function Crud() {
 
                             </div>
                         }
+                        {checkBillDetail &&
+                            <div style={{height: 600}}>
+                                <div className="row table__head">
+                                    <h3 className="col l-1">STT</h3>
+                                    <h3 className="col l-1">Ảnh</h3>
+                                    <h3 className="col l-2">Tên sản phẩm</h3>
+                                    <h3 className="col l-2">Tên khách hàng</h3>
+                                    <h3 className="col l-1">Số lượng</h3>
+                                    <h3 className="col l-1">Đơn giá (vnd)</h3>
+                                    <h3 className="col l-1">Tổng tiền (vnd)</h3>
+                                    <h3 className="col l-1">Trạng thái</h3>
+                                    <h3 className="col l-2">Hành động</h3>
+                                </div>
+                                {billDetails != null && billDetails.map((element) => {
+                                    return (
+                                        <>
+                                            <div className="row table__content">
+                                                <div className="col l-1">{++index}</div>
+                                                <div className="col l-1">
+                                                    <img src={element.product.imagePath[0]}/>
+                                                </div>
+                                                <h3 className="col l-2">{element.product.name}</h3>
+                                                <h3 className="col l-2">{element.bill.account.users.name}</h3>
+                                                <h3 className="col l-1">{element.quantity}</h3>
+                                                <h3 className="col l-1">{element.product.price.toLocaleString()}</h3>
+                                                <h3 className="col l-1">{element.total.toLocaleString()}</h3>
+                                                <h3 className="col l-1">{element.bill.statusBill.name}</h3>
+                                                <div className="col l-2">
+                                                    {element.bill.statusBill.id === 1 &&
+                                                        <div className="btn btn-primary" onClick={() =>updateStatusBill2(element.bill.id,element)}>Xác nhận đơn</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })}
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -605,5 +647,28 @@ export default function Crud() {
 
     }
 
+
+    // Hiển thị các đơn hàng đang chờ xử lý
+    function showBillDetail(){
+        setCheckBillDetail(!checkBillDetail)
+        axios.get(`http://localhost:8081/home/bills/shops/${shop.id}`).then((response) => {
+            setBillDetails(response.data.content)
+        })
+    }
+
+    // Shop xác nhận đơn hàng, trạng thái chuyển sang đang giao hàng
+    function updateStatusBill2(idBill,billDetail){
+        setCheckBillDetail(!checkBillDetail)
+        axios.post(`http://localhost:8081/home/bills/update/status-bill/2/${idBill}`,billDetail).then((response) => {
+            setCheckRender(!checkRender)
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Xác nhận đơn hàng thành công!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
+    }
 
 }

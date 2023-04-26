@@ -49,11 +49,10 @@ export default function Bill() {
                                         <h3 className="col l-1">Ảnh</h3>
                                         <h3 className="col l-2">Tên</h3>
                                         <h3 className="col l-1">Số lượng</h3>
-                                        <h3 className="col l-1">Đơn giá</h3>
-                                        <h3 className="col l-2">Tổng tiền</h3>
+                                        <h3 className="col l-1">Đơn giá (vnd)</h3>
+                                        <h3 className="col l-2">Tổng tiền (vnd)</h3>
                                         <h3 className="col l-2">Trạng thái</h3>
                                         <h3 className="col l-2">Hành động</h3>
-
                                     </div>
                                     {billDetail !== ''&& billDetail.map((element)=>{
                                         return(
@@ -65,13 +64,18 @@ export default function Bill() {
                                                    </div>
                                                    <div className="col l-2">{element.product.name}</div>
                                                    <div className="col l-1">{element.quantity}</div>
-                                                   <div className="col l-1">{element.product.price}</div>
-                                                   <div className="col l-2">{element.quantity * element.product.price}</div>
+                                                   <div className="col l-1">{element.product.price.toLocaleString()}</div>
+                                                   <div className="col l-2">{(element.quantity * element.product.price).toLocaleString()}</div>
                                                    <div className="col l-2">{element.bill.statusBill.name}</div>
                                                    <div className="col l-2">
                                                        {element.bill.statusBill.id === 1 &&
                                                            <div className="row">
                                                                <div className="btn btn-delete" onClick={() =>removeBill(element.bill.id)}>Hủy</div>
+                                                           </div>
+                                                       }
+                                                       {element.bill.statusBill.id === 2 &&
+                                                           <div className="row">
+                                                               <div className="btn btn-primary" onClick={() =>confirmationBill(element.bill.id)}>Đã nhận</div>
                                                            </div>
                                                        }
                                                    </div>
@@ -128,5 +132,17 @@ export default function Bill() {
          })
      }
 
+     function confirmationBill(idBill){
+         axios.post(`http://localhost:8081/home/bills/update/status-bill/4/${idBill}`,billDetail).then((response) => {
+             Swal.fire({
+                 position: 'center',
+                 icon: 'success',
+                 title: 'Thành công!',
+                 showConfirmButton: false,
+                 timer: 1500
+             })
+             setCheck(!check)
+         })
+     }
 
 }
