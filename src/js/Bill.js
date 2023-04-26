@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import swalWithBootstrapButtons from "sweetalert2";
 export default function Bill() {
 
     let idAccount = localStorage.getItem("idAccount")
@@ -90,72 +91,42 @@ export default function Bill() {
         </>
     )
 
-    //Tăng số lượng sản phẩm
-    function increaseQuantity(id) {
-        axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-            axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`, res.data).then((res)=>{
-                setCheck(!check)
-            })
-        })
-
-    }
      function removeBill(idBill){
-         axios.post(`http://localhost:8081/home/bills/delete/${idBill}`).then((res)=>{
-            setCheck(!check)
+         swalWithBootstrapButtons.fire({
+             title: 'Bạn có muốn hủy đơn hàng?',
+             // text: "Bạn sẽ không thể hoàn tác khi xóa",
+             icon: 'warning',
+             showCancelButton: true,
+             width: 400 ,
+             confirmButtonText: 'Có, tôi chắc chắn!',
+             cancelButtonText: 'Không, quay lại!',
+             reverseButtons: true
+         }).then((result) => {
+             if (result.isConfirmed) {
+                 axios.post(`http://localhost:8081/home/bills/delete/${idBill}`).then((res)=>{
+                     setCheck(!check)
+                     Swal.fire({
+                         position: 'center',
+                         icon: 'success',
+                         title: 'Hủy đơn hàng thành công!',
+                         showConfirmButton: false,
+                         timer: 1500
+                     })
+                 })
+             } else if (
+                 /* Read more about handling dismissals below */
+                 result.dismiss === Swal.DismissReason.cancel
+             ) {
+                 Swal.fire({
+                     position: 'center',
+                     icon: 'error',
+                     title: 'Thao tác được hủy bỏ!',
+                     showConfirmButton: false,
+                     timer: 1500
+                 })
+             }
          })
      }
 
-
-    function deleteProductInCart(id) {
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'confirmButtonColor',
-                cancelButton: 'cancelButtonColor'
-            },
-            buttonsStyling: false
-        })
-
-        swalWithBootstrapButtons.fire({
-            title: 'Bạn có muốn xóa không',
-            text: "Bạn sẽ không thể hoàn tác khi xóa",
-            icon: 'warning',
-            showCancelButton: true,
-            width: 400 ,
-            confirmButtonText: 'Có, tôi chắc chắn!',
-            cancelButtonText: 'Không, quay lại!',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-                    console.log(res.data)
-                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Xóa thành công!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        setCheck(!check)
-                    })
-                })
-            } else if (
-                /* Read more about handling dismissals below */
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Hủy thành công!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-    }
-
-    function payProduct(){
-        navigate("/bills")
-    }
 
 }
