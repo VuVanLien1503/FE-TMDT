@@ -142,7 +142,7 @@ export default function PageHome() {
         })
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-            axios.post(`http://localhost:8081/home/products/search-name?page=${pageNumber}`).then((response) => {
+            axios.post(`http://localhost:8081/home/products?page=${pageNumber}`).then((response) => {
                 setProducts(response.data.content)
                 setTotalPages(response.data.totalPages)
                 setFlag(false)
@@ -329,9 +329,9 @@ export default function PageHome() {
                                                 return (
                                                     <>
                                                         <div className="col l-3">
-                                                            <Link to={`detail/${product.id}`} className="body__container-product">
+                                                            <Link to={"#"} className="body__container-product">
                                                                 <div className="product__img">
-                                                                    <Link to={"#"}>
+                                                                    <Link to={`detail/${product.id}`}>
                                                                         {/*<img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>*/}
                                                                         <img src={product.imagePath[0]} />
                                                                     </Link>

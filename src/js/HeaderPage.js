@@ -41,11 +41,9 @@ export default function HeaderPage(prop) {
     const navigate = useNavigate()
     const [carts, setCart] = useState([])
     const [checkCart, setCheckCart] = useState(true)
-    const [render,setRender]=useState(false)
+    const [render, setRender] = useState(false)
     useEffect(() => {
         setCheckComponent(prop.component)
-        console.log("component")
-        console.log(prop.component)
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
             setUser(response.data)
             setNameLogin(response.data.name)
@@ -55,7 +53,7 @@ export default function HeaderPage(prop) {
             setCart(response.data)
         })
 
-    }, [render,check])
+    }, [render, check])
     return (
         <>
             <div className="header__primary">
@@ -84,7 +82,7 @@ export default function HeaderPage(prop) {
                                 {nameLogin === '' &&
                                     <li className="header__nav-items"><Link to={"/login"}>Đăng nhập</Link></li>}
                                 {nameLogin !== '' && <li className="header__nav-items header__nav-items-info">
-                                    <div className="header__nav-items-img"  onClick={() => formSave()}>
+                                    <div className="header__nav-items-img" onClick={() => formSave()}>
                                         {user.pathImage == null &&
                                             <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>}
                                         {user.pathImage != null && <img src={user.pathImage}/>}
@@ -107,7 +105,7 @@ export default function HeaderPage(prop) {
                                             <li className="header__nav-items-container-info">
                                                 <Link to={`#`} className="row">
                                                     <div className="col l-2 nav-items__container-icon">
-                                                        <i className="fa-solid fa-eye"></i>                                                    </div>
+                                                        <i className="fa-solid fa-eye"></i></div>
                                                     <div className="col l-10 nav-items__container-text">
                                                         Lịch Sử Mua Hàng
                                                     </div>
@@ -141,9 +139,7 @@ export default function HeaderPage(prop) {
                             </ul>
                         </div>
                     </div>
-
-                    {checkComponent!=="detail" &&
-                        <div className="header__container">
+                    <div className="header__container">
                         <div className="row header__container--align">
                             <div className="col l-3">
                                 <Link to={"/"} className="header__logo-shop">
@@ -156,22 +152,24 @@ export default function HeaderPage(prop) {
                             </div>
 
                             <div className="col l-7">
-                                <div className="header__container-right">
-                                    <div className="header__search">
+                                {checkComponent !== "detail" &&
+                                    <div className="header__container-right">
+                                        <div className="header__search">
 
-                                        {/* tìm kiếm sản phẩm theo tên*/}
+                                            {/* tìm kiếm sản phẩm theo tên*/}
 
-                                        <input type="text" className="header__search-input"
-                                               placeholder="Tìm kiếm trong shop"
-                                               onChange={(e) => prop.onClick(e.target.value)}/>
-                                        <div className="btn header__search-btn" onClick={() => prop.onClick(search)}>
-                                            <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
+                                            <input type="text" className="header__search-input"
+                                                   placeholder="Tìm kiếm trong shop"
+                                                   onChange={(e) => prop.onClick(e.target.value)}/>
+                                            <div className="btn header__search-btn"
+                                                 onClick={() => prop.onClick(search)}>
+                                                <i className="header__search-icon fa-solid fa-magnifying-glass"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>}
                             </div>
                             <div className="col l-2">
-                                {localStorage.getItem("role")!=="2" && <Link to={"/cart"} className="header__cart">
+                                {localStorage.getItem("role") !== "2" && <Link to={"/cart"} className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
                                         {carts.length !== 0 &&
@@ -201,7 +199,8 @@ export default function HeaderPage(prop) {
                                                                                         className="has__cart-price">{element.product.price}</div>
                                                                                     {/*<div className="has__cart-quantity">x 2</div>*/}
                                                                                 </div>
-                                                                                <div className="has__cart-delete" onClick={() =>deleteProductInCart(element.product.id)} >
+                                                                                <div className="has__cart-delete"
+                                                                                     onClick={() => deleteProductInCart(element.product.id)}>
                                                                                     Xoá
                                                                                 </div>
                                                                             </div>
@@ -227,73 +226,7 @@ export default function HeaderPage(prop) {
                                 </Link>}
                             </div>
                         </div>
-                    </div>}
-                    {checkComponent ==="detail" &&
-                        <div className="header__container">
-                            <div className="row header__container--align">
-                                <div className="col l-10">
-                                    <Link to={`/shop/${prop.shop.id}`} className="header__logo-shop">
-                                        <span className="header_logo--text-shop"  style={{marginLeft:450,marginTop:10}}>
-                                            <i className="info__icon fa-solid fa-store"></i>
-                                            {prop.shop.name}
-                                        </span>
-                                    </Link>
-                                </div>
-                                <div className="col l-2">
-                                    {localStorage.getItem("role")!=="2" && <div className="header__cart">
-                                        <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
-                                        <div className="header__cart-container">
-                                            {carts.length !== 0 &&
-                                                <div className="has-cart">
-                                                    <h3 className="cart__title">Sản phẩm đã chọn</h3>
-                                                    <ul className="has__cart-container">
-                                                        {carts.map((element) => {
-                                                            return (
-                                                                <li className="has__cart-items">
-                                                                    <div className="row">
-                                                                        <div className="col l-2 has__cart-img">
-                                                                            <div>
-                                                                                <img src={element.product.imagePath[0]}/>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="col l-5">
-                                                                            <div className="has__cart-head">
-                                                                                <div
-                                                                                    className="has__cart-head-title">{element.product.name}</div>
-                                                                                <div
-                                                                                    className="has__cart-head-desc">{element.product.category.name}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="col l-5">
-                                                                            <div className="has__cart-action">
-                                                                                <div className="has__cart-calculate">
-                                                                                    <div
-                                                                                        className="has__cart-price">{element.product.price}</div>
-                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
-                                                                                </div>
-                                                                                <span className="has__cart-delete" >Xoá</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            )
-                                                        })}
-                                                    </ul>
-                                                    <div className="has__cart-container-btn">
-                                                        <Link to={"/cart"} className="btn btn-cart">Xem giỏ hàng</Link>
-                                                    </div>
-                                                </div>
-                                            }
-                                            {carts.length === 0 &&
-                                                <div className="no-cart">
-                                                    <img src="/img/logo/empty-cart.webp"/>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>}
-                                </div>
-                            </div>
-                        </div>}
+                    </div>
                 </div>
             </div>
             <div id="modal">
@@ -321,8 +254,8 @@ export default function HeaderPage(prop) {
                         onSubmit={(values) => {
                             if (image !== "") {
                                 values.pathImage = image
-                            }else {
-                                values.pathImage=user.pathImage
+                            } else {
+                                values.pathImage = user.pathImage
                             }
                             saveUser(values)
                         }}
@@ -471,6 +404,7 @@ export default function HeaderPage(prop) {
         localStorage.setItem("idAccount", "")
         navigate("/login")
     }
+
     function deleteProductInCart(id) {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -485,15 +419,15 @@ export default function HeaderPage(prop) {
             text: "Bạn sẽ không thể hoàn tác khi xóa",
             icon: 'warning',
             showCancelButton: true,
-            width: 400 ,
+            width: 400,
             confirmButtonText: 'Có, tôi chắc chắn!',
             cancelButtonText: 'Không, quay lại!',
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
+                axios.get(`http://localhost:8081/home/products/${id}`).then((res) => {
                     console.log(res.data)
-                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res)=>{
+                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`, res.data).then((res) => {
                         Swal.fire({
                             position: 'center',
                             icon: 'success',

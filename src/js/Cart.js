@@ -217,18 +217,10 @@ export default function Cart() {
                 shop: {
                     id: res.data.id
                 }
-
             }
 
             axios.post(`http://localhost:8081/home/bills/create`, bill).then((res) => {
                 setBill(res.data)
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Đặt hàng thành công!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
                 const billDetail = {
                        billDetailId: {},
                        bill: {
@@ -249,7 +241,7 @@ export default function Cart() {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'Đặt hàng thành công!',
+                                title: 'Thanh Toán Thành Công...!',
                                 showConfirmButton: false,
                                 timer: 1500
                         })

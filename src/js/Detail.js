@@ -86,9 +86,10 @@ export default function Detail() {
                                                <i className="info__icon fa-solid fa-store"></i>
                                             </span>
                                             <div className="col l-9 detail__info-shared-content">
-
                                                 <span onClick={() => showShop(shop.id)}
-                                                      style={{color: "yellowgreen"}}>{shop.name}</span>
+                                                      style={{color: "yellowgreen"}}>{shop.name}
+                                                </span>
+
                                             </div>
                                         </div>
 
@@ -182,7 +183,7 @@ export default function Detail() {
 
     // vào trang cửa hàng theo id
     function showShop(id) {
-        alert("Cửa Hàng Có ID : " + id)
+        navigate(`/shop/${id}`)
     }
     // Tăng số lượng
     function increaseQuantity() {

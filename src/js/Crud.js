@@ -139,7 +139,7 @@ export default function Crud() {
                             </div>
                         </div>
                         {!checkVoucher &&
-                            <div style={{height: 320}}>
+                            <div style={{height: 600}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
                                     <h3 className="col l-1">Ảnh</h3>

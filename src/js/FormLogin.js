@@ -184,20 +184,14 @@ function sweetalert2(input) {
                         createCart(response.data.account.id)
                         break
                 }
+            }else {
+                sweetalert2(response.data.text)
             }
-            sweetalert2(response.data.text)
         })
 
     }
 
     function createCart(id) {
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Tạo thành công!',
-            showConfirmButton: false,
-            timer: 2000
-        })
         navigate(`/`)
         axios.post(`http://localhost:8081/home/carts/${id}`).then((response) => {
 
