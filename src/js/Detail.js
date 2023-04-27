@@ -128,9 +128,6 @@ export default function Detail() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row detail__info-shared detail__info-quantity">
-                                        <span className="col l-3 detail__info-shared-title">Còn lại: {product.quantity}</span>
-                                        </div>
                                     </div>
 
                                     <div className="row detail__info-support">

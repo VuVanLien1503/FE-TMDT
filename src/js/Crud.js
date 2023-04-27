@@ -56,6 +56,7 @@ export default function Crud() {
 
 
     const [products, setProducts] = useState([]);
+    const [statistical, setStatistical] = useState([]);
     const [categoryShop, setCategoryShop] = useState([])
     const [categories, setCategories] = useState([])
     const [user, setUser] = useState([])
@@ -66,6 +67,7 @@ export default function Crud() {
     const [product, setProduct] = useState([])
     const [billDetails, setBillDetails] = useState([])
     const [checkBillDetail, setCheckBillDetail] = useState(false)
+    const [checkAction, setCheckAction] = useState("show product")
     const navigate = useNavigate()
 
     const [checkUser, setCheckUser] = useState(false)
@@ -125,6 +127,9 @@ export default function Crud() {
                     <div className="grid wide container__form-edit">
                         <div className="row container-btn">
                             <div className="col l-2 container-btn-create">
+                                <div className="btn" onClick={showProduct}>Sản phẩm</div>
+                            </div>
+                            <div className="col l-2 container-btn-create">
                                 <div className="btn" onClick={() => formSave(-1)}>Thêm sản phẩm</div>
                             </div>
 
@@ -132,16 +137,16 @@ export default function Crud() {
                                 <div className="btn btn-create" onClick={openModalVoucher}>Thêm mã giảm giá</div>
                             </div>
                             <div className="col l-2 container-btn-create">
-                                <div className="btn btn-create" onClick={showVoucher}>
-                                    {!checkVoucher&&"Khuyến mãi"}
-                                    {checkVoucher&&"Sản Phẩm"}
-                                </div>
+                                <div className="btn btn-create" onClick={showVoucher}>Khuyến mãi</div>
                             </div>
                             <div className="col l-2 container-btn-create">
                                 <div className="btn btn-create" onClick={showBillDetail}>Đơn hàng</div>
                             </div>
+                            <div className="col l-2 container-btn-create">
+                                <div className="btn btn-create" onClick={showUsersBuyProductOfShop}>Thống kê</div>
+                            </div>
                         </div>
-                        {!checkVoucher &&
+                        {checkAction === "show product" &&
                             <div style={{height: 600}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
@@ -186,7 +191,7 @@ export default function Crud() {
 
                             </div>
                         }
-                        {checkVoucher &&
+                        {checkAction === "show voucher" &&
                             <div style={{height: 320}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
@@ -225,7 +230,7 @@ export default function Crud() {
 
                             </div>
                         }
-                        {checkBillDetail &&
+                        {checkAction === "show bill detail" &&
                             <div style={{height: 600}}>
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
@@ -478,10 +483,15 @@ export default function Crud() {
         </>
 
     )
+
+    //show sản phẩm
+    function showProduct(){
+        setCheckAction("show product")
+    }
     //show voucher
 
     function showVoucher(){
-        setCheckVoucher(!checkVoucher)
+        setCheckAction("show voucher")
         axios.get(`http://localhost:8081/home/shops/voucher/${shop.id}`).then((response) => {
             setVoucher(response.data.content)
         })
@@ -650,7 +660,7 @@ export default function Crud() {
 
     // Hiển thị các đơn hàng đang chờ xử lý
     function showBillDetail(){
-        setCheckBillDetail(!checkBillDetail)
+        setCheckAction("show bill detail")
         axios.get(`http://localhost:8081/home/bills/shops/${shop.id}`).then((response) => {
             setBillDetails(response.data.content)
         })
@@ -670,5 +680,16 @@ export default function Crud() {
             })
         })
     }
+
+    function showUsersBuyProductOfShop(){
+        axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) =>{
+            console.log(res.data.content)
+            setStatistical(res.data.content)
+            for (let i = 0; i < setStatistical.length; i++) {
+
+            }
+        })
+    }
+
 
 }
