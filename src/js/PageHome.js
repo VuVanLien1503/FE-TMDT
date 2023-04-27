@@ -22,13 +22,17 @@ export default function PageHome() {
     const [user, setUser] = useState([])
     const param = useParams()
     const [value, setValue] = useState("")
+
     const [search, setSearch] = useState({})
     const [priceMin, setPriceMin] = useState("0")
     const [nameProduct, setNameProduct] = useState("")
     const [priceMax, setPriceMax] = useState("100000000")
+    const [arrCity, setArrCity] = useState([])
+
+
     const [idCategory, setIdCategory] = useState("0")
     const [checkSort, setCheckSort] = useState(true)
-    const [renderHome, serRenderHome] = useState(false)
+    const [renderHome, setRenderHome] = useState(false)
 
 
     function sortPrice() {
@@ -47,116 +51,73 @@ export default function PageHome() {
 
     }
 
-    function searchByName(input) {
-        if (input !== undefined) {
-            setNameProduct(input)
-        }
-        if (priceMin === '' && priceMax === '') {
-            const search = {
-                name: nameProduct,
-                idCategory: idCategory,
-                priceMin: "0",
-                priceMax: "100000000"
-            }
-            axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, search).then((response) => {
-                setProducts(response.data.products.content)
-                setSearch(response.data.search)
-                setTotalPages(response.data.products.content.totalPages)
-            })
-        } else {
-            if (priceMin === '') {
-                const a = {
-                    name: nameProduct,
-                    idCategory: idCategory,
-                    priceMin: "0",
-                    priceMax: priceMax
-                }
-                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
-                    setProducts(response.data.products.content)
-                    setSearch(response.data.search)
-                    setTotalPages(response.data.products.content.totalPages)
-
-                })
-            } else {
-                const a = {
-                    name: nameProduct,
-                    idCategory: idCategory,
-                    priceMin: priceMin,
-                    priceMax: priceMax
-                }
-                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
-                    setProducts(response.data.products.content)
-                    setSearch(response.data.search)
-                    setTotalPages(response.data.products.content.totalPages)
-                })
-            }
-            if (priceMax === '') {
-                const a = {
-                    name: nameProduct,
-                    idCategory: idCategory,
-                    priceMin: priceMin,
-                    priceMax: "100000000"
-                }
-                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
-                    setProducts(response.data.products.content)
-                    setSearch(response.data.search)
-                    setTotalPages(response.data.products.content.totalPages)
-                })
-            } else {
-                const a = {
-                    name: nameProduct,
-                    idCategory: idCategory,
-                    priceMin: priceMin,
-                    priceMax: priceMax
-                }
-                axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`, a).then((response) => {
-                    setProducts(response.data.products.content)
-                    setSearch(response.data.search)
-                    setTotalPages(response.data.products.content.totalPages)
-                })
-            }
-
-        }
-    }
     function isPrevious() {
         setPage(pageNumber - 1)
-        console.log(pageNumber)
-        axios.get(`http://localhost:8081/home/product?page=${pageNumber-1}`).then((response) => {
-            setProducts(response.data.products.content)
-            setSearch(response.data.search)
-
-        })
+        // console.log(pageNumber)
+        // axios.get(`http://localhost:8081/home/product/search?page=${pageNumber-1}`,search).then((response) => {
+        //     setProducts(response.data.products.content)
+        //     setSearch(response.data.search)
+        // })
 
     }
     function isNext() {
         setPage(pageNumber + 1)
-        console.log(pageNumber)
-        axios.get(`http://localhost:8081/home/products?page=${pageNumber + 1}`).then((response) => {
-            setProducts(response.data.products.content)
-            setSearch(response.data.search)
-        })
+        // axios.get(`http://localhost:8081/home/products/search?page=${pageNumber + 1}`,search).then((response) => {
+        //     setProducts(response.data.products.content)
+        //     setSearch(response.data.search)
+        // })
     }
+    function searchByName(input) {
+        if (input===undefined){
+            input=""
+        }
+        const search={
+            name:input,
+            priceMin:priceMin?priceMin:"0",
+            priceMax:priceMax?priceMax:"100000000",
+            idCategory:idCategory,
+            arrayCity:arrCity
+        }
+        setSearch(search)
+        console.log(search)
+        axios.post(`http://localhost:8081/home/products/search?page=${pageNumber}`,search).then((response) => {
+            setProducts(response.data.content)
+            setTotalPages(response.data.totalPages)
+        })
+        // axios.get(`http://localhost:8081/home/products/search-name/${input}`).then((response) => {
+        //     console.log(response.data.content)
+        //     console.log(search)
+        //     console.log(pageNumber)
+        //     setProducts(response.data.content)
+        //     setTotalPages(response.data.totalPages)
+        // })
+    }
+
     useEffect(() => {
         axios.get(`http://localhost:8081/home/city`).then((repose) => {
             setCity(repose.data)
         })
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-            axios.post(`http://localhost:8081/home/products?page=${pageNumber}`).then((response) => {
-                setProducts(response.data.content)
-                setTotalPages(response.data.totalPages)
-                setFlag(false)
-            }).finally(() => {
-                setFlag(false)
-            })
+            // axios.post(`http://localhost:80811/home/products/search?page=${pageNumber}`,{search}).then((response) => {
+            //     setProducts(response.data.content)
+            //     console.log(response.data.content)
+            //     console.log(search)
+            //     setTotalPages(response.data.totalPages)
+            //     setFlag(false)
+            // }).finally(() => {
+            //     setFlag(false)
+            // })
         }).finally(() => {
             setFlag(false)
         })
-    }, [pageNumber,renderHome])
-    useEffect(searchByName, [idCategory, priceMin, priceMax,nameProduct])
+    }, [renderHome])
+
+
+    useEffect(searchByName, [idCategory, priceMin, priceMax,arrCity,pageNumber])
 
     function backToHome() {
-        serRenderHome(!renderHome)
+        setRenderHome(!renderHome)
         resetValue()
     }
 
@@ -257,24 +218,6 @@ export default function PageHome() {
                                             <i className="fa-solid fa-filter"></i>
                                             <span>Bộ lọc tìm kiếm</span>
                                         </div>
-
-                                        <div className="body__home-container-filter-items">
-                                            <span>Nơi bán</span>
-                                            <ul className="body__home-container-filter-items-nav">
-                                                {city.map((city) => {
-                                                    return (
-                                                        <>
-                                                            <li className="body__home-container-filter-items-wrap">
-                                                                <input type={"checkbox"} id={city.name}/>
-                                                                <label htmlFor={city.name}>{city.name}</label>
-                                                            </li>
-                                                        </>
-                                                    )
-                                                })}
-
-                                            </ul>
-                                        </div>
-
                                         <div className="body__home-container-filter-items">
                                             <span>Khoảng Giá</span>
                                             <div className="filter-container__input">
@@ -293,14 +236,31 @@ export default function PageHome() {
                                                                setPage(0)
                                                            }}/>
                                                 </div>
-
-                                                {/*<div className="filter__container-btn">*/}
-                                                {/*    <div className="btn btn-filter"*/}
-                                                {/*    onClick={()=>{searchByName(nameProduct)}}>*/}
-                                                {/*        Áp Dụng*/}
-                                                {/*    </div>*/}
-                                                {/*</div>*/}
                                             </div>
+                                        </div>
+                                        <div className="body__home-container-filter-items">
+                                            <span>Nơi bán</span>
+                                            <ul className="body__home-container-filter-items-nav">
+                                                {city.map((city) => {
+                                                    return (
+                                                        <>
+                                                            <li className="body__home-container-filter-items-wrap">
+                                                                <input type={"checkbox"} id={city.name} value={city.name} onClick={(event)=>{
+                                                                    if (event.currentTarget.checked){
+                                                                        arrCity.push(event.currentTarget.value)
+                                                                        setArrCity([...arrCity])
+                                                                    }else {
+                                                                        addArr(event.currentTarget.value)
+                                                                       setArrCity(arrCity.filter(city => city !== event.currentTarget.value));
+                                                                    }
+                                                                }}/>
+                                                                <label htmlFor={city.name}>{city.name}</label>
+                                                            </li>
+                                                        </>
+                                                    )
+                                                })}
+
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -366,7 +326,9 @@ export default function PageHome() {
                                         </div>
                                         <div className="body__home-nav-page">
                                             <div className="nav-page__container">
-                                                <div className="nav-page__container-btn" onClick={isPrevious}>
+                                                <div className="nav-page__container-btn" onClick={()=>{
+                                                    setPage(pageNumber - 1)
+                                                }}>
                                                     {pageNumber > 0 &&
                                                         <div className="btn btn-prev">
                                                             <i className="fa-solid fa-chevron-left" ></i>
@@ -378,7 +340,9 @@ export default function PageHome() {
                                                     <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
                                                 </ul>
 
-                                                <div className="nav-page__container-btn" onClick={isNext}>
+                                                <div className="nav-page__container-btn" onClick={()=>{
+                                                    setPage(pageNumber + 1)
+                                                }}>
                                                     {pageNumber + 1 < totalPages &&
                                                         <div className="btn btn-next">
                                                             <i className="fa-solid fa-chevron-right" ></i>
@@ -399,8 +363,14 @@ export default function PageHome() {
         </>
     )
 
-    function showDetailProduct(id) {
-        alert("ShowProduct " + id)
+    function addArr(id) {
+        let index=0
+        let arrNew=[]
+        for (let i = 0; i <arrCity.length; i++) {
+            if (arrCity[i]==id){
+               arrNew.push(arrCity[i])
+            }
+        }
     }
 
     function showShop(id) {
