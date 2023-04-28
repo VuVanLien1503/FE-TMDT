@@ -34,9 +34,6 @@ export default function FormEditUser() {
             }else {
                 setImg(response.data.pathImage)
             }
-
-            console.log(response.data.pathImage)
-            console.log(img)
         })
     }, [flag])
 

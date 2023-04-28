@@ -1,6 +1,7 @@
 import '../css/HeaderInfo.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 export default function HeaderInfo(props) {
     const [user, setUser] = useState([])
@@ -26,6 +27,11 @@ export default function HeaderInfo(props) {
                     <li className="navbar-items">Giỏ hàng</li>
                     <li className="navbar-items">Cửa hàng của tôi</li>
                 </ul>
+
+                <Link to={"/"} className="nav__back-home">
+                    <i className="fa-solid fa-arrow-left"></i>
+                    <span className="navbar-items"> Quay lại trang chủ </span>
+                </Link>
             </div>
         </>
     )

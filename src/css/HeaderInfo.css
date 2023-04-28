@@ -42,6 +42,7 @@
     margin-top: 30px;
     padding: 0 18px;
     font-size: 1.5rem;
+    border-bottom: 1px solid var(--fift-color);
 }
 
 .navbar-items {
@@ -50,6 +51,7 @@
     cursor: pointer;
 }
 
+.nav__back-home:hover > i,
 .navbar-items:hover,
 .navbar-items:hover > i {
     color: #ffbb00;
@@ -57,4 +59,19 @@
 
 .navbar-items > i {
     margin-right: 8px;
+}
+
+.nav__back-home {
+    display: block;
+    padding-left: 18px;
+    margin-top: 20px;
+}
+
+.nav__back-home > .navbar-items {
+    font-size: 1.5rem;
+}
+
+.nav__back-home > i {
+    color: var(--white-color);
+    margin-right: 6px;
 }
