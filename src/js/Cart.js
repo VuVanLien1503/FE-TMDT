@@ -15,6 +15,8 @@ export default function Cart() {
     const [check,setCheck]=useState(false)
     const [prevCarts, setPrevCarts] = useState([]);
     const [renderCart, setRenderCart] = useState(false);
+    let index = 0;
+
     // function checkRender(){
     //     setRenderCart(!renderCart)
     // }
@@ -48,69 +50,49 @@ export default function Cart() {
                                     ZteeBoss
                                 </div>
                                 <div className="body__cart-product">
+                                    <div className="row table__head">
+                                        <h3 className="col l-1">STT</h3>
+                                        <h3 className="col l-1">Ảnh</h3>
+                                        <h3 className="col l-3">Tên sản phẩm</h3>
+                                        <h3 className="col l-2">Số lượng</h3>
+                                        <h3 className="col l-1">Đơn giá (vnd)</h3>
+                                        <h3 className="col l-1">Tổng tiền (vnd)</h3>
+                                        <h3 className="col l-3">Hành động</h3>
+                                    </div>
                                     {carts !== ''&& carts.map((element)=>{
-                                        const prevElement = prevCarts
                                         return(
-                                            <div className="row" key={element.product.id}>
-                                                <div className="col l-3">
-                                                    <div className="body__cart-product-left">
-                                                        <div className="row">
-                                                            <div className="col l-3">
-                                                                <div className="cart__product-img">
-                                                                    <img src={element.product.imagePath[0]}/>
-                                                                </div>
+                                            <>
+                                                <div className="row table__content">
+                                                    <div className="col l-1">{++index}</div>
+                                                    <div className="col l-1">
+                                                        <img src={element.product.imagePath[0]}/>
+                                                    </div>
+                                                    <div className="col l-3">{element.product.name}</div>
+                                                    <div className="col l-2">
+                                                        <div className="detail__quantity product-cart__quantity">
+                                                            <div className="detail__quantity-btn detail__quantity-reduce" onClick={() => reduceQuantity(element.product.id)}>
+                                                                -
                                                             </div>
-                                                            <div className="col l-9">
-                                                                <div className="cart__product-name">
-                                                                    {element.product.name}
-                                                                </div>
+                                                            <div className="detail__quantity-number">
+                                                                {element.quantity}
+                                                            </div>
+                                                            <div className="detail__quantity-btn detail__quantity-increase" onClick={()=>increaseQuantity(element.product.id)}>
+                                                                +
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div className="col l-9">
-                                                    <div className="cart__product-action">
-                                                        <div className="row">
-                                                            <div className="col l-2">
-                                                                <div className="product-action__wrap">
-                                                                    <div className="product__text">Đơn giá: </div>
-                                                                    <div className="product__unit-price product-money">
-                                                                        {element.product.price}
-                                                                    </div>
-                                                                </div>
+                                                    <div className="col l-1">{element.product.price.toLocaleString()}</div>
+                                                    <div className="col l-1">{(element.quantity * element.product.price).toLocaleString()}</div>
+                                                    <div className="col l-3">
+                                                            <div className="col l-5">
+                                                                <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Hủy</div>
                                                             </div>
-                                                            <div className="col l-3">
-                                                                <div className="detail__quantity product-cart__quantity">
-                                                                    <div className="detail__quantity-btn detail__quantity-reduce" onClick={() => reduceQuantity(element.product.id)}>
-                                                                        -
-                                                                    </div>
-                                                                    <div className="detail__quantity-number">
-                                                                        {element.quantity}
-                                                                    </div>
-                                                                    <div className="detail__quantity-btn detail__quantity-increase" onClick={()=>increaseQuantity(element.product.id)}>
-                                                                        +
-                                                                    </div>
-                                                                </div>
+                                                            <div className="col l-7">
+                                                                <div className="btn btn-primary" onClick={() =>payProduct(element.quantity,element.product.id,element.product.price,element.product)}>Thanh toán</div>
                                                             </div>
-                                                            <div className="col l-3">
-                                                                <div className="product-action__wrap">
-                                                                    <div className="product__text">Tổng: </div>
-                                                                    <div className="product__total product-money">
-                                                                        {element.product.price*element.quantity}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col l-2">
-                                                                <div className="btn btn-delete" onClick={() =>deleteProductInCart(element.product.id)}>Xoá</div>
-                                                            </div>
-                                                            <div className="col l-2">
-                                                                <div className="btn btn-pay" onClick={() => payProduct(element.quantity, element.product.id, element.product.price, element.product)}>Thanh toán</div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </>
                                         )
                                     })}
                                 </div>
@@ -216,6 +198,9 @@ export default function Cart() {
                 date: Date.now(),
                 shop: {
                     id: res.data.id
+                },
+                statusBill:{
+                    id : 1
                 }
 
             }
@@ -243,21 +228,14 @@ export default function Cart() {
                 axios.post(`http://localhost:8081/home/bills/bill-detail/create`, billDetail ).then((res) => {
                     setBillDetail(res.data)
                     })
-                    axios.post(`http://localhost:8081/home/products/update`,productUpdate).then((res) =>{
-                        axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
-                            setCheck(!check)
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Đặt hàng thành công!',
-                                showConfirmButton: false,
-                                timer: 1500
-                        })
-                    })
+                    axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
+                        setCheck(!check)
+                        navigate("/bills")
                 })
             })
 
         })
 
     }
+
 }

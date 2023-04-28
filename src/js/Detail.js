@@ -86,9 +86,10 @@ export default function Detail() {
                                                <i className="info__icon fa-solid fa-store"></i>
                                             </span>
                                             <div className="col l-9 detail__info-shared-content">
-
                                                 <span onClick={() => showShop(shop.id)}
-                                                      style={{color: "yellowgreen"}}>{shop.name}</span>
+                                                      style={{color: "yellowgreen"}}>{shop.name}
+                                                </span>
+
                                             </div>
                                         </div>
 
@@ -126,9 +127,6 @@ export default function Detail() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="row detail__info-shared detail__info-quantity">
-                                        <span className="col l-3 detail__info-shared-title">Còn lại: {product.quantity}</span>
                                         </div>
                                     </div>
 
@@ -168,7 +166,7 @@ export default function Detail() {
                                         </div>
                                     </div>
 
-                                    <div className="btn btn-add-cart" onClick={order}>Đặt hàng</div>
+                                    <div className="btn btn-add-cart" onClick={order}>Thêm giỏ hàng</div>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +180,7 @@ export default function Detail() {
 
     // vào trang cửa hàng theo id
     function showShop(id) {
-        alert("Cửa Hàng Có ID : " + id)
+        navigate(`/shop/${id}`)
     }
     // Tăng số lượng
     function increaseQuantity() {
