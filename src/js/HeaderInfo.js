@@ -1,6 +1,7 @@
 import '../css/HeaderInfo.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 export default function HeaderInfo(props) {
     const [user, setUser] = useState([])
@@ -20,12 +21,19 @@ export default function HeaderInfo(props) {
                 <ul className="header-info__container-navbar">
                     <li className="navbar-items">
                         <i className="fa-solid fa-caret-right"></i>
-                        Tài Khoản
+                        <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
                     <li className="navbar-items">Lịch sử mua hàng</li>
-                    <li className="navbar-items">Giỏ hàng</li>
+                    <li className="navbar-items">
+                        <Link to={"/cart"}>Giỏ hàng</Link>
+                    </li>
                     <li className="navbar-items">Cửa hàng của tôi</li>
                 </ul>
+
+                <Link to={"/"} className="nav__back-home">
+                    <i className="fa-solid fa-arrow-left"></i>
+                    <span className="navbar-items"> Quay lại trang chủ </span>
+                </Link>
             </div>
         </>
     )

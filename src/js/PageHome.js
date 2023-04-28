@@ -9,10 +9,13 @@ import Loading from "./Loading";
 import ShowAllProduct from "./ShowAllProduct";
 import Swal from "sweetalert2";
 import {paste} from "@testing-library/user-event/dist/paste";
+import {animateScroll as scroll} from "react-scroll";
 
 export default function PageHome() {
+    const idAccount = localStorage.getItem("idAccount")
     const [pageNumber, setPage] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
+    const [carts, setCarts] = useState([])
 
 
     const [categories, setCategories] = useState([])
@@ -94,6 +97,10 @@ export default function PageHome() {
     }
 
     useEffect(() => {
+        axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
+            setCarts(response.data)
+        })
+
         axios.get(`http://localhost:8081/home/city`).then((repose) => {
             setCity(repose.data)
         })
@@ -111,6 +118,8 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
+
+        scrollToSection()
     }, [renderHome])
 
 
@@ -129,7 +138,7 @@ export default function PageHome() {
     return (
         <>
             <div id="main" className="main-home">
-                <HeaderPage onClick={searchByName} home={backToHome}/>
+                <HeaderPage onClick={searchByName} home={backToHome} listCart = {carts}/>
                 <div id="body__home">
                     <div className="body__home-top">
                         <div className="grid wide">
@@ -289,13 +298,11 @@ export default function PageHome() {
                                                 return (
                                                     <>
                                                         <div className="col l-3">
-                                                            <Link to={"#"} className="body__container-product">
-                                                                <div className="product__img">
-                                                                    <Link to={`detail/${product.id}`}>
+                                                            <Link to={`detail/${product.id}`} className="body__container-product">
+                                                                <Link to={`detail/${product.id}`} className="product__img">
                                                                         {/*<img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>*/}
                                                                         <img src={product.imagePath[0]} />
-                                                                    </Link>
-                                                                </div>
+                                                                </Link>
 
                                                                 <div className="product__content">
                                                                     <h2 className="product__title">{product.name}</h2>
@@ -375,5 +382,15 @@ export default function PageHome() {
 
     function showShop(id) {
         alert("Shop: " + id)
+    }
+
+    //Trượt về phần cần hiển thị
+    function scrollToSection() {
+        scroll.scrollTo('#body__home', {
+            duration: 0,
+            delay: 0,
+            smooth: true,
+            offset: 0
+        });
     }
 }

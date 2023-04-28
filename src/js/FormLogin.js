@@ -165,17 +165,20 @@ function sweetalert2(input) {
                 localStorage.setItem("role", response.data.account.role.id)
                 switch (response.data.account.role.id) {
                     case 1:
+                        // sweetalert2(response.data.text)
                         navigate("/")
                         break
                     case 2:
                         if (response.data.shop) {
+                            // sweetalert2(response.data.text)
                             navigate(`/shop-admin/${response.data.account.id}`)
-
                         } else {
+                            // sweetalert2(response.data.text)
                             navigate(`/createShop/${response.data.account.id}`)
                         }
                         break
                     case 3:
+                        // sweetalert2(response.data.text)
                         navigate(`/`)
                         createCart(response.data.account.id)
                         break
