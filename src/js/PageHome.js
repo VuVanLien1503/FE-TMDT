@@ -118,8 +118,6 @@ export default function PageHome() {
         }).finally(() => {
             setFlag(false)
         })
-
-        scrollToSection()
     }, [renderHome])
 
 

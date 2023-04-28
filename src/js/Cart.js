@@ -59,7 +59,7 @@ export default function Cart() {
                                         <h3 className="col l-1">Tổng tiền (vnd)</h3>
                                         <h3 className="col l-3">Hành động</h3>
                                     </div>
-                                    {carts !== ''&& carts.map((element)=>{
+                                    {carts.length !== 0 && carts.map((element)=>{
                                         return(
                                             <>
                                                 <div className="row table__content">
@@ -70,7 +70,7 @@ export default function Cart() {
                                                     <div className="col l-3">{element.product.name}</div>
                                                     <div className="col l-2">
                                                         <div className="detail__quantity product-cart__quantity">
-                                                            <div className="detail__quantity-btn detail__quantity-reduce" onClick={() => reduceQuantity(element.product.id)}>
+                                                            <div className="detail__quantity-btn detail__quantity-reduce" onClick={() => reduceQuantity(element.product.id, element.quantity)}>
                                                                 -
                                                             </div>
                                                             <div className="detail__quantity-number">
@@ -118,12 +118,15 @@ export default function Cart() {
     }
 
     //Giảm số luợng sản phẩm
-    function reduceQuantity(id) {
-        axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
-                axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
-                    setCheck(!check)
+    function reduceQuantity(id, quantity) {
+            if (quantity > 1){
+                axios.get(`http://localhost:8081/home/products/${id}`).then((res)=>{
+                    axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,res.data).then((res)=>{
+                        setCheck(!check)
+                    })
                 })
-        })
+            }
+
     }
 
     function deleteProductInCart(id) {
@@ -233,9 +236,7 @@ export default function Cart() {
                         navigate("/bills")
                 })
             })
-
         })
-
     }
 
 }

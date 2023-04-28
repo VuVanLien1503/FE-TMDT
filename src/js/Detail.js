@@ -25,7 +25,6 @@ export default function Detail() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
-                console.log(param.id)
                 setProduct(response.data);
                 setImage(response.data.imagePath);
                 const shopResponse = await axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`);
