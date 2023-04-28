@@ -683,11 +683,7 @@ export default function Crud() {
 
     function showUsersBuyProductOfShop(){
         axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) =>{
-            console.log(res.data.content)
-            setStatistical(res.data.content)
-            for (let i = 0; i < setStatistical.length; i++) {
-
-            }
+            console.log(res.data)
         })
     }
 

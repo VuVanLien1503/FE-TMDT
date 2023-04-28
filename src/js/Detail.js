@@ -232,7 +232,8 @@ export default function Detail() {
             showConfirmButton: false,
             timer: 1500
         }).then(() =>{
-            navigate('/cart')
+            setCheck(!check)
+            navigate(`/cart`)
         })
     }
 }

@@ -289,7 +289,7 @@ export default function PageHome() {
                                                 return (
                                                     <>
                                                         <div className="col l-3">
-                                                            <Link to={"#"} className="body__container-product">
+                                                            <Link to={`detail/${product.id}`} className="body__container-product">
                                                                 <div className="product__img">
                                                                     <Link to={`detail/${product.id}`}>
                                                                         {/*<img src="/img/logo/vn-11134207-7qukw-lf5kh01qrr7u09_tn.jfif"/>*/}
