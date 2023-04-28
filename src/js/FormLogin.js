@@ -93,8 +93,8 @@ function sweetalert2(input) {
                                                                    placeholder="Mật khẩu"/>
                                                             <div id="event" className="form__field-items-icon-login"
                                                                  onClick={setStatusPassword}>
-                                                                <i id="eye-open" className="fa-solid fa-eye"></i>
-                                                                <i id="eye-close" className="fa-solid fa-eye-slash"></i>
+                                                                {status === "text" && <i id="eye-open" className="fa-solid fa-eye"></i>}
+                                                                {status === "password" && <i id="eye-close" className="fa-solid fa-eye-slash"></i>}
                                                             </div>
                                                             <div className={'error__message'}><ErrorMessage
                                                                 name={'password'}/></div>
@@ -147,13 +147,9 @@ function sweetalert2(input) {
     function setStatusPassword() {
         if (status === "password") {
             setStatus("text");
-            document.getElementById("eye-open").style.display = "block";
-            document.getElementById("eye-close").style.display = "none";
 
         } else {
             setStatus("password");
-            document.getElementById("eye-open").style.display = "none";
-            document.getElementById("eye-close").style.display = "block";
         }
     }
 
@@ -169,23 +165,26 @@ function sweetalert2(input) {
                 localStorage.setItem("role", response.data.account.role.id)
                 switch (response.data.account.role.id) {
                     case 1:
+                        // sweetalert2(response.data.text)
                         navigate("/")
                         break
                     case 2:
                         if (response.data.shop) {
+                            // sweetalert2(response.data.text)
                             navigate(`/shop-admin/${response.data.account.id}`)
-
                         } else {
+                            // sweetalert2(response.data.text)
                             navigate(`/createShop/${response.data.account.id}`)
                         }
                         break
                     case 3:
+                        // sweetalert2(response.data.text)
                         navigate(`/`)
                         createCart(response.data.account.id)
                         break
                 }
             }
-            sweetalert2(response.data.text)
+            // sweetalert2(response.data.text)
         })
 
     }
