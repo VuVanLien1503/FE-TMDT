@@ -45,14 +45,20 @@
     border-bottom: 1px solid var(--fift-color);
 }
 
+.navbar-items > a,
+.navbar-items {
+    color: var(--white-color);
+}
+
 .navbar-items {
     color: var(--white-color);
     padding-bottom: 20px;
     cursor: pointer;
 }
 
-.nav__back-home:hover > i,
 .navbar-items:hover,
+.nav__back-home:hover > i,
+.navbar-items:hover > a,
 .navbar-items:hover > i {
     color: #ffbb00;
 }

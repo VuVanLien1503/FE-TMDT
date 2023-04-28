@@ -39,7 +39,7 @@ export default function HeaderPage(prop) {
     const [user, setUser] = useState([])
     const [nameLogin, setNameLogin] = useState("")
     const navigate = useNavigate()
-    const [carts, setCart] = useState([])
+    // const [carts, setCart] = useState([])
     const [checkCart, setCheckCart] = useState(true)
     const [render, setRender] = useState(false)
     useEffect(() => {
@@ -49,9 +49,9 @@ export default function HeaderPage(prop) {
             setNameLogin(response.data.name)
         })
 
-        axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
-            setCart(response.data)
-        })
+        // axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
+        //     setCart(response.data)
+        // })
 
     }, [render, check])
     return (
@@ -172,17 +172,17 @@ export default function HeaderPage(prop) {
                                 {localStorage.getItem("role") !== "2" && <Link to={"/cart"} className="header__cart">
                                     <i className="header__cart-icon fa-solid fa-cart-shopping"></i>
                                     <div className="header__cart-container">
-                                        {carts.length !== 0 &&
+                                        {prop.listCart.length !== 0 &&
                                             <div className="has-cart">
                                                 <h3 className="cart__title">Sản phẩm đã chọn</h3>
                                                 <ul className="has__cart-container">
-                                                    {carts.map((element) => {
+                                                    {prop.listCart.map((element) => {
                                                         return (
                                                             <>
                                                                 <li className="has__cart-items">
                                                                     <div className="row">
                                                                         <div className="col l-1 has__cart-img">
-                                                                            <img src={element.product.imagePath[0]}/>
+                                                                            <img src={element.product?.imagePath[0]}/>
                                                                         </div>
                                                                         <div className="col l-6">
                                                                             <div className="has__cart-head">
@@ -195,9 +195,8 @@ export default function HeaderPage(prop) {
                                                                         <div className="col l-5">
                                                                             <div className="has__cart-action">
                                                                                 <div className="has__cart-calculate">
-                                                                                    <div
-                                                                                        className="has__cart-price">{element.product.price}</div>
-                                                                                    {/*<div className="has__cart-quantity">x 2</div>*/}
+                                                                                    <div className="has__cart-price">{element.product.price}</div>
+                                                                                    <div className="has__cart-quantity">x {element.quantity}</div>
                                                                                 </div>
                                                                                 <div className="has__cart-delete"
                                                                                      onClick={() => deleteProductInCart(element.product.id)}>
@@ -216,13 +215,13 @@ export default function HeaderPage(prop) {
                                                 </div>
                                             </div>
                                         }
-                                        {carts.length === 0 &&
+                                        {prop.listCart.length === 0 &&
                                             <div className="no-cart">
                                                 <img src="/img/logo/empty-cart.webp"/>
                                             </div>
                                         }
                                     </div>
-                                    <div className="header__cart-count">3</div>
+                                    {prop.listCart.length > 0 && <div className="header__cart-count">{prop.listCart.length}</div>}
                                 </Link>}
                             </div>
                         </div>

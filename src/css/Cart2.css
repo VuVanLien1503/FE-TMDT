@@ -1,0 +1,11 @@
+#main-cart {
+    background: #e5e5e5;
+}
+
+.list-product__cart > img {
+    height: 320px;
+}
+
+.list-product__cart {
+    padding: 20px;
+}

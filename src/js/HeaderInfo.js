@@ -21,10 +21,12 @@ export default function HeaderInfo(props) {
                 <ul className="header-info__container-navbar">
                     <li className="navbar-items">
                         <i className="fa-solid fa-caret-right"></i>
-                        Tài Khoản
+                        <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
                     <li className="navbar-items">Lịch sử mua hàng</li>
-                    <li className="navbar-items">Giỏ hàng</li>
+                    <li className="navbar-items">
+                        <Link to={"/cart"}>Giỏ hàng</Link>
+                    </li>
                     <li className="navbar-items">Cửa hàng của tôi</li>
                 </ul>
 

@@ -6,6 +6,7 @@ import axios from "axios";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import Swal from "sweetalert2";
+import { animateScroll as scroll } from 'react-scroll';
 
 export default function Detail() {
     let idAccount = localStorage.getItem("idAccount")
@@ -17,30 +18,36 @@ export default function Detail() {
     const [image, setImage] = useState([])
     const [imageShow, setImageShow] = useState("")
     const [check, setCheck] = useState(true)
+    const [carts, setCarts] = useState([])
     const navigate = useNavigate()
     const param = useParams()
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
+                console.log(param.id)
                 setProduct(response.data);
                 setImage(response.data.imagePath);
                 const shopResponse = await axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`);
                 setShop(shopResponse.data);
                 const quantityResponse = await axios.post(`http://localhost:8081/home/carts/check-product/${idAccount}`, response.data);
                 setQuantity(quantityResponse.data);
+                const  a = await axios.get(`http://localhost:8081/home/carts/${idAccount}`, response.data)
+                setCarts(a.data)
             } catch (error) {
                 console.log(error);
             }
         };
+
         fetchData();
+        scrollToSection()
     }, [check]);
     // setQuantityRemaining(product.quantity);
     console.log(shop)
     return (
         <>
-            <HeaderPage shop={shop} component={"detail"}/>
-            <div className="body__detail">
+            <HeaderPage shop={shop} component={"detail"} listCart = {carts}/>
+            <div id={"detail"} className="body__detail">
                 <div className="grid wide">
                     <div className="body__detail-container">
                         <div className="row">
@@ -232,7 +239,22 @@ export default function Detail() {
             showConfirmButton: false,
             timer: 1500
         }).then(() =>{
-            navigate('/cart')
+            axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
+                setCarts(response.data)
+            })
+            //     .then(() => {
+            //     navigate(`/detail/${param.id}`)
+            // })
         })
+    }
+
+    //Trượt về phần cần hiển thị
+    function scrollToSection() {
+        scroll.scrollTo('#detail', {
+            duration: 0,
+            delay: 0,
+            smooth: true,
+            offset: 0
+        });
     }
 }
