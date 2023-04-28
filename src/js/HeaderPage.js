@@ -106,8 +106,8 @@ export default function HeaderPage(prop) {
                                                 <Link to={`#`} className="row">
                                                     <div className="col l-2 nav-items__container-icon">
                                                         <i className="fa-solid fa-eye"></i></div>
-                                                    <div className="col l-10 nav-items__container-text">
-                                                        Lịch Sử Mua Hàng
+                                                    <div className="col l-10 nav-items__container-text" >
+                                                        <Link to={"/bills"}>Lịch Sử Mua Hàng</Link>
                                                     </div>
                                                 </Link>
                                             </li>}
