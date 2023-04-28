@@ -61,7 +61,7 @@ export default function HeaderPage(prop) {
                     <div className="header__navbar">
                         <div className="header__navbar-items">
                             <ul className="header__nav">
-                                <li className="header__nav-items"><Link to={"/"}>Trang chủ FCBlue Mall</Link></li>
+                                <li className="header__nav-items"><Link to={"/"}>Trang chủ</Link></li>
                                 <li className="header__nav-items">Tải ứng dụng</li>
                                 <li className="header__nav-items">
                                     Kết nối
@@ -116,10 +116,10 @@ export default function HeaderPage(prop) {
                                                 <div className="col l-2 nav-items__container-icon">
                                                     <i className="fa-solid fa-user"></i>
                                                 </div>
-                                                <div className="col l-10 nav-items__container-text"
-                                                     onClick={() => formSave()}>
+                                                <Link to={"/edit_user"} className="col l-10 nav-items__container-text">
+                                                     {/*// onClick={() => formSave()}>*/}
                                                     Tài Khoản
-                                                </div>
+                                                </Link>
                                             </div>
                                         </li>
 
@@ -299,25 +299,25 @@ export default function HeaderPage(prop) {
                                     <h3>IMAGE</h3>
                                 </div>
                                 <div className="form__field">
-                                    <Field
-                                        name="image"
-                                        type="file"
-                                        multiple
-                                        onChange={(e) => uploadFile(e)}/>
+                                    {/*<Field*/}
+                                    {/*    name="image"*/}
+                                    {/*    type="file"*/}
+                                    {/*    multiple*/}
+                                    {/*    onChange={(e) => uploadFile(e)}/>*/}
                                 </div>
                                 <div>
-                                    {
-                                        !image &&
-                                        <div>
-                                            <img src={user.pathImage} alt="" style={{width: 100, height: 100}}/>
-                                            <h3 className='inner-bar'
-                                                style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
-                                        </div>
-                                    }
-                                    {
-                                        image &&
-                                        <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
-                                    }
+                                    {/*{*/}
+                                    {/*    !image &&*/}
+                                    {/*    <div>*/}
+                                    {/*        <img src={user.pathImage} alt="" style={{width: 100, height: 100}}/>*/}
+                                    {/*        <h3 className='inner-bar'*/}
+                                    {/*            style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>*/}
+                                    {/*    </div>*/}
+                                    {/*}*/}
+                                    {/*{*/}
+                                    {/*    image &&*/}
+                                    {/*    <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>*/}
+                                    {/*}*/}
                                 </div>
                                 <div className="container__btn"
                                      style={{marginLeft: 100, marginBottom: 20, marginTop: 10}}>
@@ -355,31 +355,31 @@ export default function HeaderPage(prop) {
         document.getElementById("modal").style.display = "none"
     }
 
-    function uploadFile(e) {
-        setCheck(true)
-        if (e.target.files[0]) {
-            const time = new Date().getTime()
-            const storageRef = ref(storage, `image/${time}_${e.target.files[0].name}`);
-            const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
-
-            uploadTask.on("state_changed",
-                (snapshot) => {
-                    const progress =
-                        Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                    setProgressPercent(progress);
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setImage(downloadURL)
-                        setCheck(false)
-                    });
-                }
-            );
-        }
-    }
+    // function uploadFile(e) {
+    //     setCheck(true)
+    //     if (e.target.files[0]) {
+    //         const time = new Date().getTime()
+    //         const storageRef = ref(storage, `image/${time}_${e.target.files[0].name}`);
+    //         const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+    //
+    //         uploadTask.on("state_changed",
+    //             (snapshot) => {
+    //                 const progress =
+    //                     Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //                 setProgressPercent(progress);
+    //             },
+    //             (error) => {
+    //                 console.log(error);
+    //             },
+    //             () => {
+    //                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //                     setImage(downloadURL)
+    //                     setCheck(false)
+    //                 });
+    //             }
+    //         );
+    //     }
+    // }
 
     function saveUser(values) {
 

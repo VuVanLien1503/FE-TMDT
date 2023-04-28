@@ -110,13 +110,9 @@ export default function FormRegister() {
                                                             <div className="form__field-items">
                                                                 <Field name={'password'} id="password"
                                                                        type={status} placeholder="Mật khẩu(*)"/>
-                                                                <div id="event"
-                                                                     className="form__field-items-icon"
-                                                                     onClick={setStatusPassword}>
-                                                                    <i id="eye-open"
-                                                                       className="fa-solid fa-eye"></i>
-                                                                    <i id="eye-close"
-                                                                       className="fa-solid fa-eye-slash"></i>
+                                                                <div id="event" className="form__field-items-icon" onClick={setStatusPassword}>
+                                                                    {status === "text" && <i id="eye-open" className="fa-solid fa-eye"></i>}
+                                                                    {status === "password" && <i id="eye-close" className="fa-solid fa-eye-slash"></i>}
                                                                 </div>
                                                             </div>
                                                             <div className={'error__message'}><ErrorMessage
@@ -230,13 +226,9 @@ export default function FormRegister() {
     function setStatusPassword() {
         if (status === "password") {
             setStatus("text");
-            document.getElementById("eye-open").style.display = "block";
-            document.getElementById("eye-close").style.display = "none";
 
         } else {
             setStatus("password");
-            document.getElementById("eye-open").style.display = "none";
-            document.getElementById("eye-close").style.display = "block";
         }
     }
 

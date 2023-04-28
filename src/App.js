@@ -11,6 +11,8 @@ import Crud from "./js/Crud";
 import Error from "./js/404";
 import Cart from "./js/Cart";
 import Bill from "./js/Bill";
+import HeaderInfo from "./js/HeaderInfo";
+import FormEditUser from "./js/FormEditUser";
 
 function App() {
     return (
@@ -24,6 +26,8 @@ function App() {
             {/*<Crud/>*/}
             {/*<Error/>*/}
             {/*<Cart/>*/}
+            {/*<HeaderInfo/>*/}
+            {/*<FormEditUser/>*/}
             <Routes>
                 <Route path="/register" element={<FormRegister/>}/>
                 <Route path={"/login"} element={<FormLogin/>}/>
@@ -34,6 +38,7 @@ function App() {
                 <Route path={"/shop-admin/:id"} element={<Crud/>}/>
                 <Route path={"/cart"} element={<Cart/>}/>
                 <Route path={"/bills"} element={<Bill/>}/>
+                <Route path={"/edit_user"} element={<FormEditUser/>}/>
             </Routes>
         </>
     );
