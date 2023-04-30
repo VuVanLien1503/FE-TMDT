@@ -71,11 +71,20 @@ export default function PageHome() {
         // })
     }
     function searchByName(input) {
-        if (input===undefined){
-            input=""
+        if (input!==undefined){
+            setNameProduct(input)
         }
+        // axios.get(`http://localhost:8081/home/products/search-name/${input}`).then((response) => {
+        //     console.log(response.data.content)
+        //     console.log(search)
+        //     console.log(pageNumber)
+        //     setProducts(response.data.content)
+        //     setTotalPages(response.data.totalPages)
+        // })
+    }
+    function searchAll(){
         const search={
-            name:input,
+            name:nameProduct,
             priceMin:priceMin?priceMin:"0",
             priceMax:priceMax?priceMax:"100000000",
             idCategory:idCategory,
@@ -87,13 +96,6 @@ export default function PageHome() {
             setProducts(response.data.content)
             setTotalPages(response.data.totalPages)
         })
-        // axios.get(`http://localhost:8081/home/products/search-name/${input}`).then((response) => {
-        //     console.log(response.data.content)
-        //     console.log(search)
-        //     console.log(pageNumber)
-        //     setProducts(response.data.content)
-        //     setTotalPages(response.data.totalPages)
-        // })
     }
 
     useEffect(() => {
@@ -106,22 +108,13 @@ export default function PageHome() {
         })
         axios.get(`http://localhost:8081/home/categories`).then((response) => {
             setCategories(response.data)
-            // axios.post(`http://localhost:80811/home/products/search?page=${pageNumber}`,{search}).then((response) => {
-            //     setProducts(response.data.content)
-            //     console.log(response.data.content)
-            //     console.log(search)
-            //     setTotalPages(response.data.totalPages)
-            //     setFlag(false)
-            // }).finally(() => {
-            //     setFlag(false)
-            // })
         }).finally(() => {
             setFlag(false)
         })
     }, [renderHome])
 
 
-    useEffect(searchByName, [idCategory, priceMin, priceMax,arrCity,pageNumber])
+    useEffect(searchAll, [idCategory, priceMin, priceMax,arrCity,pageNumber,nameProduct])
 
     function backToHome() {
         setRenderHome(!renderHome)
@@ -196,7 +189,7 @@ export default function PageHome() {
                                             <li className="">
                                                 <div className="body__home-container-nav-items"
                                                      onClick={() => {
-                                                         backToHome()
+                                                         setIdCategory(0)
                                                      }}
                                                 >Tất cả
                                                 </div>
