@@ -204,7 +204,7 @@ export default function Cart() {
                 }
 
             }
-
+            console.log(bill)
             axios.post(`http://localhost:8081/home/bills/create`, bill).then((res) => {
                 setBill(res.data)
                 Swal.fire({

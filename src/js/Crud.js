@@ -11,6 +11,9 @@ import storage from "./FirebaseConfig";
 import Swal from "sweetalert2";
 
 export default function Crud() {
+    const [pageNumber, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .required('Vui lòng nhập tên sản phẩm'),
@@ -188,6 +191,34 @@ export default function Crud() {
                                         </>
                                     )
                                 })}
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn" onClick={()=>{
+                                            setPage(pageNumber - 1)
+                                        }}>
+                                            {pageNumber > 0 &&
+                                                <div className="btn btn-prev">
+                                                    <i className="fa-solid fa-chevron-left" ></i>
+                                                </div>}
+
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn" onClick={()=>{
+                                            setPage(pageNumber + 1)
+                                        }}>
+                                            {pageNumber + 1 < totalPages &&
+                                                <div className="btn btn-next">
+                                                    <i className="fa-solid fa-chevron-right" ></i>
+                                                </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
+
 
                             </div>
                         }
@@ -262,10 +293,13 @@ export default function Crud() {
                                                         <div className="btn btn-primary" onClick={() =>updateStatusBill2(element.bill.id,element)}>Xác nhận đơn</div>
                                                     }
                                                 </div>
+
                                             </div>
+
                                         </>
                                     )
                                 })}
+
                             </div>
                         }
 
