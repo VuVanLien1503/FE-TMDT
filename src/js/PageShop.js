@@ -17,48 +17,62 @@ export default function PageShop() {
     const param = useParams()
     const navigate = useNavigate()
 
+    const [pageNumber, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+    const [idCategory, setIdCategory] = useState(0)
+    const [nameProduct, setNameProduct] = useState("")
+
+
 
     useEffect(() => {
-        if (localStorage.getItem("idAccount")) {
-            axios.get(`http://localhost:8081/home/shops/information/${param.id}`).then((response) => {
-                setShop(response.data)
-                // truy van Acc tu ID SHop
-                axios.get(`http://localhost:8081/accounts/information/${param.id}`).then((response) => {
-                    setAccount(response.data)
-                    axios.get(`http://localhost:8081/home/products/shop/${response.data.id}`).then((response) => {
-                        setProducts(response.data.content)
-                        setTotalElements(response.data.totalElements)
-                    })
-                    axios.get(`http://localhost:8081/home/shops/${response.data.id}/categories`).then((response) => {
-                        setCategoryShop(response.data)
-                    })
-                    axios.get(`http://localhost:8081/accounts/${response.data.id}`).then((response) => {
-                        setUser(response.data)
-                        console.log(response.data)
-                    })
+        // if (localStorage.getItem("idAccount")) {
+        axios.get(`http://localhost:8081/home/shops/information/${param.id}`).then((response) => {
+            setShop(response.data)
+            // truy van Acc tu ID SHop
+            axios.get(`http://localhost:8081/accounts/information/${param.id}`).then((response) => {
+                setAccount(response.data)
+                axios.get(`http://localhost:8081/home/products/shop/${response.data.id}?page=${pageNumber}`).then((response) => {
+                    setProducts(response.data.content)
+                    setTotalPages(response.data.totalPages)
+                    setTotalElements(response.data.totalElements)
+                })
+                axios.get(`http://localhost:8081/home/shops/${response.data.id}/categories`).then((response) => {
+                    setCategoryShop(response.data)
+                })
+                axios.get(`http://localhost:8081/accounts/${response.data.id}`).then((response) => {
+                    setUser(response.data)
+                    console.log(response.data)
                 })
             })
+        })
 
-
-        } else {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Bạn Cần Đăng Nhập',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(r => {
-                navigate("/login")
-            })
-        }
 
     }, [])
-    function backToHome(){
-      navigate("/")
+
+    function renderPageShop(){
+        const search={
+            name:nameProduct,
+            idCategory:idCategory,
+        }
+        console.log(search)
+        axios.post(`http://localhost:8081/home/products/search-shop/${account.id}?page=${pageNumber}`,search).then((response) => {
+            setProducts(response.data.content)
+            setTotalPages(response.data.totalPages)
+            setTotalElements(response.data.totalElements)
+        })
     }
-    function searchByName(input){
+    useEffect(renderPageShop, [idCategory,pageNumber,nameProduct])
+    function backToHome() {
+        navigate("/")
+    }
+
+    function searchByName(input) {
         console.log(input)
+        if (input!==undefined){
+            setNameProduct(input)
+        }
     }
+
     return (
         <>
             <div id="main">
@@ -108,7 +122,8 @@ export default function PageShop() {
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-solid fa-phone"></i>
-                                                            Số điện thoại: <span className="info__detail">{user.phone}</span>
+                                                            Số điện thoại: <span
+                                                            className="info__detail">{user.phone}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
@@ -122,17 +137,20 @@ export default function PageShop() {
                                                     <ul className="header__right-container">
                                                         <li className="header__right-info">
 
-                                                            Số lượng sản phẩm: <span className="info__detail">{totalElements}</span>
+                                                            Số lượng sản phẩm: <span
+                                                            className="info__detail">{totalElements}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-location-dot"></i>
-                                                            Địa chỉ: <span className="info__detail">{user.address}</span>
+                                                            Địa chỉ: <span
+                                                            className="info__detail">{user.address}</span>
                                                         </li>
 
                                                         <li className="header__right-info">
                                                             <i className="info__icon fa-sharp fa-solid fa-bookmark"></i>
-                                                            Mô tả: <span className="info__detail">{shop.description}</span>
+                                                            Mô tả: <span
+                                                            className="info__detail">{shop.description}</span>
 
                                                         </li>
 
@@ -159,10 +177,17 @@ export default function PageShop() {
                                         <h2 className="category-title">Danh mục</h2>
                                     </div>
                                     <ul className="category__container">
+                                        <li className="category__items"
+                                            onClick={() => {
+                                                setIdCategory(0)
+                                            }}>Tất Cả
+                                        </li>
                                         {categoryShop !== '' && categoryShop.map((category) => {
                                             return (
                                                 <li className="category__items"
-                                                    onClick={() => showDetailCategory(category.id)}>{category.name}</li>
+                                                    onClick={() =>{
+                                                        setIdCategory(category.id)
+                                                    }}>{category.name}</li>
                                             )
                                         })}
                                     </ul>
@@ -198,7 +223,11 @@ export default function PageShop() {
                                                                     }}>{product.category.name}</h3>
                                                                 </div>
                                                                 <div className="product__rating">
-                                                                    <h3> Số Lượng :  {product.quantity}</h3>
+                                                                    <h3> Số Lượng : {product.quantity}</h3>
+                                                                </div>
+
+                                                                <div className="product__rating">
+                                                                    <h3> Lượt Xem : {product.views}</h3>
                                                                 </div>
                                                                 <div>
                                                                 </div>
@@ -211,7 +240,35 @@ export default function PageShop() {
                                         {/*End show product*/}
                                     </div>
                                 </div>
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn" onClick={()=>{
+                                            setPage(pageNumber - 1)
+                                        }}>
+                                            {pageNumber > 0 &&
+                                                <div className="btn btn-prev">
+                                                    <i className="fa-solid fa-chevron-left" ></i>
+                                                </div>}
+
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn" onClick={()=>{
+                                            setPage(pageNumber + 1)
+                                        }}>
+                                            {pageNumber + 1 < totalPages &&
+                                                <div className="btn btn-next">
+                                                    <i className="fa-solid fa-chevron-right" ></i>
+                                                </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

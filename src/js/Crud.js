@@ -11,9 +11,6 @@ import storage from "./FirebaseConfig";
 import Swal from "sweetalert2";
 
 export default function Crud() {
-    const [pageNumber, setPage] = useState(0)
-    const [totalPages, setTotalPages] = useState(0)
-
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .required('Vui lòng nhập tên sản phẩm'),
@@ -77,14 +74,23 @@ export default function Crud() {
 
 
     const [checkRender, setCheckRender] = useState(false)
+
+
+    // phan trang
+    const [pageNumber, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+    const [nameProduct, setNameProduct] = useState("")
+
+
     useEffect(() => {
         if (localStorage.getItem("idAccount")) {
 
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
                 if (localStorage.getItem("idAccount") == response.data.account.id) {
-                    axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
+                    axios.get(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`).then((response) => {
                         setProducts(response.data.content)
+                        setTotalPages(response.data.totalPages)
                         setTotalElements(response.data.totalElements)
                     })
                     axios.get(`http://localhost:8081/home/categories`).then((response) => {
@@ -120,11 +126,33 @@ export default function Crud() {
             })
         }
 
-    }, [checkRender])
+    }, [checkRender,pageNumber])
+    function searchByName(input) {
+        console.log(input)
+        if (input!==undefined){
+            setNameProduct(input)
+        }
+    }
+
+    function renderPageShopCrud(){
+        const search={
+            name:nameProduct,
+        }
+        console.log(search)
+        axios.post(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`,search).then((response) => {
+            setProducts(response.data.content)
+            setTotalPages(response.data.totalPages)
+            setTotalElements(response.data.totalElements)
+        })
+    }
+    useEffect(renderPageShopCrud, [pageNumber,nameProduct])
+    function backToHome() {
+        navigate("/")
+    }
     let index = 0
     return (
         <>
-            <HeaderPage/>
+            <HeaderPage onClick={searchByName} home={backToHome}/>
             <div id="main" className="main-home">
                 <div id="main__crud">
                     <div className="grid wide container__form-edit">
@@ -218,10 +246,9 @@ export default function Crud() {
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         }
+
                         {checkAction === "show voucher" &&
                             <div style={{height: 320}}>
                                 <div className="row table__head">
