@@ -10,8 +10,10 @@ import ShowAllProduct from "./ShowAllProduct";
 import Swal from "sweetalert2";
 import {paste} from "@testing-library/user-event/dist/paste";
 import {animateScroll as scroll} from "react-scroll";
+import RatingComponent from "./RatingComponent";
 
 export default function PageHome() {
+
     const idAccount = localStorage.getItem("idAccount")
     const [pageNumber, setPage] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
@@ -35,6 +37,7 @@ export default function PageHome() {
 
     const [idCategory, setIdCategory] = useState("0")
     const [checkSort, setCheckSort] = useState(true)
+    const [checkView, setCheckView] = useState(true)
     const [renderHome, setRenderHome] = useState(false)
 
 
@@ -48,6 +51,21 @@ export default function PageHome() {
         } else {
             products.sort((a, b) => {
                 return b.price - a.price
+            })
+            setProducts([...products])
+        }
+
+    }
+    function sortView() {
+        setCheckView(!checkView)
+        if (checkView) {
+            products.sort((a, b) => {
+                return a.views - b.views
+            })
+            setProducts([...products])
+        } else {
+            products.sort((a, b) => {
+                return b.views - a.views
             })
             setProducts([...products])
         }
@@ -281,8 +299,17 @@ export default function PageHome() {
                                                         {!checkSort && "Giá Giảm"}
                                                     </div>
                                                 </div>
+                                                <div className="col l-3">
+                                                    <div className="btn"
+                                                         onClick={() =>
+                                                             sortView()}>
+                                                        {checkView && " Lượt Xem Tăng"}
+                                                        {!checkView && "Lượt Xem Giảm"}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
 
                                         <div className="row body__home-container-products-all">
                                             {products != null && products.map((product) => {
@@ -310,9 +337,10 @@ export default function PageHome() {
                                                                         <p style={{marginLeft:5}}>đ</p>
                                                                     </div>
                                                                     <div className="product__address">
-                                                                        <i className="fa-solid fa-location-dot"></i>
-                                                                        {/*<span>{product.shop.account.users.address}</span>*/}
-                                                                        <span>{product.shop.city.name}</span>
+                                                                       <span> <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
+                                                                        {product.shop.city.name}</span>
+                                                                       <span style={{marginLeft:60}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
+                                                                           {product.views}</span>
                                                                     </div>
                                                                 </div>
                                                             </Link>

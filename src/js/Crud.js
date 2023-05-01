@@ -330,7 +330,8 @@ export default function Crud() {
                             imagePath: '',
                             category: {
                                 id: ''
-                            }
+                            },
+                            date:Date.now()
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {

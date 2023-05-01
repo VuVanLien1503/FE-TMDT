@@ -6,7 +6,8 @@ import axios from "axios";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import Swal from "sweetalert2";
-import { animateScroll as scroll } from 'react-scroll';
+import {animateScroll as scroll} from 'react-scroll';
+import RatingComponent from "./RatingComponent";
 
 export default function Detail() {
     let idAccount = localStorage.getItem("idAccount")
@@ -26,12 +27,32 @@ export default function Detail() {
             try {
                 const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
                 setProduct(response.data);
+                console.log(response.data);
+                const updateProduct = {
+                    id: response.data.id,
+                    name: response.data.name,
+                    category: {
+                        id: response.data.category.id
+                    },
+                    date: response.data.date,
+                    price: response.data.price,
+                    quantity: response.data.quantity,
+                    shop: {
+                        id: response.data.shop.id
+                    },
+                    imagePath:response.data.imagePath,
+                    description:response.data.description,
+                    views:response.data.views+1
+                }
+                axios.post(`http://localhost:8081/home/products/views`,updateProduct).then((response) => {
+                    setProduct(response.data)
+                })
                 setImage(response.data.imagePath);
                 const shopResponse = await axios.get(`http://localhost:8081/home/shops/product/${response.data.id}`);
                 setShop(shopResponse.data);
                 const quantityResponse = await axios.post(`http://localhost:8081/home/carts/check-product/${idAccount}`, response.data);
                 setQuantity(quantityResponse.data);
-                const  a = await axios.get(`http://localhost:8081/home/carts/${idAccount}`, response.data)
+                const a = await axios.get(`http://localhost:8081/home/carts/${idAccount}`, response.data)
                 setCarts(a.data)
             } catch (error) {
                 console.log(error);
@@ -45,7 +66,7 @@ export default function Detail() {
     console.log(shop)
     return (
         <>
-            <HeaderPage shop={shop} component={"detail"} listCart = {carts}/>
+            <HeaderPage shop={shop} component={"detail"} listCart={carts}/>
             <div id={"detail"} className="body__detail">
                 <div className="grid wide">
                     <div className="body__detail-container">
@@ -64,7 +85,7 @@ export default function Detail() {
                                                     <li className="container__img-second-items" onClick={() => {
                                                         setImageShow(element)
                                                     }}>
-                                                        <img src={element} style={{width:85,height:75}}/>
+                                                        <img src={element} style={{width: 85, height: 75}}/>
                                                     </li>
 
                                                 </>
@@ -109,10 +130,20 @@ export default function Detail() {
                                         </div>
 
                                         <div className="row detail__info-shared detail__info-quantity">
-                                            <span className="col l-3 detail__info-shared-title">Số lượng còn lại : </span>
+                                            <span
+                                                className="col l-3 detail__info-shared-title">Số lượng còn lại : </span>
                                             <div className="col l-9 detail__info-shared-content">
                                                 <div className="detail__quantity">
                                                     {product.quantity}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row detail__info-shared detail__info-quantity">
+                                            <span
+                                                className="col l-3 detail__info-shared-title">Số lượng xem : </span>
+                                            <div className="col l-9 detail__info-shared-content">
+                                                <div className="detail__quantity">
+                                                    {product.views}
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +202,6 @@ export default function Detail() {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div className="btn btn-add-cart" onClick={order}>Thêm giỏ hàng</div>
                                 </div>
                             </div>
@@ -188,16 +218,16 @@ export default function Detail() {
     function showShop(id) {
         navigate(`/shop/${id}`)
     }
+
     // Tăng số lượng
     function increaseQuantity() {
         console.log(product.quantity)
-        if (quantity === product.quantity){
+        if (quantity === product.quantity) {
             setQuantity(product.quantity)
             setCheck(!check)
-        }
-        else {
-            axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`,product).then((res)=>{
-                setQuantity(quantity +1)
+        } else {
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/add/product`, product).then((res) => {
+                setQuantity(quantity + 1)
                 setCheck(!check)
             })
         }
@@ -206,12 +236,12 @@ export default function Detail() {
     // Giảm số lượng
     function reduceQuantity() {
         if (quantity === 0) {
-            axios.delete(`http://localhost:8081/home/carts/delete/product-cart/0/${idAccount}`,product).then((res)=>{
+            axios.delete(`http://localhost:8081/home/carts/delete/product-cart/0/${idAccount}`, product).then((res) => {
                 setQuantity(0)
                 setCheck(!check)
             })
         } else {
-            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`,product).then((res)=>{
+            axios.post(`http://localhost:8081/home/carts/${idAccount}/sub/product`, product).then((res) => {
                 setQuantity(quantity - 1)
                 setCheck(!check)
             })
@@ -230,6 +260,7 @@ export default function Detail() {
 
         })
     }
+
     function order() {
         Swal.fire({
             position: 'center',
@@ -237,7 +268,7 @@ export default function Detail() {
             title: 'Đặt hàng thành công!',
             showConfirmButton: false,
             timer: 1500
-        }).then(() =>{
+        }).then(() => {
             axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
                 setCarts(response.data)
             })
