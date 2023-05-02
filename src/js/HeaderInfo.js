@@ -23,7 +23,7 @@ export default function HeaderInfo(props) {
                         <i className="fa-solid fa-caret-right"></i>
                         <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
-                    <li className="navbar-items">Lịch sử mua hàng</li>
+                    <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
                     <li className="navbar-items">
                         <Link to={"/cart"}>Giỏ hàng</Link>
                     </li>

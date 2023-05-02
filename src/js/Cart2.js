@@ -73,7 +73,7 @@ export default function Cart2() {
                                                             <div className="col l-3">
                                                                 <div className="product-items__container">
                                                                     <div className="product-items__container-img">
-                                                                        <img src={cart.product.pathImage} alt=""/>
+                                                                        <img src={cart.product.imagePath[0]} alt=""/>
                                                                     </div>
 
                                                                     <div className="product-items__container-price">
