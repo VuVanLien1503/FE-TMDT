@@ -19,11 +19,16 @@ export default function Bill2() {
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
 
+    //page
+    const [pageNumber, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
+
     useEffect(() => {
-        axios.get(`http://localhost:8081/home/bills/bill-detail/${idAccount}`).then((response) => {
+        axios.get(`http://localhost:8081/home/bills/bill-detail/${idAccount}?page=${pageNumber}`).then((response) => {
             setBillDetail(response.data.content)
+            setTotalPages(response.data.totalPages)
         })
-    }, [check])
+    }, [check,pageNumber])
 
     return (
         <>
@@ -63,7 +68,7 @@ export default function Bill2() {
                                                             <div className="col l-3">
                                                                 <div className="product-items__container">
                                                                     <div className="product-items__container-img">
-                                                                        <img src={element.product.imagePath[0]} alt=""/>
+                                                                        <img src={element.product.imagePath[0]} alt="" style={{width:80,height:80}}/>
                                                                     </div>
                                                                     <div className="product-items__container-price">
                                                                         <div className="product-items__price">{element.product.name}</div>
@@ -126,6 +131,34 @@ export default function Bill2() {
 
                                         {/*{carts.length === 0 && <img src="/img/logo/empty-cart.webp" alt=""/>}*/}
                                     </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className="body__home-nav-page">
+                            <div className="nav-page__container">
+                                <div className="nav-page__container-btn" onClick={()=>{
+                                    setPage(pageNumber - 1)
+                                }}>
+                                    {pageNumber > 0 &&
+                                        <div className="btn btn-prev">
+                                            <i className="fa-solid fa-chevron-left" ></i>
+                                        </div>}
+
+                                </div>
+
+                                <ul className="nav-page__container-number-page">
+                                    <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
+                                </ul>
+
+                                <div className="nav-page__container-btn" onClick={()=>{
+                                    setPage(pageNumber + 1)
+                                }}>
+                                    {pageNumber + 1 < totalPages &&
+                                        <div className="btn btn-next">
+                                            <i className="fa-solid fa-chevron-right" ></i>
+                                        </div>}
+
                                 </div>
                             </div>
                         </div>
