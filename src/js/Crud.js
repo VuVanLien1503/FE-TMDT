@@ -81,6 +81,10 @@ export default function Crud() {
     const [totalPages, setTotalPages] = useState(0)
     const [nameProduct, setNameProduct] = useState("")
 
+    // phân trang đơn hàng
+    const [pageNumberBill, setPageBill] = useState(0)
+    const [totalPagesBill, setTotalPagesBill] = useState(0)
+    useEffect(showBillDetail, [pageNumberBill])
 
     useEffect(() => {
         if (localStorage.getItem("idAccount")) {
@@ -126,29 +130,33 @@ export default function Crud() {
             })
         }
 
-    }, [checkRender,pageNumber])
+    }, [checkRender, pageNumber])
+
     function searchByName(input) {
         console.log(input)
-        if (input!==undefined){
+        if (input !== undefined) {
             setNameProduct(input)
         }
     }
 
-    function renderPageShopCrud(){
-        const search={
-            name:nameProduct,
+    function renderPageShopCrud() {
+        const search = {
+            name: nameProduct,
         }
         console.log(search)
-        axios.post(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`,search).then((response) => {
+        axios.post(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`, search).then((response) => {
             setProducts(response.data.content)
             setTotalPages(response.data.totalPages)
             setTotalElements(response.data.totalElements)
         })
     }
-    useEffect(renderPageShopCrud, [pageNumber,nameProduct])
+
+    useEffect(renderPageShopCrud, [pageNumber, nameProduct])
+
     function backToHome() {
         navigate("/")
     }
+
     let index = 0
     return (
         <>
@@ -221,12 +229,12 @@ export default function Crud() {
                                 })}
                                 <div className="body__home-nav-page">
                                     <div className="nav-page__container">
-                                        <div className="nav-page__container-btn" onClick={()=>{
+                                        <div className="nav-page__container-btn" onClick={() => {
                                             setPage(pageNumber - 1)
                                         }}>
                                             {pageNumber > 0 &&
                                                 <div className="btn btn-prev">
-                                                    <i className="fa-solid fa-chevron-left" ></i>
+                                                    <i className="fa-solid fa-chevron-left"></i>
                                                 </div>}
 
                                         </div>
@@ -235,12 +243,12 @@ export default function Crud() {
                                             <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
                                         </ul>
 
-                                        <div className="nav-page__container-btn" onClick={()=>{
+                                        <div className="nav-page__container-btn" onClick={() => {
                                             setPage(pageNumber + 1)
                                         }}>
                                             {pageNumber + 1 < totalPages &&
                                                 <div className="btn btn-next">
-                                                    <i className="fa-solid fa-chevron-right" ></i>
+                                                    <i className="fa-solid fa-chevron-right"></i>
                                                 </div>}
 
                                         </div>
@@ -317,7 +325,9 @@ export default function Crud() {
                                                 <h3 className="col l-1">{element.bill.statusBill.name}</h3>
                                                 <div className="col l-2">
                                                     {element.bill.statusBill.id === 1 &&
-                                                        <div className="btn btn-primary" onClick={() =>updateStatusBill2(element.bill.id,element)}>Xác nhận đơn</div>
+                                                        <div className="btn btn-primary"
+                                                             onClick={() => updateStatusBill2(element.bill.id, element)}>Xác
+                                                            nhận đơn</div>
                                                     }
                                                 </div>
 
@@ -326,6 +336,33 @@ export default function Crud() {
                                         </>
                                     )
                                 })}
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPageBill(pageNumberBill - 1)
+                                        }}>
+                                            {pageNumberBill > 0 &&
+                                                <div className="btn btn-prev">
+                                                    <i className="fa-solid fa-chevron-left"></i>
+                                                </div>}
+
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page">{pageNumberBill + 1} | {totalPagesBill}</li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPageBill(pageNumberBill + 1)
+                                        }}>
+                                            {pageNumberBill + 1 < totalPagesBill &&
+                                                <div className="btn btn-next">
+                                                    <i className="fa-solid fa-chevron-right"></i>
+                                                </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         }
@@ -358,7 +395,7 @@ export default function Crud() {
                             category: {
                                 id: ''
                             },
-                            date:Date.now()
+                            date: Date.now()
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
@@ -393,7 +430,8 @@ export default function Crud() {
                                     <div className="col l-6">
                                         <div className="form__field">
                                             <div className="form__field-container">
-                                                <Field name={'quantity'} type="text" placeholder="Số lượng sản phẩm(*)"/>
+                                                <Field name={'quantity'} type="text"
+                                                       placeholder="Số lượng sản phẩm(*)"/>
                                                 <div className="error__message">
                                                     <ErrorMessage name="quantity"/>
                                                 </div>
@@ -404,7 +442,8 @@ export default function Crud() {
                                     <div className="col l-6">
                                         <div className="form__field">
                                             <div className="form__field-container">
-                                                <Field name={'description'} type="text" placeholder="Mô tả sản Phẩm(*)"/>
+                                                <Field name={'description'} type="text"
+                                                       placeholder="Mô tả sản Phẩm(*)"/>
                                                 <div className="error__message">
                                                     <ErrorMessage name="description"/>
                                                 </div>
@@ -429,10 +468,10 @@ export default function Crud() {
                                     <div className="col l-6" style={{height: 168}}>
                                         <div className="form__field">
                                             <Field className="input__file"
-                                                name="image"
-                                                type="file"
-                                                multiple
-                                                onChange={(e) => uploadFile(e)}/>
+                                                   name="image"
+                                                   type="file"
+                                                   multiple
+                                                   onChange={(e) => uploadFile(e)}/>
                                         </div>
 
                                         <div>
@@ -547,21 +586,24 @@ export default function Crud() {
     )
 
     //show sản phẩm
-    function showProduct(){
+    function showProduct() {
         setCheckAction("show product")
     }
+
     //show voucher
 
-    function showVoucher(){
+    function showVoucher() {
         setCheckAction("show voucher")
         axios.get(`http://localhost:8081/home/shops/voucher/${shop.id}`).then((response) => {
             setVoucher(response.data.content)
         })
     }
-    function updateVoucher(id){
+
+    function updateVoucher(id) {
 
     }
-    function deleteVoucher(id){
+
+    function deleteVoucher(id) {
 
     }
 
@@ -612,9 +654,9 @@ export default function Crud() {
             confirmButtonText: 'Có',
             cancelButtonText: 'không',
             reverseButtons: true,
-            width:500,
-            height:400,
-            customClass:{
+            width: 500,
+            height: 400,
+            customClass: {
                 confirmButton: 'confirmButtonColor',
                 cancelButton: 'cancelButtonColor',
             },
@@ -721,17 +763,19 @@ export default function Crud() {
 
 
     // Hiển thị các đơn hàng đang chờ xử lý
-    function showBillDetail(){
+    function showBillDetail() {
         setCheckAction("show bill detail")
-        axios.get(`http://localhost:8081/home/bills/shops/${shop.id}`).then((response) => {
+        axios.get(`http://localhost:8081/home/bills/shops/${shop.id}?page=${pageNumberBill}`).then((response) => {
             setBillDetails(response.data.content)
+            setTotalPagesBill(response.data.totalPages)
         })
     }
 
+
     // Shop xác nhận đơn hàng, trạng thái chuyển sang đang giao hàng
-    function updateStatusBill2(idBill,billDetail){
+    function updateStatusBill2(idBill, billDetail) {
         setCheckBillDetail(!checkBillDetail)
-        axios.post(`http://localhost:8081/home/bills/update/status-bill/2/${idBill}`,billDetail).then((response) => {
+        axios.post(`http://localhost:8081/home/bills/update/status-bill/2/${idBill}`, billDetail).then((response) => {
             setCheckRender(!checkRender)
             Swal.fire({
                 position: 'center',
@@ -743,8 +787,8 @@ export default function Crud() {
         })
     }
 
-    function showUsersBuyProductOfShop(){
-        axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) =>{
+    function showUsersBuyProductOfShop() {
+        axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) => {
             console.log(res.data)
         })
     }

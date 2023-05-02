@@ -61,7 +61,7 @@ export default function Detail() {
 
         fetchData();
         scrollToSection()
-    }, [check]);
+    }, []);
     // setQuantityRemaining(product.quantity);
     console.log(shop)
     return (
