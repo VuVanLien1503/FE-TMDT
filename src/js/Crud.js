@@ -86,10 +86,13 @@ export default function Crud() {
     const [pageNumberBill, setPageBill] = useState(0)
     const [totalPagesBill, setTotalPagesBill] = useState(0)
     useEffect(showBillDetail, [pageNumberBill, pageNumber])
+    useEffect(showBillDetail, [pageNumberBill])
+    const [listUser, setListUser] = useState([]);
 
     useEffect(() => {
         setCheckAction("show product")
         if (localStorage.getItem("idAccount")) {
+
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
                 if (localStorage.getItem("idAccount") == response.data.account.id) {
@@ -183,7 +186,7 @@ export default function Crud() {
                                 <div className="btn btn-create" onClick={showBillDetail}>Đơn hàng</div>
                             </div>
                             <div className="col l-2 container-btn-create">
-                                <div className="btn btn-create" onClick={() => setCheckAction("show statistical")}>Xem thống kê</div>
+                                <div className="btn btn-create" onClick={showUsersBuyProductOfShop}>Thống kê</div>
                             </div>
                         </div>
                         {checkAction === "show product" &&
@@ -365,6 +368,54 @@ export default function Crud() {
                                     </div>
                                 </div>
 
+                            </div>
+                        }
+                        {checkAction === "show statistical" &&
+                            <div style={{height: 600}}>
+                                <div className="row table__head">
+                                    <h3 className="col l-1">STT</h3>
+                                    <h3 className="col l-3">Tên khách hàng</h3>
+                                    <h3 className="col l-3">Tổng số tiền đã mua</h3>
+                                </div>
+                                {listUser != null && listUser.map((element) => {
+                                    return (
+                                        <>
+                                            <div className="row table__content">
+                                                <div className="col l-1">{++index}</div>
+                                                <div className="col l-3">{element.account.users.name}</div>
+                                                <div className="col l-3">{element.total.toLocaleString()}đ</div>
+                                            </div>
+
+                                        </>
+                                    )
+                                })}
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPage(pageNumber - 1)
+                                        }}>
+                                            {pageNumber > 0 &&
+                                                <div className="btn btn-prev">
+                                                    <i className="fa-solid fa-chevron-left"></i>
+                                                </div>}
+
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPage(pageNumber + 1)
+                                        }}>
+                                            {pageNumber + 1 < totalPages &&
+                                                <div className="btn btn-next">
+                                                    <i className="fa-solid fa-chevron-right"></i>
+                                                </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         }
 
@@ -590,73 +641,6 @@ export default function Crud() {
 
     )
 
-    function ShowChart() {
-        const data = {
-            labels: ['product 1', 'product 2', 'product 3', 'product 4', 'product 5', 'product 6', 'product 7', 'product 8', 'product 9', 'product 10', 'product 11', 'product 12'],
-            datasets: [
-                {
-                    label: 'Doanh số bán hàng',
-                    data: [12, 19, 3, 5, 2, 3, 10, 15, 13, 9, 12, 6],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }
-            ]
-        };
-
-        const options = {
-            scales: {
-                x: {
-                    type: 'category',
-                    ticks: {
-                        display: false,
-                    },
-                },
-                y: {
-                    beginAtZero: true,
-                },
-            },
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 0,
-                    bottom: 10,
-                },
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-        };
-
-        return (
-            <>
-                <h1 style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ</h1>
-                <div style={{width: 900, height: 300}}>
-                    <Bar data={data} options={options}/>
-                </div>
-            </>
-        )
-    }
-
     //show sản phẩm
     function showProduct() {
         setCheckAction("show product")
@@ -856,12 +840,14 @@ export default function Crud() {
                 showConfirmButton: false,
                 timer: 1500
             })
+            showBillDetail()
         })
     }
 
-    function ShowUsersBuyProductOfShop() {
+    function showUsersBuyProductOfShop() {
         setCheckAction("show statistical")
         axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) => {
+            setListUser(res.data)
             console.log(res.data)
         })
     }

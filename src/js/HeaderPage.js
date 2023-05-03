@@ -199,7 +199,7 @@ export default function HeaderPage(prop) {
                                                                                     <div className="has__cart-quantity">x {element.quantity}</div>
                                                                                 </div>
                                                                                 <div className="has__cart-delete"
-                                                                                     onClick={() => deleteProductInCart(element.product.id)}>
+                                                                                     onClick={() => deleteProduct(element.product.id)}>
                                                                                     Xoá
                                                                                 </div>
                                                                             </div>
@@ -404,7 +404,8 @@ export default function HeaderPage(prop) {
         navigate("/login")
     }
 
-    function deleteProductInCart(id) {
+
+    function deleteProduct(id) {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'confirmButtonColor',
