@@ -85,6 +85,7 @@ export default function Crud() {
     const [pageNumberBill, setPageBill] = useState(0)
     const [totalPagesBill, setTotalPagesBill] = useState(0)
     useEffect(showBillDetail, [pageNumberBill])
+    const [listUser, setListUser] = useState([]);
 
     useEffect(() => {
         if (localStorage.getItem("idAccount")) {
@@ -364,6 +365,54 @@ export default function Crud() {
                                     </div>
                                 </div>
 
+                            </div>
+                        }
+                        {checkAction === "show statistical" &&
+                            <div style={{height: 600}}>
+                                <div className="row table__head">
+                                    <h3 className="col l-1">STT</h3>
+                                    <h3 className="col l-3">Tên khách hàng</h3>
+                                    <h3 className="col l-3">Tổng số tiền đã mua</h3>
+                                </div>
+                                {listUser != null && listUser.map((element) => {
+                                    return (
+                                        <>
+                                            <div className="row table__content">
+                                                <div className="col l-1">{++index}</div>
+                                                <div className="col l-3">{element.account.users.name}</div>
+                                                <div className="col l-3">{element.total.toLocaleString()}đ</div>
+                                            </div>
+
+                                        </>
+                                    )
+                                })}
+                                <div className="body__home-nav-page">
+                                    <div className="nav-page__container">
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPage(pageNumber - 1)
+                                        }}>
+                                            {pageNumber > 0 &&
+                                                <div className="btn btn-prev">
+                                                    <i className="fa-solid fa-chevron-left"></i>
+                                                </div>}
+
+                                        </div>
+
+                                        <ul className="nav-page__container-number-page">
+                                            <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
+                                        </ul>
+
+                                        <div className="nav-page__container-btn" onClick={() => {
+                                            setPage(pageNumber + 1)
+                                        }}>
+                                            {pageNumber + 1 < totalPages &&
+                                                <div className="btn btn-next">
+                                                    <i className="fa-solid fa-chevron-right"></i>
+                                                </div>}
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         }
 
@@ -784,11 +833,14 @@ export default function Crud() {
                 showConfirmButton: false,
                 timer: 1500
             })
+            showBillDetail()
         })
     }
 
     function showUsersBuyProductOfShop() {
+        setCheckAction("show statistical")
         axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) => {
+            setListUser(res.data)
             console.log(res.data)
         })
     }
