@@ -183,8 +183,8 @@ button.each-slideshow-indicator {
 
 .body__home-nav-page {
     display: flex;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    margin-top: 130px;
+    margin-bottom: 10px;
 }
 
 .nav-page__container {
@@ -392,4 +392,23 @@ button.each-slideshow-indicator {
 
 .body__home-container-products-all {
     height: 853px;
+}
+
+/*css rating*/
+.activeShow {
+    color: gold;
+    font-size: 28px;
+    margin-left: 5px;
+}
+.showRating{
+    font-size: 24px;
+    margin-left: 5px;
+}
+input[type="radio"] {
+    display: none;
+}
+.showRating-span{
+    margin-left: 10px;
+    font-size: 18px;
+    color: #022cfa;
 }

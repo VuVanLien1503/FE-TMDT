@@ -355,6 +355,8 @@
     font-size: 1.8rem;
     font-weight: 300;
     color: var(--primary-color);
+    padding-top: 5px;
+
 }
 
 .product__rating {
@@ -363,9 +365,15 @@
 
 .product__address {
     font-size: 1rem;
+    /*padding-top: 10px;*/
+    /*border-top: 1px solid #999;*/
+    margin-top: 14px;
+
+}
+.product__showRating{
     padding-top: 10px;
     border-top: 1px solid #999;
-    margin-top: 14px;
+
 }
 
 .product__address > i {

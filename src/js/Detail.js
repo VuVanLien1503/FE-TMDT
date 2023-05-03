@@ -40,11 +40,11 @@ export default function Detail() {
                     shop: {
                         id: response.data.shop.id
                     },
-                    imagePath:response.data.imagePath,
-                    description:response.data.description,
-                    views:response.data.views+1
+                    imagePath: response.data.imagePath,
+                    description: response.data.description,
+                    views: response.data.views + 1
                 }
-                axios.post(`http://localhost:8081/home/products/views`,updateProduct).then((response) => {
+                axios.post(`http://localhost:8081/home/products/views`, updateProduct).then((response) => {
                     setProduct(response.data)
                 })
                 setImage(response.data.imagePath);
@@ -64,6 +64,38 @@ export default function Detail() {
     }, []);
     // setQuantityRemaining(product.quantity);
     console.log(shop)
+
+
+    // rating
+    function Rating() {
+        const [rating, setRating] = useState(0);
+        const handleClick = (value) => {
+            setRating(value);
+            console.log(value)
+        }
+        return (
+            <div>
+                <div>
+                    {[...Array(5)].map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                            <label key={ratingValue} htmlFor={`rating-${ratingValue}`} className={"lien"}>
+                                <input
+                                    type="radio"
+                                    id={`rating-${ratingValue}`}
+                                    name="rating"
+                                    value={ratingValue}
+                                    onClick={() => handleClick(ratingValue)}
+                                />
+                                <span className={ratingValue <= rating ? "active" : ""}>&#9733;</span>
+                            </label>
+                        );
+                    })}
+                </div>
+
+            </div>
+        );
+    };
     return (
         <>
             <HeaderPage shop={shop} component={"detail"} listCart={carts}/>
@@ -92,6 +124,10 @@ export default function Detail() {
                                             )
                                         })}
                                     </ul>
+                                    <div style={{marginTop: 20}}>
+                                          <h1 style={{marginBottom:15}}>Đánh Giá :</h1>
+                                        <Rating/>
+                                    </div>
                                 </div>
                             </div>
 

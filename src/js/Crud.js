@@ -9,6 +9,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import storage from "./FirebaseConfig";
 import Swal from "sweetalert2";
+import {Bar} from "react-chartjs-2";
 
 export default function Crud() {
     const validationSchema = Yup.object().shape({
@@ -84,11 +85,11 @@ export default function Crud() {
     // phân trang đơn hàng
     const [pageNumberBill, setPageBill] = useState(0)
     const [totalPagesBill, setTotalPagesBill] = useState(0)
-    useEffect(showBillDetail, [pageNumberBill])
+    useEffect(showBillDetail, [pageNumberBill, pageNumber])
 
     useEffect(() => {
+        setCheckAction("show product")
         if (localStorage.getItem("idAccount")) {
-
             axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
                 setShop(response.data)
                 if (localStorage.getItem("idAccount") == response.data.account.id) {
@@ -182,7 +183,7 @@ export default function Crud() {
                                 <div className="btn btn-create" onClick={showBillDetail}>Đơn hàng</div>
                             </div>
                             <div className="col l-2 container-btn-create">
-                                <div className="btn btn-create" onClick={showUsersBuyProductOfShop}>Thống kê</div>
+                                <div className="btn btn-create" onClick={() => setCheckAction("show statistical")}>Xem thống kê</div>
                             </div>
                         </div>
                         {checkAction === "show product" &&
@@ -367,6 +368,10 @@ export default function Crud() {
                             </div>
                         }
 
+                        {checkAction === "show statistical" &&  <div>
+                            <h1 style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ</h1>
+                            {/*<ShowChart/>*/}
+                        </div> }
                     </div>
                 </div>
             </div>
@@ -585,6 +590,73 @@ export default function Crud() {
 
     )
 
+    function ShowChart() {
+        const data = {
+            labels: ['product 1', 'product 2', 'product 3', 'product 4', 'product 5', 'product 6', 'product 7', 'product 8', 'product 9', 'product 10', 'product 11', 'product 12'],
+            datasets: [
+                {
+                    label: 'Doanh số bán hàng',
+                    data: [12, 19, 3, 5, 2, 3, 10, 15, 13, 9, 12, 6],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const options = {
+            scales: {
+                x: {
+                    type: 'category',
+                    ticks: {
+                        display: false,
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 0,
+                    bottom: 10,
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+        };
+
+        return (
+            <>
+                <h1 style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ</h1>
+                <div style={{width: 900, height: 300}}>
+                    <Bar data={data} options={options}/>
+                </div>
+            </>
+        )
+    }
+
     //show sản phẩm
     function showProduct() {
         setCheckAction("show product")
@@ -787,7 +859,8 @@ export default function Crud() {
         })
     }
 
-    function showUsersBuyProductOfShop() {
+    function ShowUsersBuyProductOfShop() {
+        setCheckAction("show statistical")
         axios.get(`http://localhost:8081/home/shops/users/${shop.id}`).then((res) => {
             console.log(res.data)
         })

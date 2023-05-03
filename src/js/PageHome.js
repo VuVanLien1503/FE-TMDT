@@ -339,8 +339,11 @@ export default function PageHome() {
                                                                     <div className="product__address">
                                                                        <span> <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
                                                                         {product.shop.city.name}</span>
-                                                                       <span style={{marginLeft:60}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
+                                                                       <span style={{marginLeft:80}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
                                                                            {product.views}</span>
+                                                                    </div>
+                                                                    <div className="product__showRating">
+                                                                        <ShowRating value={4} quantity={199}/>
                                                                     </div>
                                                                 </div>
                                                             </Link>
@@ -412,4 +415,31 @@ export default function PageHome() {
             offset: 0
         });
     }
+    function ShowRating(props) {
+        const [rating, setRating] = useState(props.value);
+        return (
+            <div>
+                <div>
+                    {[...Array(5)].map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                            <label key={ratingValue} htmlFor={`rating-${ratingValue}`} className={"showRating"}>
+                                <input
+                                    type="radio"
+                                    id={`rating-${ratingValue}`}
+                                    name="rating"
+                                    value={ratingValue}
+                                />
+                                <span className={ratingValue <= rating ? "activeShow" : ""}>&#9733;</span>
+                            </label>
+
+                        );
+                    })}
+                    <span className={"showRating-span"}>({props.quantity})</span>
+                </div>
+
+            </div>
+        );
+    };
+
 }

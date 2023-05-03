@@ -178,3 +178,16 @@
 .detail__info-support-items > span {
     color: #666;
 }
+
+.active {
+    color: gold;
+    font-size: 42px;
+    margin-left: 5px;
+}
+.lien{
+    font-size: 36px;
+    margin-left: 5px;
+}
+input[type="radio"] {
+    display: none;
+}
