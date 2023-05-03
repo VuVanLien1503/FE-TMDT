@@ -9,7 +9,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import storage from "./FirebaseConfig";
 import Swal from "sweetalert2";
-import {Bar} from "react-chartjs-2";
+
 
 export default function Crud() {
     const validationSchema = Yup.object().shape({

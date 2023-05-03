@@ -27,7 +27,6 @@ export default function Detail() {
             try {
                 const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
                 setProduct(response.data);
-                console.log(response.data);
                 const updateProduct = {
                     id: response.data.id,
                     name: response.data.name,
@@ -42,7 +41,8 @@ export default function Detail() {
                     },
                     imagePath: response.data.imagePath,
                     description: response.data.description,
-                    views: response.data.views + 1
+                    views: response.data.views + 1,
+                    rating: response.data.rating
                 }
                 axios.post(`http://localhost:8081/home/products/views`, updateProduct).then((response) => {
                     setProduct(response.data)
@@ -68,8 +68,23 @@ export default function Detail() {
 
     // rating
     function Rating() {
-        const [rating, setRating] = useState(0);
+
+        console.log(product)
+        const [rating, setRating] = useState(product.rating);
         const handleClick = (value) => {
+            let evaluate = {
+                evaluateId: {},
+                product:{
+                    id: product.id
+                },
+                account:{
+                    id: idAccount
+                },
+                rating : value
+            }
+            console.log(evaluate)
+            axios.post(`http://localhost:8081/home/products/rating`,evaluate).then((res)=>{
+            })
             setRating(value);
             console.log(value)
         }

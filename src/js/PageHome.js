@@ -342,8 +342,8 @@ export default function PageHome() {
                                                                        <span style={{marginLeft:80}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
                                                                            {product.views}</span>
                                                                     </div>
-                                                                    <div className="product__showRating">
-                                                                        <ShowRating value={4} quantity={199}/>
+                                                                    <div className="product__showRating" >
+                                                                        <ShowRating  value={product.rating} quantity={product.numberPeople}/>
                                                                     </div>
                                                                 </div>
                                                             </Link>
@@ -415,7 +415,18 @@ export default function PageHome() {
             offset: 0
         });
     }
+
+    // function ShowListRating(props) {
+    //     const [listRating, setListRating] = useState([])
+    //     axios.get(`http://localhost:8081/home/products/rating/${props.id}`).then((res) =>{
+    //         setListRating(res.data)
+    //         console.log(listRating)
+    //     })
+    // }
+
+
     function ShowRating(props) {
+        const [totalRating, setTotalRating] = useState(0)
         const [rating, setRating] = useState(props.value);
         return (
             <div>
