@@ -240,7 +240,7 @@ export default function PageShop() {
                                         {/*End show product*/}
                                     </div>
                                 </div>
-                                <div className="body__home-nav-page">
+                                <div className="body__home-nav-page" >
                                     <div className="nav-page__container">
                                         <div className="nav-page__container-btn" onClick={()=>{
                                             setPage(pageNumber - 1)

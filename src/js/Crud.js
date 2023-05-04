@@ -9,8 +9,11 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import storage from "./FirebaseConfig";
 import Swal from "sweetalert2";
+import {Bar} from "react-chartjs-2";
+import Chart from "chart.js/auto";
+import {BarController, BarElement, CategoryScale, Legend, LinearScale} from "chart.js";
 
-
+Chart.register(BarElement,BarController,LinearScale,Legend,CategoryScale)
 export default function Crud() {
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -57,6 +60,7 @@ export default function Crud() {
 
 
     const [products, setProducts] = useState([]);
+    const [productsAll, setProductsAll] = useState([]);
     const [statistical, setStatistical] = useState([]);
     const [categoryShop, setCategoryShop] = useState([])
     const [categories, setCategories] = useState([])
@@ -100,6 +104,10 @@ export default function Crud() {
                         setProducts(response.data.content)
                         setTotalPages(response.data.totalPages)
                         setTotalElements(response.data.totalElements)
+                    })
+                    axios.get(`http://localhost:8081/home/products/shop-crud-all/${param.id}`).then((response) => {
+                        setProductsAll(response.data.content)
+
                     })
                     axios.get(`http://localhost:8081/home/categories`).then((response) => {
                         setCategories(response.data)
@@ -370,58 +378,58 @@ export default function Crud() {
 
                             </div>
                         }
-                        {checkAction === "show statistical" &&
-                            <div style={{height: 600}}>
-                                <div className="row table__head">
-                                    <h3 className="col l-1">STT</h3>
-                                    <h3 className="col l-3">Tên khách hàng</h3>
-                                    <h3 className="col l-3">Tổng số tiền đã mua</h3>
-                                </div>
-                                {listUser != null && listUser.map((element) => {
-                                    return (
-                                        <>
-                                            <div className="row table__content">
-                                                <div className="col l-1">{++index}</div>
-                                                <div className="col l-3">{element.account.users.name}</div>
-                                                <div className="col l-3">{element.total.toLocaleString()}đ</div>
-                                            </div>
+                        {/*{checkAction === "show statistical" &&*/}
+                        {/*    <div style={{height: 600}}>*/}
+                        {/*        <div className="row table__head">*/}
+                        {/*            <h3 className="col l-1">STT</h3>*/}
+                        {/*            <h3 className="col l-3">Tên khách hàng</h3>*/}
+                        {/*            <h3 className="col l-3">Tổng số tiền đã mua</h3>*/}
+                        {/*        </div>*/}
+                        {/*        {listUser != null && listUser.map((element) => {*/}
+                        {/*            return (*/}
+                        {/*                <>*/}
+                        {/*                    <div className="row table__content">*/}
+                        {/*                        <div className="col l-1">{++index}</div>*/}
+                        {/*                        <div className="col l-3">{element.account.users.name}</div>*/}
+                        {/*                        <div className="col l-3">{element.total.toLocaleString()}đ</div>*/}
+                        {/*                    </div>*/}
 
-                                        </>
-                                    )
-                                })}
-                                <div className="body__home-nav-page">
-                                    <div className="nav-page__container">
-                                        <div className="nav-page__container-btn" onClick={() => {
-                                            setPage(pageNumber - 1)
-                                        }}>
-                                            {pageNumber > 0 &&
-                                                <div className="btn btn-prev">
-                                                    <i className="fa-solid fa-chevron-left"></i>
-                                                </div>}
+                        {/*                </>*/}
+                        {/*            )*/}
+                        {/*        })}*/}
+                        {/*        <div className="body__home-nav-page">*/}
+                        {/*            <div className="nav-page__container">*/}
+                        {/*                <div className="nav-page__container-btn" onClick={() => {*/}
+                        {/*                    setPage(pageNumber - 1)*/}
+                        {/*                }}>*/}
+                        {/*                    {pageNumber > 0 &&*/}
+                        {/*                        <div className="btn btn-prev">*/}
+                        {/*                            <i className="fa-solid fa-chevron-left"></i>*/}
+                        {/*                        </div>}*/}
 
-                                        </div>
+                        {/*                </div>*/}
 
-                                        <ul className="nav-page__container-number-page">
-                                            <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>
-                                        </ul>
+                        {/*                <ul className="nav-page__container-number-page">*/}
+                        {/*                    <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>*/}
+                        {/*                </ul>*/}
 
-                                        <div className="nav-page__container-btn" onClick={() => {
-                                            setPage(pageNumber + 1)
-                                        }}>
-                                            {pageNumber + 1 < totalPages &&
-                                                <div className="btn btn-next">
-                                                    <i className="fa-solid fa-chevron-right"></i>
-                                                </div>}
+                        {/*                <div className="nav-page__container-btn" onClick={() => {*/}
+                        {/*                    setPage(pageNumber + 1)*/}
+                        {/*                }}>*/}
+                        {/*                    {pageNumber + 1 < totalPages &&*/}
+                        {/*                        <div className="btn btn-next">*/}
+                        {/*                            <i className="fa-solid fa-chevron-right"></i>*/}
+                        {/*                        </div>}*/}
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
 
                         {checkAction === "show statistical" &&  <div>
-                            <h1 style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ</h1>
-                            {/*<ShowChart/>*/}
+                            {/*<button style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ doanh số</button>*/}
+                            <ShowChart/>
                         </div> }
                     </div>
                 </div>
@@ -851,6 +859,80 @@ export default function Crud() {
             console.log(res.data)
         })
     }
+    function ShowChart() {
+        let arrLabel=[];
+        let arrData=[];
+        if (productsAll!==null){
+            for (let i = 0; i < productsAll.length; i++) {
+                arrLabel.push(productsAll[i].name)
+                arrData.push(productsAll[i].views)
+            }
+        }
 
+        const data = {
+            labels: arrLabel,
+            datasets: [
+                {
+                    label: 'Doanh số bán hàng',
+                    data: arrData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const options = {
+            scales: {
+                x: {
+                    type: 'category',
+                    ticks: {
+                        display: false,
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 0,
+                    bottom: 10,
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+        };
+
+        return (
+            <>
+                <h1 style={{marginLeft: 400, marginTop: 50,marginBottom:20}}> Thống Kê Doanh Số Bán Hàng </h1>
+                <div style={{width: 1200, height: 400}}>
+                    <Bar data={data} options={options}/>
+                </div>
+            </>
+        )
+    }
 
 }
