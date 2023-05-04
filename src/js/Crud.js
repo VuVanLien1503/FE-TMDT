@@ -87,48 +87,48 @@ export default function Crud() {
     useEffect(showBillDetail, [pageNumberBill])
 
     useEffect(() => {
-        if (localStorage.getItem("idAccount")) {
-
-            axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
-                setShop(response.data)
-                if (localStorage.getItem("idAccount") == response.data.account.id) {
-                    axios.get(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`).then((response) => {
-                        setProducts(response.data.content)
-                        setTotalPages(response.data.totalPages)
-                        setTotalElements(response.data.totalElements)
-                    })
-                    axios.get(`http://localhost:8081/home/categories`).then((response) => {
-                        setCategories(response.data)
-                    })
-                    axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
-                        setCategoryShop(response.data)
-                    })
-                    axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
-                        setUser(response.data)
-                    })
-                } else {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Bạn Không Có Quyền Truy Cập',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(r => {
-                        navigate("/")
-                    })
-                }
-            })
-        } else {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Bạn Cần Đăng Nhập',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(r => {
-                navigate("/login")
-            })
-        }
+        // if (localStorage.getItem("idAccount")) {
+        //
+        //     axios.get(`http://localhost:8081/home/shops/${param.id}`).then((response) => {
+        //         setShop(response.data)
+        //         if (localStorage.getItem("idAccount") == response.data.account.id) {
+        //             axios.get(`http://localhost:8081/home/products/shop-crud/${param.id}?page=${pageNumber}`).then((response) => {
+        //                 setProducts(response.data.content)
+        //                 setTotalPages(response.data.totalPages)
+        //                 setTotalElements(response.data.totalElements)
+        //             })
+        //             axios.get(`http://localhost:8081/home/categories`).then((response) => {
+        //                 setCategories(response.data)
+        //             })
+        //             axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
+        //                 setCategoryShop(response.data)
+        //             })
+        //             axios.get(`http://localhost:8081/accounts/${param.id}`).then((response) => {
+        //                 setUser(response.data)
+        //             })
+        //         } else {
+        //             Swal.fire({
+        //                 position: 'center',
+        //                 icon: 'error',
+        //                 title: 'Bạn Không Có Quyền Truy Cập',
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             }).then(r => {
+        //                 navigate("/")
+        //             })
+        //         }
+        //     })
+        // } else {
+        //     Swal.fire({
+        //         position: 'center',
+        //         icon: 'error',
+        //         title: 'Bạn Cần Đăng Nhập',
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     }).then(r => {
+        //         navigate("/login")
+        //     })
+        // }
 
     }, [checkRender, pageNumber])
 
@@ -169,7 +169,7 @@ export default function Crud() {
                                 <div className="btn" onClick={showProduct}>Sản phẩm</div>
                             </div>
                             <div className="col l-2 container-btn-create">
-                                <div className="btn" onClick={() => formSave(-1)}>Thêm sản phẩm</div>
+                                {/*<div className="btn" onClick={() => formSave(-1)}>Thêm sản phẩm</div>*/}
                             </div>
 
                             <div className="col l-2 container-btn-create">
@@ -211,8 +211,8 @@ export default function Crud() {
                                                 <div className="col l-2">
                                                     <div className="row">
                                                         <div className="col l-6">
-                                                            <div className="btn btn-edit"
-                                                                 onClick={() => formSave(product.id)}>Sửa
+                                                            <div className="btn btn-edit">
+                                                                 {/*// onClick={() => formSave(product.id)}>Sửa*/}
                                                             </div>
                                                         </div>
                                                         <div className="col l-6">
@@ -372,139 +372,139 @@ export default function Crud() {
             </div>
             <FooterForm/>
             {/*modal add product*/}
-            <div id="modalAddProduct">
-                <div className="modal__background" onClick={closeModal}></div>
-                <div className="modal__container">
-                        <span className="modal__close" onClick={closeModal}>
-                            <i className="modal__close-icon fa-solid fa-xmark"></i>
-                        </span>
-                    <h1 className="modal__container-title modal__container-title-crud">
-                        {id === -1 && <span>Thêm Sản Phẩm</span>}
-                        {id !== -1 && <span>Chỉnh Sửa Sản Phẩm</span>}
-                    </h1>
+            {/*<div id="modalAddProduct">*/}
+            {/*    <div className="modal__background" onClick={closeModal}></div>*/}
+            {/*    <div className="modal__container">*/}
+            {/*            <span className="modal__close" onClick={closeModal}>*/}
+            {/*                <i className="modal__close-icon fa-solid fa-xmark"></i>*/}
+            {/*            </span>*/}
+            {/*        <h1 className="modal__container-title modal__container-title-crud">*/}
+            {/*            {id === -1 && <span>Thêm Sản Phẩm</span>}*/}
+            {/*            {id !== -1 && <span>Chỉnh Sửa Sản Phẩm</span>}*/}
+            {/*        </h1>*/}
 
-                    {/*formik open*/}
-                    <Formik
-                        initialValues={{
-                            id: id,
-                            name: product.name ? product.name : '',
-                            quantity: product.quantity ? product.quantity : '',
-                            price: product.price ? product.price : '',
-                            description: product.description ? product.description : '',
-                            imagePath: '',
-                            category: {
-                                id: ''
-                            },
-                            date: Date.now()
-                        }}
-                        validationSchema={validationSchema}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            save(values)
-                        }}
-                        enableReinitialize={true}
-                    >
-                        {(formik) => (
-                            <Form id={"demo"} className="grid wide modal__create">
-                                <div className="row">
-                                    <div className="col l-6">
-                                        <div className="form__field">
-                                            <div className="form__field-container">
-                                                <Field name={'name'} type="text" placeholder="Tên Sản Phẩm(*)"/>
-                                                <div className="error__message">
-                                                    <ErrorMessage name="name"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            {/*        /!*formik open*!/*/}
+            {/*        <Formik*/}
+            {/*            initialValues={{*/}
+            {/*                id: id,*/}
+            {/*                name: product.name ? product.name : '',*/}
+            {/*                quantity: product.quantity ? product.quantity : '',*/}
+            {/*                price: product.price ? product.price : '',*/}
+            {/*                description: product.description ? product.description : '',*/}
+            {/*                imagePath: '',*/}
+            {/*                category: {*/}
+            {/*                    id: ''*/}
+            {/*                },*/}
+            {/*                date: Date.now()*/}
+            {/*            }}*/}
+            {/*            validationSchema={validationSchema}*/}
+            {/*            onSubmit={(values) => {*/}
+            {/*                console.log(values);*/}
+            {/*                save(values)*/}
+            {/*            }}*/}
+            {/*            enableReinitialize={true}*/}
+            {/*        >*/}
+            {/*            {(formik) => (*/}
+            {/*                <Form id={"demo"} className="grid wide modal__create">*/}
+            {/*                    <div className="row">*/}
+            {/*                        <div className="col l-6">*/}
+            {/*                            <div className="form__field">*/}
+            {/*                                <div className="form__field-container">*/}
+            {/*                                    <Field name={'name'} type="text" placeholder="Tên Sản Phẩm(*)"/>*/}
+            {/*                                    <div className="error__message">*/}
+            {/*                                        <ErrorMessage name="name"/>*/}
+            {/*                                    </div>*/}
+            {/*                                </div>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                    <div className="col l-6">
-                                        <div className="form__field">
-                                            <div className="form__field-container">
-                                                <Field name={'price'} type="text" placeholder="Đơn giá sản phẩm(*)"/>
-                                                <div className="error__message"><ErrorMessage name="price"/></div>
-                                            </div>
-                                        </div>
-                                    </div>
+            {/*                        <div className="col l-6">*/}
+            {/*                            <div className="form__field">*/}
+            {/*                                <div className="form__field-container">*/}
+            {/*                                    <Field name={'price'} type="text" placeholder="Đơn giá sản phẩm(*)"/>*/}
+            {/*                                    <div className="error__message"><ErrorMessage name="price"/></div>*/}
+            {/*                                </div>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                    <div className="col l-6">
-                                        <div className="form__field">
-                                            <div className="form__field-container">
-                                                <Field name={'quantity'} type="text"
-                                                       placeholder="Số lượng sản phẩm(*)"/>
-                                                <div className="error__message">
-                                                    <ErrorMessage name="quantity"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            {/*                        <div className="col l-6">*/}
+            {/*                            <div className="form__field">*/}
+            {/*                                <div className="form__field-container">*/}
+            {/*                                    <Field name={'quantity'} type="text"*/}
+            {/*                                           placeholder="Số lượng sản phẩm(*)"/>*/}
+            {/*                                    <div className="error__message">*/}
+            {/*                                        <ErrorMessage name="quantity"/>*/}
+            {/*                                    </div>*/}
+            {/*                                </div>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                    <div className="col l-6">
-                                        <div className="form__field">
-                                            <div className="form__field-container">
-                                                <Field name={'description'} type="text"
-                                                       placeholder="Mô tả sản Phẩm(*)"/>
-                                                <div className="error__message">
-                                                    <ErrorMessage name="description"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            {/*                        <div className="col l-6">*/}
+            {/*                            <div className="form__field">*/}
+            {/*                                <div className="form__field-container">*/}
+            {/*                                    <Field name={'description'} type="text"*/}
+            {/*                                           placeholder="Mô tả sản Phẩm(*)"/>*/}
+            {/*                                    <div className="error__message">*/}
+            {/*                                        <ErrorMessage name="description"/>*/}
+            {/*                                    </div>*/}
+            {/*                                </div>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                    <div className="col l-6">
-                                        <div className="form__field-container">
-                                            <Field id="category" name="category.id" as="select">
-                                                <option value={''}>Vui lòng chọn category</option>
-                                                {categories != null && categories.map((item, id) => (
-                                                    <option key={id} value={item.id}>{item.name}</option>
-                                                ))}
-                                            </Field>
-                                            <div className="error__message">
-                                                <ErrorMessage name="category"/>
-                                            </div>
-                                        </div>
-                                    </div>
+            {/*                        <div className="col l-6">*/}
+            {/*                            <div className="form__field-container">*/}
+            {/*                                <Field id="category" name="category.id" as="select">*/}
+            {/*                                    <option value={''}>Vui lòng chọn category</option>*/}
+            {/*                                    {categories != null && categories.map((item, id) => (*/}
+            {/*                                        <option key={id} value={item.id}>{item.name}</option>*/}
+            {/*                                    ))}*/}
+            {/*                                </Field>*/}
+            {/*                                <div className="error__message">*/}
+            {/*                                    <ErrorMessage name="category"/>*/}
+            {/*                                </div>*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
 
-                                    <div className="col l-6" style={{height: 168}}>
-                                        <div className="form__field">
-                                            <Field className="input__file"
-                                                   name="image"
-                                                   type="file"
-                                                   multiple
-                                                   onChange={(e) => uploadFile(e)}/>
-                                        </div>
+            {/*                        <div className="col l-6" style={{height: 168}}>*/}
+            {/*                            <div className="form__field">*/}
+            {/*                                <Field className="input__file"*/}
+            {/*                                       name="image"*/}
+            {/*                                       type="file"*/}
+            {/*                                       multiple*/}
+            {/*                                       onChange={(e) => uploadFile(e)}/>*/}
+            {/*                            </div>*/}
 
-                                        <div>
-                                            {
-                                                !image &&
-                                                <h3 className='inner-bar'
-                                                    style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>
-                                            }
-                                            {
-                                                image &&
-                                                <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="container__btn-crud">
-                                    <div className="row">
-                                        <div className="">
-                                            <button type={"submit"} className={'btn btn-primary'}
-                                                    aria-disabled={check}>Xác Nhận
-                                            </button>
+            {/*                            <div>*/}
+            {/*                                {*/}
+            {/*                                    !image &&*/}
+            {/*                                    <h3 className='inner-bar'*/}
+            {/*                                        style={{width: `${progressPercent} % `}}>{progressPercent}%</h3>*/}
+            {/*                                }*/}
+            {/*                                {*/}
+            {/*                                    image &&*/}
+            {/*                                    <img src={image} alt='uploaded file' style={{width: 100, height: 100}}/>*/}
+            {/*                                }*/}
+            {/*                            </div>*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                    <div className="container__btn-crud">*/}
+            {/*                        <div className="row">*/}
+            {/*                            <div className="">*/}
+            {/*                                <button type={"submit"} className={'btn btn-primary'}*/}
+            {/*                                        aria-disabled={check}>Xác Nhận*/}
+            {/*                                </button>*/}
 
-                                        </div>
+            {/*                            </div>*/}
 
-                                    </div>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-                    {/*formik close*/}
+            {/*                        </div>*/}
+            {/*                    </div>*/}
+            {/*                </Form>*/}
+            {/*            )}*/}
+            {/*        </Formik>*/}
+            {/*        /!*formik close*!/*/}
 
-                </div>
-            </div>
+            {/*    </div>*/}
+            {/*</div>*/}
             {/*modal add voucher*/}
             <div id="modalAddVoucher">
                 <div className="modal__background" onClick={closeModalVoucher}></div>
@@ -685,39 +685,39 @@ export default function Crud() {
         })
     }
 
-    function formSave(id) {
-        setId(id)
-        if (id !== -1) {
-            axios.get(`http://localhost:8081/home/products/${id}`).then((response) => {
-                setProduct(response.data)
-            })
-        }
-        document.getElementById("modalAddProduct").style.display = "flex"
-    }
+    // function formSave(id) {
+    //     setId(id)
+    //     if (id !== -1) {
+    //         axios.get(`http://localhost:8081/home/products/${id}`).then((response) => {
+    //             setProduct(response.data)
+    //         })
+    //     }
+    //     document.getElementById("modalAddProduct").style.display = "flex"
+    // }
 
-    function save(values) {
-        if (id !== -1) {
-            values.id = id
-        }
-        values.imagePath = imagePath
-
-        axios.post(` http://localhost:8081/home/products/shop/${param.id}`, values).then((response) => {
-            axios.get(`http://localhost:8081/home/categories`).then((response) => {
-                setCategories(response.data)
-            })
-            axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
-                setCategoryShop(response.data)
-            })
-            axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
-                setProducts(response.data.content)
-                setTotalElements(response.data.totalElements)
-            })
-            closeModal()
-            document.getElementById("demo").reset()
-            setImage('')
-            setProgressPercent(0)
-        })
-    }
+    // function save(values) {
+    //     if (id !== -1) {
+    //         values.id = id
+    //     }
+    //     values.imagePath = imagePath
+    //
+    //     axios.post(` http://localhost:8081/home/products/shop/${param.id}`, values).then((response) => {
+    //         axios.get(`http://localhost:8081/home/categories`).then((response) => {
+    //             setCategories(response.data)
+    //         })
+    //         axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
+    //             setCategoryShop(response.data)
+    //         })
+    //         axios.get(`http://localhost:8081/home/products/shop/${param.id}`).then((response) => {
+    //             setProducts(response.data.content)
+    //             setTotalElements(response.data.totalElements)
+    //         })
+    //         closeModal()
+    //         document.getElementById("demo").reset()
+    //         setImage('')
+    //         setProgressPercent(0)
+    //     })
+    // }
 
     function closeModal() {
         document.getElementById("demo").reset()
@@ -726,40 +726,40 @@ export default function Crud() {
         document.getElementById("modalAddProduct").style.display = "none"
     }
 
-    function uploadFile(e) {
-        let a = []
-        setCheck(true)
-        const files = e.currentTarget.files;
-        console.log(files)
-        for (let i = 0; i < files.length; i++) {
-            if (e.target.files) {
-                const time = new Date().getTime()
-                const storageRef = ref(storage, `image/${time}_${e.target.files[i].name}`);
-                const uploadTask = uploadBytesResumable(storageRef, e.target.files[i]);
-
-                uploadTask.on("state_changed",
-                    (snapshot) => {
-                        const progress =
-                            Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        setProgressPercent(progress);
-                    },
-                    (error) => {
-                        console.log(error);
-                    },
-                    () => {
-                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            a = [downloadURL, ...a]
-                            setImage(downloadURL)
-                            setImagePath([...a])
-                            setCheck(false)
-                        });
-                    }
-                );
-            }
-        }
-        e.currentTarget.value = null;
-
-    }
+    // function uploadFile(e) {
+    //     let a = []
+    //     setCheck(true)
+    //     const files = e.currentTarget.files;
+    //     console.log(files)
+    //     for (let i = 0; i < files.length; i++) {
+    //         if (e.target.files) {
+    //             const time = new Date().getTime()
+    //             const storageRef = ref(storage, `image/${time}_${e.target.files[i].name}`);
+    //             const uploadTask = uploadBytesResumable(storageRef, e.target.files[i]);
+    //
+    //             uploadTask.on("state_changed",
+    //                 (snapshot) => {
+    //                     const progress =
+    //                         Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //                     setProgressPercent(progress);
+    //                 },
+    //                 (error) => {
+    //                     console.log(error);
+    //                 },
+    //                 () => {
+    //                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //                         a = [downloadURL, ...a]
+    //                         setImage(downloadURL)
+    //                         setImagePath([...a])
+    //                         setCheck(false)
+    //                     });
+    //                 }
+    //             );
+    //         }
+    //     }
+    //     e.currentTarget.value = null;
+    //
+    // }
 
 
     // Hiển thị các đơn hàng đang chờ xử lý

@@ -105,7 +105,7 @@
 .form-info__input-file > input {
     width: 100%;
     padding: 6px 4px;
-    margin-top: 8px;
+    margin-top: 13px;
 }
 
 .form-info__input-file--show {
@@ -125,4 +125,10 @@
 
 .form-info__container-img > img {
     border-radius: 50%;
+}
+
+.form-edit-user__form--container {
+    width: 176px;
+    padding-left: 20px;
+    margin-top: 10px;
 }

@@ -337,8 +337,10 @@ export default function PageHome() {
                                                                         <p style={{marginLeft:5}}>đ</p>
                                                                     </div>
                                                                     <div className="product__address">
-                                                                       <span> <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
-                                                                        {product.shop.city.name}</span>
+                                                                       <span>
+                                                                           <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
+                                                                            {product.shop.city.name}
+                                                                       </span>
                                                                        <span style={{marginLeft:60}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
                                                                            {product.views}</span>
                                                                     </div>

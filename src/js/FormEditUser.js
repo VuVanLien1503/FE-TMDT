@@ -16,7 +16,7 @@ export default function FormEditUser() {
     const [status, setStatus] = useState("password")
     const[img, setImg] = useState("/img/logo/avatar-facebook-mac-dinh-8.jpg")
     const [name, setName] = useState("")
-    const [account, setAccount] = useState([])
+    const [account, setAccount] = useState({})
     const idAccount = localStorage.getItem("idAccount")
     const role = localStorage.getItem("role")
     const [flag,setFlag]=useState(false)

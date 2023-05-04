@@ -7,14 +7,14 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function Cart2() {
-    const [check,setCheck]=useState(false)
+    const [check,setCheck] = useState(false)
     const idAccount = localStorage.getItem("idAccount")
     const navigate = useNavigate()
     const [bill, setBill] = useState([])
     const [billDetail, setBillDetail] = useState([])
     const[img, setImg] = useState("/img/logo/avatar-facebook-mac-dinh-8.jpg")
     const [name, setName] = useState("")
-    const [account, setAccount] = useState([])
+    const [account, setAccount] = useState({})
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
 
@@ -37,18 +37,7 @@ export default function Cart2() {
 
     return (
         <>
-            <Formik
-                initialValues={{
-
-                }}
-
-                onSubmit={(values) => {
-
-                }}
-
-                // validationSchema={Validation}
-                >
-                <div id="main-cart">
+            <div id="main-cart">
                     <HeaderInfo name={name} img={img}/>
                     <div className="container__form-edit-user">
                         <div className="form-edit-user__header">
@@ -72,13 +61,18 @@ export default function Cart2() {
                                                         <div className="row">
                                                             <div className="col l-3">
                                                                 <div className="product-items__container">
-                                                                    <div className="product-items__container-img">
-                                                                        <img src={cart.product.imagePath[0]} alt=""/>
+                                                                    <div className="product-items__container--center">
+                                                                        <div className="product-items__container-img">
+                                                                            <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"/>
+                                                                            {/*<img src={cart.product.imagePath[0]} alt=""/>*/}
+                                                                        </div>
                                                                     </div>
 
                                                                     <div className="product-items__container-price">
-                                                                        Đơn giá:
-                                                                        <div className="product-items__price">{cart.product.price}đ</div>
+                                                                        Đơn giá
+                                                                        <div className="product-items__price">
+                                                                            <span>{cart.product.price}</span>
+                                                                            đ</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -110,15 +104,21 @@ export default function Cart2() {
                                                                     </div>
 
                                                                     <div className="product-items__total">
-                                                                        100000đ
+                                                                        <span>100000</span>
+                                                                        đ
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div className="col l-4">
+                                                            <div className="col l-4 product-items--center">
                                                                 <div className="product-items__container">
-                                                                    <div className="btn" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
-                                                                    <div className="btn" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
+                                                                    <div className="product-items__container-btn">
+                                                                        <div className="btn btn-cancel" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
+                                                                    </div>
+
+                                                                    <div className="product-items__container-btn">
+                                                                        <div className="btn btn-pay" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -134,7 +134,6 @@ export default function Cart2() {
                         </div>
                     </div>
                 </div>
-            </Formik>
         </>
     )
 
