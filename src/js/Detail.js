@@ -27,6 +27,8 @@ export default function Detail() {
             try {
                 const response = await axios.get(`http://localhost:8081/home/products/${param.id}`);
                 setProduct(response.data);
+                console.log(234)
+                console.log(response.data)
                 const updateProduct = {
                     id: response.data.id,
                     name: response.data.name,
@@ -42,7 +44,8 @@ export default function Detail() {
                     imagePath: response.data.imagePath,
                     description: response.data.description,
                     views: response.data.views + 1,
-                    rating: response.data.rating
+                    rating: response.data.rating,
+                    totalQuantity : response.data.totalQuantity
                 }
                 axios.post(`http://localhost:8081/home/products/views`, updateProduct).then((response) => {
                     setProduct(response.data)
@@ -191,13 +194,22 @@ export default function Detail() {
                                         </div>
                                         <div className="row detail__info-shared detail__info-quantity">
                                             <span
-                                                className="col l-3 detail__info-shared-title">Số lượng xem : </span>
+                                                className="col l-3 detail__info-shared-title">Số lượng đã bán : </span>
                                             <div className="col l-9 detail__info-shared-content">
                                                 <div className="detail__quantity">
-                                                    {product.views}
+                                                    {product.totalQuantity}
                                                 </div>
                                             </div>
                                         </div>
+                                        {/*<div className="row detail__info-shared detail__info-quantity">*/}
+                                        {/*    <span*/}
+                                        {/*        className="col l-3 detail__info-shared-title">Số lượng xem : </span>*/}
+                                        {/*    <div className="col l-9 detail__info-shared-content">*/}
+                                        {/*        <div className="detail__quantity">*/}
+                                        {/*            {product.views}*/}
+                                        {/*        </div>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                         <div className="row detail__info-shared detail__info-quantity">
                                             <span className="col l-3 detail__info-shared-title">Số lượng mua</span>
                                             <div className="col l-9 detail__info-shared-content">

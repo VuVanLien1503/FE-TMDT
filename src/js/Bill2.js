@@ -97,7 +97,7 @@ export default function Bill2() {
                                                                         Tổng
                                                                     </div>
                                                                     <div className="product-items__total">
-                                                                        {(element.quantity * element.product.price).toLocaleString()} đ
+                                                                        {(element.total).toLocaleString()} đ
                                                                     </div>
                                                                 </div>
                                                                 <div className="product-items__container">

@@ -17,6 +17,7 @@ export default function Cart2() {
     const [account, setAccount] = useState([])
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
+    const [valueVoucher, setValueVoucher] = useState(0.0)
 
     useEffect(() => {
         axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
@@ -110,15 +111,26 @@ export default function Cart2() {
                                                                     </div>
 
                                                                     <div className="product-items__total">
-                                                                        100000đ
+                                                                        {(cart.quantity * cart.product.price).toLocaleString()} đ
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-                                                            <div className="col l-4">
+                                                            <div className="col l-2">
                                                                 <div className="product-items__container">
-                                                                    <div className="btn" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
-                                                                    <div className="btn" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
+                                                                    <div className="product-items__text">
+                                                                        Nhập mã khuyến mãi
+                                                                    </div>
+                                                                    <div className="product-items__total">
+                                                                        <input type={"text"} id={`${cart.product.id}`} style={{width : 150}}/>
+                                                                    </div>
+                                                                    <div className="btn btn-primary" onClick={()=>checkVoucher(cart.product.id)}> Kiểm tra</div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="col l-2">
+                                                                <div className="product-items__container">
+                                                                    <div className="btn btn-danger" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
+                                                                    <div className="btn btn-primary" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -208,6 +220,11 @@ export default function Cart2() {
 
     //Thanh toán sản phẩm
     function payProduct(quantity ,idProduct, price, product){
+        let voucher = document.getElementById(`${idProduct}`).value
+        axios.post(`http://localhost:8081/home/carts/voucher/${idProduct}/${voucher}`).then((res)=>{
+        })
+        checkVoucher(idProduct)
+
         const productUpdate={
             id:product.id,
             quantity: product.quantity - quantity,
@@ -222,7 +239,8 @@ export default function Cart2() {
             },
             imagePath : product.imagePath
         }
-        const total = quantity * price
+
+        const total = quantity * price - (quantity*price)*(valueVoucher/100)
         axios.get(`http://localhost:8081/home/shops/product/${idProduct}`).then((res)=> {
             const bill = {
                 account: {
@@ -267,6 +285,30 @@ export default function Cart2() {
                 })
             })
 
+        })
+
+    }
+    function checkVoucher(id){
+        let voucher = document.getElementById(`${id}`).value
+        axios.get(`http://localhost:8081/home/carts/voucher/${id}/${voucher}`).then((res)=>{
+           setValueVoucher(res.data)
+            if (res.data!==0){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Nhập mã thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Mã hết hạn hoặc không tồn tại',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
 
     }
