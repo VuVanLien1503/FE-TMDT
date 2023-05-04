@@ -15,6 +15,7 @@ import HeaderInfo from "./js/HeaderInfo";
 import FormEditUser from "./js/FormEditUser";
 import Cart2 from "./js/Cart2";
 import Bill2 from "./js/Bill2";
+import ProductShop from "./js/ProductShop";
 
 function App() {
     return (
@@ -38,7 +39,7 @@ function App() {
                 <Route path={"/createShop/:id"} element={<CreateShop/>}/>
                 <Route path={"/"} element={<PageHome/>}/>
                 <Route path={"detail/:id"} element={<Detail/>}/>
-                <Route path={"/shop-admin/:id"} element={<Crud/>}/>
+                <Route path={"/shop-admin/:id"} element={<ProductShop/>}/>
                 <Route path={"/cart"} element={<Cart2/>}/>
                 <Route path={"/bills"} element={<Bill2/>}/>
                 <Route path={"/edit_user"} element={<FormEditUser/>}/>

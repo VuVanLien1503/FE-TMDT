@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 export default function HeaderInfo(props) {
     const [user, setUser] = useState([])
     const idAccount = localStorage.getItem("idAccount")
-
+    const roleAccount = localStorage.getItem("role")
 
     return (
         <>
@@ -23,11 +23,33 @@ export default function HeaderInfo(props) {
                         <i className="fa-solid fa-caret-right"></i>
                         <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
-                    <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
-                    <li className="navbar-items">
-                        <Link to={"/cart"}>Giỏ hàng</Link>
-                    </li>
-                    <li className="navbar-items">Cửa hàng của tôi</li>
+
+                    {roleAccount === "3" &&
+                        <>
+                            <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
+                            <li className="navbar-items">
+                                <Link to={"/cart"}>Giỏ hàng</Link>
+                            </li>
+                        </>
+                    }
+
+                    {roleAccount === "2" &&
+                        <li className="navbar-items">
+                            <div>
+                                Cửa hàng của tôi
+                                <i className="fa-solid fa-caret-down"></i>
+                            </div>
+                            <ul className="navbar-items__second">
+                                <li className="navbar-items__second-items">
+                                    <Link to={`/shop-admin/${idAccount}`}>
+                                          Sản phẩm
+                                    </Link>
+                                </li>
+                                <li className="navbar-items__second-items">Khuyến mãi</li>
+                                <li className="navbar-items__second-items">Đơn hàng</li>
+                                <li className="navbar-items__second-items">Thống kê</li>
+                            </ul>
+                        </li>}
                 </ul>
 
                 <Link to={"/"} className="nav__back-home">

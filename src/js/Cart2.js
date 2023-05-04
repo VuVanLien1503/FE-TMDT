@@ -7,14 +7,14 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function Cart2() {
-    const [check,setCheck]=useState(false)
+    const [check,setCheck] = useState(false)
     const idAccount = localStorage.getItem("idAccount")
     const navigate = useNavigate()
     const [bill, setBill] = useState([])
     const [billDetail, setBillDetail] = useState([])
     const[img, setImg] = useState("/img/logo/avatar-facebook-mac-dinh-8.jpg")
     const [name, setName] = useState("")
-    const [account, setAccount] = useState([])
+    const [account, setAccount] = useState({})
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
     const [valueVoucher, setValueVoucher] = useState(0.0)
@@ -38,18 +38,7 @@ export default function Cart2() {
 
     return (
         <>
-            <Formik
-                initialValues={{
-
-                }}
-
-                onSubmit={(values) => {
-
-                }}
-
-                // validationSchema={Validation}
-                >
-                <div id="main-cart">
+            <div id="main-cart">
                     <HeaderInfo name={name} img={img}/>
                     <div className="container__form-edit-user">
                         <div className="form-edit-user__header">
@@ -78,8 +67,10 @@ export default function Cart2() {
                                                                     </div>
 
                                                                     <div className="product-items__container-price">
-                                                                        Đơn giá:
-                                                                        <div className="product-items__price">{cart.product.price}đ</div>
+                                                                        Đơn giá
+                                                                        <div className="product-items__price">
+                                                                            <span>{cart.product.price}</span>
+                                                                            đ</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -127,10 +118,15 @@ export default function Cart2() {
                                                                 </div>
                                                             </div>
 
-                                                            <div className="col l-2">
+                                                            <div className="col l-4 product-items--center">
                                                                 <div className="product-items__container">
-                                                                    <div className="btn btn-danger" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
-                                                                    <div className="btn btn-primary" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
+                                                                    <div className="product-items__container-btn">
+                                                                        <div className="btn btn-cancel" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
+                                                                    </div>
+
+                                                                    <div className="product-items__container-btn">
+                                                                        <div className="btn btn-pay" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,7 +142,6 @@ export default function Cart2() {
                         </div>
                     </div>
                 </div>
-            </Formik>
         </>
     )
 
@@ -220,11 +215,6 @@ export default function Cart2() {
 
     //Thanh toán sản phẩm
     function payProduct(quantity ,idProduct, price, product){
-        let voucher = document.getElementById(`${idProduct}`).value
-        axios.post(`http://localhost:8081/home/carts/voucher/${idProduct}/${voucher}`).then((res)=>{
-        })
-        checkVoucher(idProduct)
-
         const productUpdate={
             id:product.id,
             quantity: product.quantity - quantity,
@@ -239,8 +229,7 @@ export default function Cart2() {
             },
             imagePath : product.imagePath
         }
-
-        const total = quantity * price - (quantity*price)*(valueVoucher/100)
+        const total = quantity * price
         axios.get(`http://localhost:8081/home/shops/product/${idProduct}`).then((res)=> {
             const bill = {
                 account: {
@@ -285,30 +274,6 @@ export default function Cart2() {
                 })
             })
 
-        })
-
-    }
-    function checkVoucher(id){
-        let voucher = document.getElementById(`${id}`).value
-        axios.get(`http://localhost:8081/home/carts/voucher/${id}/${voucher}`).then((res)=>{
-           setValueVoucher(res.data)
-            if (res.data!==0){
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Nhập mã thành công',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Mã hết hạn hoặc không tồn tại',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
         })
 
     }

@@ -103,24 +103,24 @@ export default function HeaderPage(prop) {
                                             </li>}
                                         {role !== "2" &&
                                             <li className="header__nav-items-container-info">
-                                                <Link to={`#`} className="row">
+                                                <Link to={"/bills"} className="row">
                                                     <div className="col l-2 nav-items__container-icon">
                                                         <i className="fa-solid fa-eye"></i></div>
                                                     <div className="col l-10 nav-items__container-text" >
-                                                        <Link to={"/bills"}>Lịch Sử Mua Hàng</Link>
+                                                        Lịch Sử Mua Hàng
                                                     </div>
                                                 </Link>
                                             </li>}
                                         <li className="header__nav-items-container-info">
-                                            <div className="row">
+                                            <Link to={"/edit_user"} className="row">
                                                 <div className="col l-2 nav-items__container-icon">
                                                     <i className="fa-solid fa-user"></i>
                                                 </div>
-                                                <Link to={"/edit_user"} className="col l-10 nav-items__container-text">
+                                                <div className="col l-10 nav-items__container-text">
                                                      {/*// onClick={() => formSave()}>*/}
                                                     Tài Khoản
-                                                </Link>
-                                            </div>
+                                                </div>
+                                            </Link>
                                         </li>
 
                                         <li className="header__nav-items-container-info">
@@ -181,8 +181,10 @@ export default function HeaderPage(prop) {
                                                             <>
                                                                 <li className="has__cart-items">
                                                                     <div className="row">
-                                                                        <div className="col l-1 has__cart-img">
-                                                                            <img src={element.product?.imagePath[0]}/>
+                                                                        <div className="col l-2 has__cart-img">
+                                                                            <div className="has__cart-img-container">
+                                                                                <img src={element.product?.imagePath[0]}/>
+                                                                            </div>
                                                                         </div>
                                                                         <div className="col l-6">
                                                                             <div className="has__cart-head">
@@ -192,7 +194,7 @@ export default function HeaderPage(prop) {
                                                                                     className="has__cart-head-desc">{element.product.category.name}</div>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col l-5">
+                                                                        <div className="col l-4">
                                                                             <div className="has__cart-action">
                                                                                 <div className="has__cart-calculate">
                                                                                     <div className="has__cart-price">{element.product.price}</div>
