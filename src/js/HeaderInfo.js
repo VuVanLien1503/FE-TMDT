@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 export default function HeaderInfo(props) {
     const [user, setUser] = useState([])
     const idAccount = localStorage.getItem("idAccount")
-    const roleAccount = localStorage.getItem("role")
+    const role = localStorage.getItem("role")
 
     return (
         <>
@@ -23,33 +23,21 @@ export default function HeaderInfo(props) {
                         <i className="fa-solid fa-caret-right"></i>
                         <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
-
-                    {roleAccount === "3" &&
-                        <>
-                            <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
-                            <li className="navbar-items">
-                                <Link to={"/cart"}>Giỏ hàng</Link>
-                            </li>
-                        </>
+                    {role === '3' &&
+                        <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
                     }
 
-                    {roleAccount === "2" &&
+                    {role === '3' &&
                         <li className="navbar-items">
-                            <div>
-                                Cửa hàng của tôi
-                                <i className="fa-solid fa-caret-down"></i>
-                            </div>
-                            <ul className="navbar-items__second">
-                                <li className="navbar-items__second-items">
-                                    <Link to={`/shop-admin/${idAccount}`}>
-                                          Sản phẩm
-                                    </Link>
-                                </li>
-                                <li className="navbar-items__second-items">Khuyến mãi</li>
-                                <li className="navbar-items__second-items">Đơn hàng</li>
-                                <li className="navbar-items__second-items">Thống kê</li>
-                            </ul>
-                        </li>}
+                            <Link to={"/cart"}>Giỏ hàng</Link>
+                        </li>
+                    }
+                    {role === '2' &&
+                        <Link to={`/shop-admin/${idAccount}`}>
+                        <li className="navbar-items">Cửa hàng của tôi</li>
+                        </Link>
+                    }
+
                 </ul>
 
                 <Link to={"/"} className="nav__back-home">

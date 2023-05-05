@@ -200,10 +200,10 @@ export default function HeaderPage(prop) {
                                                                                     <div className="has__cart-price">{element.product.price}</div>
                                                                                     <div className="has__cart-quantity">x {element.quantity}</div>
                                                                                 </div>
-                                                                                <div className="has__cart-delete"
-                                                                                     onClick={() => deleteProduct(element.product.id)}>
-                                                                                    Xoá
-                                                                                </div>
+                                                                                {/*<div className="has__cart-delete"*/}
+                                                                                {/*     onClick={() => deleteProduct(element.product.id)}>*/}
+                                                                                {/*    Xoá*/}
+                                                                                {/*</div>*/}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -346,7 +346,7 @@ export default function HeaderPage(prop) {
     )
 
     function formSave() {
-        document.getElementById("modal").style.display = "flex"
+        // document.getElementById("modal").style.display = "flex"
     }
 
     function closeModal() {
@@ -403,6 +403,7 @@ export default function HeaderPage(prop) {
 
     function logout() {
         localStorage.setItem("idAccount", "")
+        localStorage.setItem("role", "")
         navigate("/login")
     }
 

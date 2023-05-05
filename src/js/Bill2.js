@@ -18,6 +18,7 @@ export default function Bill2() {
     const [account, setAccount] = useState([])
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
+    const [user, setUser] = useState([])
 
     //page
     const [pageNumber, setPage] = useState(0)
@@ -27,6 +28,9 @@ export default function Bill2() {
         axios.get(`http://localhost:8081/home/bills/bill-detail/${idAccount}?page=${pageNumber}`).then((response) => {
             setBillDetail(response.data.content)
             setTotalPages(response.data.totalPages)
+        })
+        axios.get(`http://localhost:8081/accounts/${idAccount}`).then((response) => {
+            setUser(response.data)
         })
     }, [check,pageNumber])
 
@@ -44,7 +48,7 @@ export default function Bill2() {
                 // validationSchema={Validation}
             >
                 <div id="main-cart">
-                    <HeaderInfo name={name} img={img}/>
+                    <HeaderInfo name={name} img={user.pathImage}/>
                     <div className="container__form-edit-user">
                         <div className="form-edit-user__header">
                             <i className="fa-solid fa-cart-shopping"></i>

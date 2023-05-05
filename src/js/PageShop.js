@@ -21,7 +21,8 @@ export default function PageShop() {
     const [totalPages, setTotalPages] = useState(0)
     const [idCategory, setIdCategory] = useState(0)
     const [nameProduct, setNameProduct] = useState("")
-
+    const [carts, setCarts] = useState([])
+    const idAccount = localStorage.getItem("idAccount")
 
 
     useEffect(() => {
@@ -42,6 +43,9 @@ export default function PageShop() {
                 axios.get(`http://localhost:8081/accounts/${response.data.id}`).then((response) => {
                     setUser(response.data)
                     console.log(response.data)
+                })
+                axios.get(`http://localhost:8081/home/carts/${idAccount}`).then((response) => {
+                    setCarts(response.data)
                 })
             })
         })
@@ -78,7 +82,7 @@ export default function PageShop() {
             <div id="main">
                 {/*Start Header*/}
                 <div id="header__page-shop">
-                    <HeaderPage onClick={searchByName} home={backToHome}/>
+                    <HeaderPage onClick={searchByName} home={backToHome} listCart = {carts}/>
                     <div className="header__shop">
                         <div className="grid wide">
                             <div className="header__shop-container">
@@ -86,12 +90,12 @@ export default function PageShop() {
                                     <div className="col l-4">
                                         <div className="header__shop-left">
                                             <img className="header__shop-left-img"
-                                                 src="/img/logo/62901191827247fbb12c20d02d8bc1f6_tn.jfif"
+                                                 src={user.pathImage}
                                                  alt=""/>
                                             <div className="header__shop-left-content">
                                                 <div className="row">
                                                     <div className="header__shop-img col l-4">
-                                                        <img src="/img/logo/avatar-facebook-mac-dinh-8.jpg"
+                                                        <img src={user.pathImage}
                                                              alt=""/>
                                                     </div>
                                                     <div className="header__shop-info col l-8">

@@ -337,11 +337,9 @@ export default function PageHome() {
                                                                         <p style={{marginLeft:5}}>đ</p>
                                                                     </div>
                                                                     <div className="product__address">
-                                                                       <span>
-                                                                           <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
-                                                                            {product.shop.city.name}
-                                                                       </span>
-                                                                       <span style={{marginLeft:60}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
+                                                                       <span> <i className="fa-solid fa-location-dot" style={{marginRight:4}}></i>
+                                                                        {product.shop.city.name}</span>
+                                                                       <span style={{marginLeft:80}}><i className="fa-solid fa-eye" style={{marginRight:4}}></i>
                                                                            {product.views}</span>
                                                                     </div>
                                                                     <div className="product__showRating" >
@@ -417,4 +415,42 @@ export default function PageHome() {
             offset: 0
         });
     }
+
+    // function ShowListRating(props) {
+    //     const [listRating, setListRating] = useState([])
+    //     axios.get(`http://localhost:8081/home/products/rating/${props.id}`).then((res) =>{
+    //         setListRating(res.data)
+    //         console.log(listRating)
+    //     })
+    // }
+
+
+    function ShowRating(props) {
+        const [totalRating, setTotalRating] = useState(0)
+        const [rating, setRating] = useState(props.value);
+        return (
+            <div>
+                <div>
+                    {[...Array(5)].map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                            <label key={ratingValue} htmlFor={`rating-${ratingValue}`} className={"showRating"}>
+                                <input
+                                    type="radio"
+                                    id={`rating-${ratingValue}`}
+                                    name="rating"
+                                    value={ratingValue}
+                                />
+                                <span className={ratingValue <= rating ? "activeShow" : ""}>&#9733;</span>
+                            </label>
+
+                        );
+                    })}
+                    {/*<span className={"showRating-span"}>({props.quantity})</span>*/}
+                </div>
+
+            </div>
+        );
+    }
+
 }
