@@ -417,4 +417,29 @@ export default function PageHome() {
             offset: 0
         });
     }
+    function ShowRating(props) {
+        const [totalRating, setTotalRating] = useState(0)
+        const [rating, setRating] = useState(props.value);
+        return (
+            <div>
+                <div>
+                    {[...Array(5)].map((star, index) => {
+                        const ratingValue = index + 1;
+                        return (
+                            <label key={ratingValue} htmlFor={`rating-${ratingValue}`} className={"showRating"}>
+                                <input
+                                    type="radio"
+                                    id={`rating-${ratingValue}`}
+                                    name="rating"
+                                    value={ratingValue}
+                                />
+                                <span className={ratingValue <= rating ? "activeShow" : ""}>&#9733;</span>
+                            </label>
+                        );
+                    })}
+                    <span className={"showRating-span"}>({props.quantity})</span>
+                </div>
+            </div>
+        );
+    }
 }
