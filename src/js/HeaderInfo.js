@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 export default function HeaderInfo(props) {
     const [user, setUser] = useState([])
     const idAccount = localStorage.getItem("idAccount")
-
+    const role = localStorage.getItem("role")
 
     return (
         <>
@@ -23,11 +23,21 @@ export default function HeaderInfo(props) {
                         <i className="fa-solid fa-caret-right"></i>
                         <Link to={"/edit_user"}>Tài Khoản</Link>
                     </li>
-                    <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
-                    <li className="navbar-items">
-                        <Link to={"/cart"}>Giỏ hàng</Link>
-                    </li>
-                    <li className="navbar-items">Cửa hàng của tôi</li>
+                    {role === '3' &&
+                        <li className="navbar-items"> <Link to={"/bills"}>Lịch sử mua hàng</Link></li>
+                    }
+
+                    {role === '3' &&
+                        <li className="navbar-items">
+                            <Link to={"/cart"}>Giỏ hàng</Link>
+                        </li>
+                    }
+                    {role === '2' &&
+                        <Link to={`/shop-admin/${idAccount}`}>
+                        <li className="navbar-items">Cửa hàng của tôi</li>
+                        </Link>
+                    }
+
                 </ul>
 
                 <Link to={"/"} className="nav__back-home">

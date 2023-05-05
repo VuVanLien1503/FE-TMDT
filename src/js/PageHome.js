@@ -446,11 +446,11 @@ export default function PageHome() {
 
                         );
                     })}
-                    <span className={"showRating-span"}>({props.quantity})</span>
+                    {/*<span className={"showRating-span"}>({props.quantity})</span>*/}
                 </div>
 
             </div>
         );
-    };
+    }
 
 }

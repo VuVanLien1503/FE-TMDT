@@ -11,6 +11,7 @@ import RatingComponent from "./RatingComponent";
 
 export default function Detail() {
     let idAccount = localStorage.getItem("idAccount")
+    let role = localStorage.getItem("role")
     const [quantity, setQuantity] = useState(0)
     const [quantityRemaining, setQuantityRemaining] = useState(0)
     const [product, setProduct] = useState([])
@@ -142,10 +143,13 @@ export default function Detail() {
                                             )
                                         })}
                                     </ul>
-                                    <div style={{marginTop: 20}}>
-                                          <h1 style={{marginBottom:15}}>Đánh Giá :</h1>
-                                        <Rating/>
-                                    </div>
+                                    {role !== "" &&
+                                        <div style={{marginTop: 20}}>
+                                            <h1 style={{marginBottom:15}}>Đánh Giá :</h1>
+                                            <Rating/>
+                                        </div>
+                                    }
+
                                 </div>
                             </div>
 
@@ -265,7 +269,9 @@ export default function Detail() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="btn btn-add-cart" onClick={order}>Thêm giỏ hàng</div>
+                                    {idAccount !== ''&&
+                                        <div className="btn btn-add-cart" onClick={order}>Thêm giỏ hàng</div>
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -17,6 +17,7 @@ export default function Cart2() {
     const [account, setAccount] = useState([])
     const [prevCarts, setPrevCarts] = useState([])
     const [carts, setCart] = useState([])
+    const [shop, setShop] = useState([])
     const [valueVoucher, setValueVoucher] = useState(0.0)
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export default function Cart2() {
             setPrevCarts(carts);
             setCart(response.data)
         })
+
     }, [check])
 
     return (
@@ -121,7 +123,7 @@ export default function Cart2() {
                                                                         Nhập mã khuyến mãi
                                                                     </div>
                                                                     <div className="product-items__total">
-                                                                        <input type={"text"} id={`${cart.product.id}`} style={{width : 150}}/>
+                                                                        <input type={"text"} id={`${cart.product.id}`} style={{width : "100%", marginBottom: "6px"}}/>
                                                                     </div>
                                                                     <div className="btn btn-primary" onClick={()=>checkVoucher(cart.product.id)}> Kiểm tra</div>
                                                                 </div>
@@ -129,7 +131,7 @@ export default function Cart2() {
 
                                                             <div className="col l-2">
                                                                 <div className="product-items__container">
-                                                                    <div className="btn btn-danger" onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
+                                                                    <div className="btn btn-danger" style={{marginBottom : "6px"}} onClick={() =>deleteProductInCart(cart.product.id)}>Huỷ</div>
                                                                     <div className="btn btn-primary" onClick={() =>payProduct(cart.quantity, cart.product.id, cart.product.price, cart.product)}>Thanh toán</div>
                                                                 </div>
                                                             </div>
@@ -221,10 +223,8 @@ export default function Cart2() {
     //Thanh toán sản phẩm
     function payProduct(quantity ,idProduct, price, product){
         let voucher = document.getElementById(`${idProduct}`).value
-        axios.post(`http://localhost:8081/home/carts/voucher/${idProduct}/${voucher}`).then((res)=>{
+        axios.post(`http://localhost:8081/home/carts/voucher/${shop.id}/${voucher}`).then((res)=>{
         })
-        checkVoucher(idProduct)
-
         const productUpdate={
             id:product.id,
             quantity: product.quantity - quantity,
@@ -237,7 +237,10 @@ export default function Cart2() {
             shop: {
                 id: product.shop.id,
             },
-            imagePath : product.imagePath
+            imagePath : product.imagePath,
+            totalQuantity: product.totalQuantity + quantity,
+            date : product.date,
+            rating : product.rating,
         }
 
         const total = quantity * price - (quantity*price)*(valueVoucher/100)
@@ -279,6 +282,8 @@ export default function Cart2() {
                 axios.post(`http://localhost:8081/home/bills/bill-detail/create`, billDetail ).then((res) => {
                     setBillDetail(res.data)
                 })
+                axios.post(`http://localhost:8081/home/products/update`,productUpdate).then((res)=>{
+                })
                 axios.post(`http://localhost:8081/home/carts/delete/product-cart/${idAccount}`,product).then((res) =>{
                     setCheck(!check)
                     navigate("/bills")
@@ -289,26 +294,32 @@ export default function Cart2() {
 
     }
     function checkVoucher(id){
-        let voucher = document.getElementById(`${id}`).value
-        axios.get(`http://localhost:8081/home/carts/voucher/${id}/${voucher}`).then((res)=>{
-           setValueVoucher(res.data)
-            if (res.data!==0){
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Nhập mã thành công',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }else {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Mã hết hạn hoặc không tồn tại',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
+        axios.get(`http://localhost:8081/home/shops/product/${id}`).then((response) => {
+            setShop(response.data)
+            let voucher = document.getElementById(`${id}`).value
+            axios.get(`http://localhost:8081/home/carts/voucher/${response.data.id}/${voucher}`).then((res)=>{
+                setValueVoucher(res.data)
+                console.log(res.data)
+                if (res.data!==0){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Nhập mã thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Mã hết hạn hoặc không tồn tại',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+
         })
 
     }

@@ -197,6 +197,7 @@ export default function FormEditUser() {
                 timer: 2000
             })
             setFlag(!flag)
+            navigate("/")
         }).catch(() => {
             Swal.fire({
                 position: 'center',

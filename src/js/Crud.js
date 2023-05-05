@@ -48,6 +48,7 @@ export default function Crud() {
             .positive('Số lượng sản phẩm phải lớn hơn 0'),
 
     });
+    const idAccount = localStorage.getItem("idAccount")
 
     const [progressPercent, setProgressPercent] = useState(0)
     const [image, setImage] = useState("")
@@ -90,7 +91,7 @@ export default function Crud() {
     const [pageNumberBill, setPageBill] = useState(0)
     const [totalPagesBill, setTotalPagesBill] = useState(0)
     useEffect(showBillDetail, [pageNumberBill, pageNumber])
-    useEffect(showBillDetail, [pageNumberBill])
+    // useEffect(showBillDetail, [pageNumberBill])
     const [listUser, setListUser] = useState([]);
 
     useEffect(() => {
@@ -107,10 +108,14 @@ export default function Crud() {
                     })
                     axios.get(`http://localhost:8081/home/products/shop-crud-all/${param.id}`).then((response) => {
                         setProductsAll(response.data.content)
+                        console.log(123)
+                        console.log(response.data.content)
 
                     })
                     axios.get(`http://localhost:8081/home/categories`).then((response) => {
                         setCategories(response.data)
+                        console.log(237)
+                        console.log(response.data)
                     })
                     axios.get(`http://localhost:8081/home/shops/${param.id}/categories`).then((response) => {
                         setCategoryShop(response.data)
@@ -203,7 +208,7 @@ export default function Crud() {
                                     <h3 className="col l-1">STT</h3>
                                     <h3 className="col l-1">Ảnh</h3>
                                     <h3 className="col l-3">Tên sản phẩm</h3>
-                                    <h3 className="col l-3">Mô tả</h3>
+                                    <h3 className="col l-3">Số lượng bán</h3>
                                     <h3 className="col l-1">Số lượng</h3>
                                     <h3 className="col l-1">Giá</h3>
                                     <h3 className="col l-2">Chỉnh sửa</h3>
@@ -217,9 +222,9 @@ export default function Crud() {
                                                     <img src={product.imagePath[0]}/>
                                                 </div>
                                                 <div className="col l-3">{product.name}</div>
-                                                <div className="col l-3">{product.description}</div>
+                                                <div className="col l-3">{product.totalQuantity}</div>
                                                 <div className="col l-1">{product.quantity}</div>
-                                                <div className="col l-1">{product.price}</div>
+                                                <div className="col l-1">{product.price.toLocaleString()}</div>
                                                 <div className="col l-2">
                                                     <div className="row">
                                                         <div className="col l-6">
@@ -274,32 +279,32 @@ export default function Crud() {
                                 <div className="row table__head">
                                     <h3 className="col l-1">STT</h3>
                                     <h3 className="col l-3">Tên mã</h3>
-                                    <h3 className="col l-2">Số lượng</h3>
-                                    <h3 className="col l-2">Chiết khấu</h3>
-                                    <h3 className="col l-4">Chỉnh sửa</h3>
+                                    <h3 className="col l-4">Số lượng</h3>
+                                    <h3 className="col l-4">Chiết khấu</h3>
+                                    {/*<h3 className="col l-4">Chỉnh sửa</h3>*/}
                                 </div>
                                 {voucher != null && voucher.map((voucher) => {
                                     return (
                                         <>
-                                            <div className="row table__content">
+                                            <div className="row table__content" style={{marginTop : 10}}>
                                                 <div className="col l-1">{++index}</div>
                                                 <div className="col l-3">{voucher.name}</div>
-                                                <div className="col l-2">{voucher.quantity}</div>
-                                                <div className="col l-2">{voucher.percent}</div>
-                                                <div className="col l-4">
-                                                    <div className="row">
-                                                        <div className="col l-6">
-                                                            <div className="btn btn-edit"
-                                                                 onClick={() => updateVoucher(product.id)}>Sửa
-                                                            </div>
-                                                        </div>
-                                                        <div className="col l-6">
-                                                            <div className="btn btn-delete"
-                                                                 onClick={() => deleteVoucher(product.id)}>Xoá
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div className="col l-4">{voucher.quantity}</div>
+                                                <div className="col l-4">{voucher.percent}</div>
+                                                {/*<div className="col l-4">*/}
+                                                {/*    <div className="row">*/}
+                                                {/*        <div className="col l-6">*/}
+                                                {/*            <div className="btn btn-edit"*/}
+                                                {/*                 onClick={() => updateVoucher(product.id)}>Sửa*/}
+                                                {/*            </div>*/}
+                                                {/*        </div>*/}
+                                                {/*        <div className="col l-6">*/}
+                                                {/*            <div className="btn btn-delete"*/}
+                                                {/*                 onClick={() => deleteVoucher(product.id)}>Xoá*/}
+                                                {/*            </div>*/}
+                                                {/*        </div>*/}
+                                                {/*    </div>*/}
+                                                {/*</div>*/}
                                             </div>
 
                                         </>
@@ -329,12 +334,12 @@ export default function Crud() {
                                                 <div className="col l-1">
                                                     <img src={element.product.imagePath[0]}/>
                                                 </div>
-                                                <h3 className="col l-2">{element.product.name}</h3>
-                                                <h3 className="col l-2">{element.bill.account.users.name}</h3>
-                                                <h3 className="col l-1">{element.quantity}</h3>
-                                                <h3 className="col l-1">{element.product.price.toLocaleString()}</h3>
-                                                <h3 className="col l-1">{element.total.toLocaleString()}</h3>
-                                                <h3 className="col l-1">{element.bill.statusBill.name}</h3>
+                                                <div className="col l-2">{element.product.name}</div>
+                                                <div className="col l-2">{element.bill.account.users.name}</div>
+                                                <div className="col l-1">{element.quantity}</div>
+                                                <div className="col l-1">{element.product.price.toLocaleString()}</div>
+                                                <div className="col l-1">{element.total.toLocaleString()}</div>
+                                                <div className="col l-1">{element.bill.statusBill.name}</div>
                                                 <div className="col l-2">
                                                     {element.bill.statusBill.id === 1 &&
                                                         <div className="btn btn-primary"
@@ -375,57 +380,8 @@ export default function Crud() {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         }
-                        {/*{checkAction === "show statistical" &&*/}
-                        {/*    <div style={{height: 600}}>*/}
-                        {/*        <div className="row table__head">*/}
-                        {/*            <h3 className="col l-1">STT</h3>*/}
-                        {/*            <h3 className="col l-3">Tên khách hàng</h3>*/}
-                        {/*            <h3 className="col l-3">Tổng số tiền đã mua</h3>*/}
-                        {/*        </div>*/}
-                        {/*        {listUser != null && listUser.map((element) => {*/}
-                        {/*            return (*/}
-                        {/*                <>*/}
-                        {/*                    <div className="row table__content">*/}
-                        {/*                        <div className="col l-1">{++index}</div>*/}
-                        {/*                        <div className="col l-3">{element.account.users.name}</div>*/}
-                        {/*                        <div className="col l-3">{element.total.toLocaleString()}đ</div>*/}
-                        {/*                    </div>*/}
-
-                        {/*                </>*/}
-                        {/*            )*/}
-                        {/*        })}*/}
-                        {/*        <div className="body__home-nav-page">*/}
-                        {/*            <div className="nav-page__container">*/}
-                        {/*                <div className="nav-page__container-btn" onClick={() => {*/}
-                        {/*                    setPage(pageNumber - 1)*/}
-                        {/*                }}>*/}
-                        {/*                    {pageNumber > 0 &&*/}
-                        {/*                        <div className="btn btn-prev">*/}
-                        {/*                            <i className="fa-solid fa-chevron-left"></i>*/}
-                        {/*                        </div>}*/}
-
-                        {/*                </div>*/}
-
-                        {/*                <ul className="nav-page__container-number-page">*/}
-                        {/*                    <li className="btn btn-page">{pageNumber + 1} | {totalPages}</li>*/}
-                        {/*                </ul>*/}
-
-                        {/*                <div className="nav-page__container-btn" onClick={() => {*/}
-                        {/*                    setPage(pageNumber + 1)*/}
-                        {/*                }}>*/}
-                        {/*                    {pageNumber + 1 < totalPages &&*/}
-                        {/*                        <div className="btn btn-next">*/}
-                        {/*                            <i className="fa-solid fa-chevron-right"></i>*/}
-                        {/*                        </div>}*/}
-
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*}*/}
 
                         {checkAction === "show statistical" &&  <div>
                             {/*<button style={{marginLeft: 600, marginTop: 50}}>Biểu Đồ doanh số</button>*/}
@@ -459,7 +415,9 @@ export default function Crud() {
                             category: {
                                 id: ''
                             },
-                            date: Date.now()
+                            date: Date.now(),
+                            totalQuantity: product.totalQuantity,
+                            rating : product.rating,
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
@@ -777,6 +735,7 @@ export default function Crud() {
                 setTotalElements(response.data.totalElements)
             })
             closeModal()
+            setCheckRender(!checkRender)
             document.getElementById("demo").reset()
             setImage('')
             setProgressPercent(0)
@@ -840,7 +799,6 @@ export default function Crud() {
     function updateStatusBill2(idBill, billDetail) {
         setCheckBillDetail(!checkBillDetail)
         axios.post(`http://localhost:8081/home/bills/update/status-bill/2/${idBill}`, billDetail).then((response) => {
-            setCheckRender(!checkRender)
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -864,9 +822,13 @@ export default function Crud() {
         let arrData=[];
         if (productsAll!==null){
             for (let i = 0; i < productsAll.length; i++) {
-                arrLabel.push(productsAll[i].name)
-                arrData.push(productsAll[i].views)
+                if (productsAll[i].totalQuantity >0){
+                    arrLabel.push(productsAll[i].name)
+                    arrData.push(productsAll[i].totalQuantity)
+                }
             }
+            console.log(arrLabel)
+            console.log(arrData)
         }
 
         const data = {
