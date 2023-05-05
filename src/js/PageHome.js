@@ -415,16 +415,6 @@ export default function PageHome() {
             offset: 0
         });
     }
-
-    // function ShowListRating(props) {
-    //     const [listRating, setListRating] = useState([])
-    //     axios.get(`http://localhost:8081/home/products/rating/${props.id}`).then((res) =>{
-    //         setListRating(res.data)
-    //         console.log(listRating)
-    //     })
-    // }
-
-
     function ShowRating(props) {
         const [totalRating, setTotalRating] = useState(0)
         const [rating, setRating] = useState(props.value);
@@ -443,14 +433,11 @@ export default function PageHome() {
                                 />
                                 <span className={ratingValue <= rating ? "activeShow" : ""}>&#9733;</span>
                             </label>
-
                         );
                     })}
-                    {/*<span className={"showRating-span"}>({props.quantity})</span>*/}
+                    <span className={"showRating-span"}>({props.quantity})</span>
                 </div>
-
             </div>
         );
     }
-
 }

@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function Cart2() {
-    const [check,setCheck] = useState(false)
+    const [check,setCheck]=useState(false)
     const idAccount = localStorage.getItem("idAccount")
     const navigate = useNavigate()
     const [bill, setBill] = useState([])
@@ -34,7 +34,6 @@ export default function Cart2() {
             setPrevCarts(carts);
             setCart(response.data)
         })
-
     }, [check])
 
     return (
@@ -49,7 +48,7 @@ export default function Cart2() {
                 }}
 
                 // validationSchema={Validation}
-                >
+            >
                 <div id="main-cart">
                     <HeaderInfo name={name} img={img}/>
                     <div className="container__form-edit-user">
@@ -293,32 +292,26 @@ export default function Cart2() {
 
     }
     function checkVoucher(id){
-        axios.get(`http://localhost:8081/home/shops/product/${id}`).then((response) => {
-            setShop(response.data)
-            let voucher = document.getElementById(`${id}`).value
-            axios.get(`http://localhost:8081/home/carts/voucher/${response.data.id}/${voucher}`).then((res)=>{
-                setValueVoucher(res.data)
-                console.log(res.data)
-                if (res.data!==0){
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Nhập mã thành công',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }else {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Mã hết hạn hoặc không tồn tại',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            })
-
-
+        let voucher = document.getElementById(`${id}`).value
+        axios.get(`http://localhost:8081/home/carts/voucher/${id}/${voucher}`).then((res)=>{
+            setValueVoucher(res.data)
+            if (res.data!==0){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Nhập mã thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Mã hết hạn hoặc không tồn tại',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
 
     }
